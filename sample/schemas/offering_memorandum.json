@@ -1,0 +1,122 @@
+{
+  "name": "offering_memorandum",
+  "description": "Key facts from a multifamily offering memorandum. One entry per document. Values are spread across the summary, financial and rent sections; take the figure the OM presents as current, not a projection, unless the field says otherwise.",
+  "fields": {
+    "property_name": {
+      "name": "Property Name",
+      "description": "Name of the property being offered."
+    },
+    "address": {
+      "name": "Street Address",
+      "description": "Street address of the property, without city and state."
+    },
+    "city": {
+      "name": "City",
+      "description": "City."
+    },
+    "state": {
+      "name": "State",
+      "description": "Two-letter state code."
+    },
+    "zip_code": {
+      "name": "ZIP Code",
+      "description": "ZIP code as a string."
+    },
+    "county": {
+      "name": "County",
+      "description": "County the property is in, if the OM states it. null otherwise."
+    },
+    "submarket": {
+      "name": "Submarket",
+      "description": "Submarket or neighbourhood the OM places the property in, if named."
+    },
+    "broker_name": {
+      "name": "Brokerage",
+      "description": "The brokerage firm presenting the offering."
+    },
+    "units": {
+      "name": "Number of Units",
+      "description": "Total unit count, as a number."
+    },
+    "year_built": {
+      "name": "Year Built",
+      "description": "Year of original construction, as a four-digit number."
+    },
+    "year_renovated": {
+      "name": "Year Renovated",
+      "description": "Year of the latest renovation, if stated. null otherwise."
+    },
+    "building_type": {
+      "name": "Building Type",
+      "description": "Style of construction as the OM names it, e.g. Garden, Mid-Rise."
+    },
+    "number_of_buildings": {
+      "name": "Number of Buildings",
+      "description": "Count of residential buildings, as a number."
+    },
+    "stories": {
+      "name": "Stories",
+      "description": "Number of stories as the OM states it. Keep the OM's wording if it gives a range, e.g. '2 & 3'."
+    },
+    "rentable_sf": {
+      "name": "Rentable Square Feet",
+      "description": "Total rentable square footage, as a number."
+    },
+    "average_unit_sf": {
+      "name": "Average Unit Size (SF)",
+      "description": "Average unit size in square feet, as a number. Use the OM's figure if given, otherwise rentable SF divided by units, rounded to the nearest whole number."
+    },
+    "site_acres": {
+      "name": "Site Area (acres)",
+      "description": "Land area in acres, as a number."
+    },
+    "parking_spaces": {
+      "name": "Parking Spaces",
+      "description": "Total parking spaces, as a number."
+    },
+    "parking_ratio": {
+      "name": "Parking Ratio",
+      "description": "Parking spaces per unit, as a number, e.g. 1.41."
+    },
+    "asking_price": {
+      "name": "Asking Price",
+      "description": "Quoted asking price as a number. null if the OM is unpriced."
+    },
+    "price_per_unit": {
+      "name": "Price per Unit",
+      "description": "Asking price divided by units, rounded to the nearest whole number. null if the OM is unpriced."
+    },
+    "asking_cap_rate": {
+      "name": "Asking Cap Rate",
+      "description": "Quoted cap rate as a percentage number, e.g. 5.25 for 5.25%. null if not stated."
+    },
+    "occupancy_pct": {
+      "name": "Current Occupancy",
+      "description": "The current leased or occupied percentage the OM states for the property as of its rent roll date, as a number, e.g. 71 for '71% leased'. Not a proforma or economic occupancy assumption. null if not stated."
+    },
+    "average_in_place_rent": {
+      "name": "Average In-Place Rent",
+      "description": "Average in-place effective rent per unit per month that the OM reports for the property itself, as a number. This is distinct from market rent and from comparable properties. null if not stated."
+    },
+    "market_rent": {
+      "name": "Market Rent",
+      "description": "Average market rent per unit per month the OM quotes for the property, as a number, e.g. from the unit mix summary."
+    },
+    "market_rent_psf": {
+      "name": "Market Rent per SF",
+      "description": "Market rent per square foot per month as a number, e.g. 2.23."
+    },
+    "unit_types": {
+      "name": "Unit Types",
+      "description": "List of the floor plan or unit type names in the unit mix table, in the order shown, e.g. ['A1', 'A2', 'B1']. Empty list if there is no unit mix table."
+    },
+    "noi_t12": {
+      "name": "Trailing 12 NOI",
+      "description": "Trailing twelve month net operating income as a number, if the OM gives one. null otherwise."
+    },
+    "noi_proforma": {
+      "name": "Pro Forma NOI",
+      "description": "Year-one or pro forma net operating income as a number, if the OM gives one. null otherwise."
+    }
+  }
+}

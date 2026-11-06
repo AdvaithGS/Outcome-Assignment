@@ -1,0 +1,13 @@
+# Never ship secrets, caches (they hold text extracted from the sample docs) or provided data
+.env
+.cache/
+ledger/
+sample/
+outputs/
+.git/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+notes/

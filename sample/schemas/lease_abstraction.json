@@ -1,0 +1,166 @@
+{
+  "name": "lease_abstraction",
+  "description": "Abstract of a commercial office lease. One entry per document. Dates in YYYY-MM-DD. Money as plain numbers. Where the lease does not state something, the value is null; do not infer from market norms.",
+  "fields": {
+    "tenant_name": {
+      "name": "Tenant Name",
+      "description": "Full legal name of the tenant (lessee) exactly as written, including the corporate suffix."
+    },
+    "landlord_legal_name": {
+      "name": "Landlord Legal Name",
+      "description": "Full legal name of the landlord (lessor) exactly as written, including the corporate suffix."
+    },
+    "property_name": {
+      "name": "Property Name",
+      "description": "Name of the building or property where the premises are located, if the lease gives one."
+    },
+    "building_address": {
+      "name": "Building Address",
+      "description": "Street address of the building as written in the lease, including city, state and ZIP where given."
+    },
+    "premises": {
+      "name": "Premises",
+      "description": "The suite, floor or unit identifier of the leased premises only, e.g. 'Suite 214W' or '14th Floor'. Not the street address."
+    },
+    "rentable_square_footage": {
+      "name": "Rentable Square Footage",
+      "description": "Rentable square footage of the tenant's premises as stated in the lease, as a number."
+    },
+    "pro_rata_share": {
+      "name": "Tenant's Pro Rata Share",
+      "description": "Tenant's proportionate share of the building used for expense pass-throughs, as a percentage number exactly as the lease states it (0.91 for '0.91%'). null if not stated."
+    },
+    "permitted_use": {
+      "name": "Permitted Use",
+      "description": "The use the tenant is permitted to make of the premises, as the lease states it. A short phrase or sentence."
+    },
+    "lease_execution_date": {
+      "name": "Lease Execution Date",
+      "description": "The date the lease was signed or is 'made as of' / 'dated'. Not the commencement date."
+    },
+    "lease_commencement_date": {
+      "name": "Lease Commencement Date",
+      "description": "The date the lease term begins."
+    },
+    "rent_commencement_date": {
+      "name": "Rent Commencement Date",
+      "description": "The date the tenant's rent obligation begins. May differ from the commencement date when there is free rent. If the lease does not distinguish the two, same as the commencement date."
+    },
+    "lease_expiration_date": {
+      "name": "Lease Expiration Date",
+      "description": "The date the lease term ends. May be labelled termination date or expiration date."
+    },
+    "lease_term_months": {
+      "name": "Lease Term (months)",
+      "description": "Length of the initial term in whole months, from commencement to expiration. Compute it if the lease only gives the dates."
+    },
+    "rent_schedule_start_dates": {
+      "name": "Rent Schedule: Start Dates",
+      "description": "List of the start date of each base rent period in the initial term, in order. One list item per period. If the rent never changes, a single item equal to the rent commencement date."
+    },
+    "rent_schedule_end_dates": {
+      "name": "Rent Schedule: End Dates",
+      "description": "List of the end date of each base rent period, aligned item by item with the start dates."
+    },
+    "rent_schedule_monthly_rent": {
+      "name": "Rent Schedule: Monthly Rent",
+      "description": "List of the monthly base rent for each period, aligned item by item with the start dates. Numbers only."
+    },
+    "rent_schedule_annual_rent_per_rsf": {
+      "name": "Rent Schedule: Annual Rent per RSF",
+      "description": "List of the annual base rent per rentable square foot for each period, aligned with the start dates. Use the lease's figure if stated, otherwise compute monthly rent times 12 divided by rentable square footage, rounded to 2 decimals."
+    },
+    "total_base_rent": {
+      "name": "Total Base Rent over Term",
+      "description": "Sum of all base rent due over the initial term, as a number. Compute from the schedule if the lease does not state it."
+    },
+    "base_rent_escalation": {
+      "name": "Base Rent Escalation",
+      "description": "How base rent increases over the term, in a short phrase, e.g. '3% annually' or 'fixed steps per schedule' or 'none'."
+    },
+    "free_rent_months": {
+      "name": "Free Rent (months)",
+      "description": "Total months of base rent abatement granted in the initial term, as a number. 0 if none."
+    },
+    "security_deposit_amount": {
+      "name": "Security Deposit",
+      "description": "Cash security deposit amount as a number. If the lease shows a handwritten or amended figure, use the figure that governs."
+    },
+    "letter_of_credit_required": {
+      "name": "Letter of Credit Required",
+      "description": "true if the lease requires a letter of credit as security, false otherwise."
+    },
+    "expense_structure": {
+      "name": "Operating Expense Structure",
+      "description": "How operating expenses are passed to the tenant: e.g. 'base year 1993', 'expense stop $x per RSF', 'net of all expenses', 'gross'. A short phrase."
+    },
+    "base_year_expenses": {
+      "name": "Base Year (Expenses)",
+      "description": "The base year for operating expense escalations as a four-digit year, if the lease uses a base year. null otherwise."
+    },
+    "base_year_taxes": {
+      "name": "Base Year (Taxes)",
+      "description": "The base year for real estate tax escalations as a four-digit year, if the lease uses one. null otherwise."
+    },
+    "electricity_provision": {
+      "name": "Electricity",
+      "description": "How electricity for the premises is provided and billed: included in rent, separately metered, a fixed charge per RSF, etc. A short phrase."
+    },
+    "parking_spaces": {
+      "name": "Parking Spaces",
+      "description": "Number of parking spaces granted to the tenant, as a number, only if the lease states a count. null otherwise."
+    },
+    "parking_monthly_charge": {
+      "name": "Parking Monthly Charge",
+      "description": "Monthly charge per parking space as a number, only if stated. null otherwise."
+    },
+    "ti_allowance_total": {
+      "name": "Tenant Improvement Allowance",
+      "description": "Total tenant improvement allowance as a number, if the lease or its work letter states one. null otherwise."
+    },
+    "renewal_option_exists": {
+      "name": "Renewal Option",
+      "description": "true if the tenant has an option to renew or extend, false otherwise."
+    },
+    "renewal_options_count": {
+      "name": "Number of Renewal Options",
+      "description": "How many renewal options the tenant holds, as a number. 0 if none."
+    },
+    "renewal_term_months": {
+      "name": "Renewal Term (months)",
+      "description": "List of the length of each renewal option in months. Empty list if none."
+    },
+    "renewal_notice_months": {
+      "name": "Renewal Notice (months)",
+      "description": "List of the advance notice in months the tenant must give to exercise each renewal option, aligned with the terms. Empty list if none."
+    },
+    "early_termination_right": {
+      "name": "Tenant Early Termination Right",
+      "description": "true if the tenant may terminate before expiration under a stated option, false otherwise."
+    },
+    "termination_fee_description": {
+      "name": "Termination Fee",
+      "description": "How any termination fee is calculated, in a short phrase. null if there is no termination right."
+    },
+    "right_to_sublet": {
+      "name": "Right to Sublet or Assign",
+      "description": "Whether and on what condition the tenant may sublet or assign, in a short phrase, e.g. 'with landlord consent, not unreasonably withheld'."
+    },
+    "guarantor_name": {
+      "name": "Guarantor",
+      "description": "Full name of any guarantor of the lease. null if there is no guaranty."
+    },
+    "broker_names": {
+      "name": "Brokers",
+      "description": "List of the real estate brokers or brokerage firms named in the lease. Empty list if none are named."
+    },
+    "late_fee": {
+      "name": "Late Fee",
+      "description": "The late payment charge as the lease states it, in a short phrase, e.g. '5% of the overdue amount' or 'interest at 18% per annum'. null if not stated."
+    },
+    "holdover_rent": {
+      "name": "Holdover Rent",
+      "description": "The rent payable if the tenant holds over after expiration, as the lease states it, e.g. '150% of the last monthly rent'. null if not stated."
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "operating_statement_lines",
+  "description": "Line items from a trailing-twelve-month (T12) operating statement. One row per general ledger line that carries an amount. Section headers and subtotal rows without their own GL code are not rows.",
+  "fields": {
+    "property_name": {
+      "name": "Property",
+      "description": "Property name or identifier from the report header. Same for every row."
+    },
+    "period_start": {
+      "name": "Period Start",
+      "description": "First month of the statement period as the first day of that month, YYYY-MM-DD. Same for every row."
+    },
+    "period_end": {
+      "name": "Period End",
+      "description": "Last month of the statement period as the last day of that month, YYYY-MM-DD. Same for every row."
+    },
+    "gl_code": {
+      "name": "GL Code",
+      "description": "General ledger account code of the line, exactly as shown, e.g. 510-500. One per row.",
+      "primary": true
+    },
+    "line_item": {
+      "name": "Line Item",
+      "description": "Account name of the line exactly as shown, trimmed of leading whitespace."
+    },
+    "section": {
+      "name": "Section",
+      "description": "The nearest section header above the line, e.g. 'REVENUE', 'REIMBURSEMENTS AND CONCESSIONS', 'Payroll'. Exactly as shown."
+    },
+    "category": {
+      "name": "Category",
+      "description": "One of: Revenue, Expense, Other. Revenue for income lines, Expense for operating and non-operating expense lines, Other for anything that is neither (e.g. balance sheet or capital lines)."
+    },
+    "amount_total": {
+      "name": "Total Amount",
+      "description": "The line's value in the Total column for the full period, as a number. Negative numbers stay negative."
+    },
+    "amount_first_month": {
+      "name": "First Month Amount",
+      "description": "The line's value in the first monthly column of the period, as a number."
+    },
+    "amount_last_month": {
+      "name": "Last Month Amount",
+      "description": "The line's value in the last monthly column of the period, as a number."
+    },
+    "months_with_activity": {
+      "name": "Months with Activity",
+      "description": "Count of monthly columns in which the line has a non-zero value, as a number from 0 to 12."
+    }
+  }
+}

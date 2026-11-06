@@ -1,0 +1,87 @@
+{
+  "name": "boxscore",
+  "description": "Weekly box score summary for a multifamily property. One row per unit type from the Availability table, plus a few values that apply to the whole document. Ignore any Totals row.",
+  "fields": {
+    "property_name": {
+      "name": "Property Name",
+      "description": "Property name from the top of the document, below the 'Box Score' heading. Exclude any text in parentheses. Same for every row."
+    },
+    "date": {
+      "name": "Report Date",
+      "description": "The end date of the reporting period shown near the top as a date range. Take the second date of the range, in YYYY-MM-DD. Same for every row."
+    },
+    "code": {
+      "name": "Code",
+      "description": "Unit type code from the 'Code' column of the Availability table, e.g. PR - P1. One per row.",
+      "primary": true
+    },
+    "name": {
+      "name": "Name",
+      "description": "Unit type name from the 'Name' column, exactly as written."
+    },
+    "avg_sq_ft": {
+      "name": "Avg. Sq Ft.",
+      "description": "Average square footage of the unit type, as a number."
+    },
+    "avg_rent": {
+      "name": "Avg. Rent",
+      "description": "Average rent of the unit type as a number with no currency symbol."
+    },
+    "units": {
+      "name": "Units",
+      "description": "Total number of units of this type. Whole number."
+    },
+    "occ_no_notice": {
+      "name": "Occupied No Notice",
+      "description": "Count of occupied units with no notice to vacate, from the 'Occupied No Notice' column."
+    },
+    "vacant_rented": {
+      "name": "Vacant Rented",
+      "description": "Count of vacant units that are already rented."
+    },
+    "vacant_unrented": {
+      "name": "Vacant Unrented",
+      "description": "Count of vacant units that are not rented."
+    },
+    "notice_rented": {
+      "name": "Notice Rented",
+      "description": "Count of units on notice that are already rented."
+    },
+    "notice_unrented": {
+      "name": "Notice Unrented",
+      "description": "Count of units on notice that are not rented."
+    },
+    "avail": {
+      "name": "Avail",
+      "description": "Value of the 'Avail' column. Take it from that column only, not from any similar-looking one."
+    },
+    "model": {
+      "name": "Model",
+      "description": "Number of model units from the 'Model' column. null if the table has no such column."
+    },
+    "down": {
+      "name": "Down",
+      "description": "Number of down units from the 'Down' column."
+    },
+    "admin": {
+      "name": "Admin",
+      "description": "Number of admin units from the 'Admin' column."
+    },
+    "percent_occupied": {
+      "name": "% Occ",
+      "description": "Value of the '% Occ' column exactly as printed, e.g. 89.47."
+    },
+    "p_occ_wornonrev": {
+      "name": "% Occ w/NonRev",
+      "description": "Value of the '% Occ w/NonRev' column exactly as printed. Do not confuse with '% Occ'."
+    },
+    "percent_leased": {
+      "name": "% Leased",
+      "description": "Value of the '% Leased' column exactly as printed."
+    },
+    "p_trend": {
+      "name": "% Trend",
+      "description": "Value of the '% Trend' column exactly as printed."
+    }
+  }
+}

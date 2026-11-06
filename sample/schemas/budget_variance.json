@@ -1,0 +1,63 @@
+{
+  "name": "budget_variance",
+  "description": "Line items from a budget analysis report comparing a prior-year budget, a prior-year reforecast and the new budget. One row per detail line with a GL code. Section headers and total rows are not rows.",
+  "fields": {
+    "property_name": {
+      "name": "Property",
+      "description": "Property name from the report header. Same for every row."
+    },
+    "property_rsf": {
+      "name": "Property RSF",
+      "description": "Property rentable square footage from the header, as a number. Same for every row."
+    },
+    "budget_year": {
+      "name": "Budget Year",
+      "description": "The year of the new budget being analysed, as a four-digit number. Same for every row."
+    },
+    "gl_code": {
+      "name": "GL Code",
+      "description": "General ledger account code of the line, exactly as shown, e.g. 6101-0000. One per row.",
+      "primary": true
+    },
+    "line_item": {
+      "name": "Line Item",
+      "description": "Account name of the line exactly as shown."
+    },
+    "section": {
+      "name": "Section",
+      "description": "The nearest bold section header above the line, e.g. 'Rent Revenue', 'Cleaning Expenses'. Exactly as shown."
+    },
+    "prior_year_budget": {
+      "name": "Prior Year Budget",
+      "description": "The line's value in the prior-year budget column, as a number."
+    },
+    "prior_year_reforecast": {
+      "name": "Prior Year Reforecast",
+      "description": "The line's value in the prior-year reforecast column, as a number."
+    },
+    "budget": {
+      "name": "Budget",
+      "description": "The line's value in the new budget column, as a number."
+    },
+    "reforecast_vs_prior_budget_variance": {
+      "name": "Reforecast vs Prior Budget (amount)",
+      "description": "Dollar variance of the prior-year reforecast against the prior-year budget, as a number with its sign as printed."
+    },
+    "reforecast_vs_prior_budget_pct": {
+      "name": "Reforecast vs Prior Budget (%)",
+      "description": "Percentage variance of the prior-year reforecast against the prior-year budget, as a number exactly as printed, e.g. -46.78. null when the report prints N/A."
+    },
+    "budget_vs_reforecast_variance": {
+      "name": "Budget vs Reforecast (amount)",
+      "description": "Dollar variance of the new budget against the prior-year reforecast, as a number with its sign as printed."
+    },
+    "budget_vs_reforecast_pct": {
+      "name": "Budget vs Reforecast (%)",
+      "description": "Percentage variance of the new budget against the prior-year reforecast, as a number exactly as printed. null when the report prints N/A."
+    },
+    "explanation_of_variance": {
+      "name": "Explanation of Variance",
+      "description": "The management commentary printed in the Explanation of Variance column for this line, verbatim. null if the column is empty for the line."
+    }
+  }
+}

@@ -1,0 +1,17 @@
+# Secrets: never commit the key
+.env
+
+# Provided data: the brief forbids committing sample documents or answers
+sample/sample-data-documents/
+sample/sample-data-output-validated/
+
+# Local environments, caches, build output
+venv/
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Caches hold text extracted from the sample documents: never commit
+.cache/

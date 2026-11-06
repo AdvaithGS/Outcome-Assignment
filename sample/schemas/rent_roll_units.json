@@ -1,0 +1,75 @@
+{
+  "name": "rent_roll_units",
+  "description": "One row per unit from a residential rent roll detail report. The report lists each unit as a block: a unit line followed by its scheduled charge lines (rent, fees, utilities). Fold each block into one row.",
+  "fields": {
+    "property_name": {
+      "name": "Property",
+      "description": "Property name from the report header. Same for every row."
+    },
+    "report_period": {
+      "name": "Report Period",
+      "description": "The month and year the rent roll is for, as YYYY-MM. Same for every row."
+    },
+    "unit_number": {
+      "name": "Unit",
+      "description": "The unit identifier exactly as shown in the unit column, e.g. 100-101. One per row.",
+      "primary": true
+    },
+    "unit_type_code": {
+      "name": "Unit Type",
+      "description": "Floor plan or unit type code for the unit, e.g. C5."
+    },
+    "unit_square_feet": {
+      "name": "Square Feet",
+      "description": "Square footage of the unit, as a number."
+    },
+    "unit_status": {
+      "name": "Unit Status",
+      "description": "Status of the unit exactly as shown, e.g. 'Occupied No Notice', 'Vacant Unrented', 'Notice Rented'."
+    },
+    "resident_name": {
+      "name": "Resident",
+      "description": "Resident name as shown. null for vacant units."
+    },
+    "market_rent": {
+      "name": "Market Rent",
+      "description": "Market rent for the unit, as a number."
+    },
+    "monthly_rent": {
+      "name": "Scheduled Rent",
+      "description": "The scheduled monthly charge on the unit's 'Rent' charge line, as a number. 0 if the unit has no rent charge line."
+    },
+    "monthly_other_charges": {
+      "name": "Other Scheduled Charges",
+      "description": "Sum of all scheduled charge lines for the unit other than Rent (fees, utilities, storage, pet), as a number. 0 if none."
+    },
+    "monthly_total_charges": {
+      "name": "Total Scheduled Charges",
+      "description": "The unit's charge total as shown on its 'Charge Total' line, as a number. Should equal rent plus other charges."
+    },
+    "deposit_held": {
+      "name": "Deposit Held",
+      "description": "Security deposit held for the unit, as a number. 0 if none."
+    },
+    "balance": {
+      "name": "Balance",
+      "description": "Outstanding resident balance for the unit, as a number. Negative numbers stay negative."
+    },
+    "move_in_date": {
+      "name": "Move-In Date",
+      "description": "Move-in date, YYYY-MM-DD. null if blank."
+    },
+    "lease_start_date": {
+      "name": "Lease Start",
+      "description": "Lease start date, YYYY-MM-DD. null if blank."
+    },
+    "lease_end_date": {
+      "name": "Lease End",
+      "description": "Lease end date, YYYY-MM-DD. null if blank."
+    },
+    "expected_move_out_date": {
+      "name": "Expected Move-Out",
+      "description": "Expected move-out date, YYYY-MM-DD. null if blank."
+    }
+  }
+}

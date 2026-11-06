@@ -1,0 +1,9 @@
+document_id,file,schema_name,kind,notes
+boxscore_001,boxscore_001.csv,boxscore,csv,Weekly box score; one table of unit types plus header values
+budget_001,budget_001.pdf,budget_variance,pdf,8-page budget analysis report with variance commentary; detail rows only
+lease_001,lease_001.pdf,lease_abstraction,pdf,1993 office lease; rent schedule in a later article
+lease_002,lease_002.docx,lease_abstraction,docx,Office lease; long digital text
+lease_003,lease_003.pdf,lease_abstraction,pdf,Office lease
+om_001,om_001.pdf,offering_memorandum,pdf,22-page multifamily offering memorandum; values spread across sections
+t12_001,t12_001.xlsx,operating_statement_lines,xlsx,12-month operating statement; GL code and name columns; monthly columns plus Total
+rentroll_001,rentroll_001.xlsx,rent_roll_units,xlsx,Rent roll detail; one block per unit with charge lines; second sheet is report parameters
