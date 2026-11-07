@@ -16,3 +16,8 @@ __pycache__/
 # Caches and dumps hold text extracted from the sample documents: never commit
 .cache/
 experiments/*/dumps/
+
+# per-mode duplicates of outputs/ (regenerated for $0 in replay mode)
+experiments/e2a/M/
+experiments/e2a/C/
+experiments/e2a/H/
