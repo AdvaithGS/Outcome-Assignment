@@ -1,0 +1,148 @@
+{
+ "boxscore_001": {
+  "valid": true,
+  "errors": [],
+  "score": 1.0,
+  "per_field": {
+   "property_name": 1.0,
+   "date": 1.0,
+   "code": 1.0,
+   "name": 1.0,
+   "avg_sq_ft": 1.0,
+   "avg_rent": 1.0,
+   "units": 1.0,
+   "occ_no_notice": 1.0,
+   "vacant_rented": 1.0,
+   "vacant_unrented": 1.0,
+   "notice_rented": 1.0,
+   "notice_unrented": 1.0,
+   "avail": 1.0,
+   "model": 1.0,
+   "down": 1.0,
+   "admin": 1.0,
+   "percent_occupied": 1.0,
+   "p_occ_wornonrev": 1.0,
+   "percent_leased": 1.0,
+   "p_trend": 1.0
+  },
+  "hallucinations": [],
+  "misses": [],
+  "extra_rows": [],
+  "missing_rows": [],
+  "rows": {
+   "predicted": 10,
+   "truth": 10
+  }
+ },
+ "budget_001": {
+  "valid": true,
+  "errors": [],
+  "score": 0.9662,
+  "per_field": {
+   "property_name": 1.0,
+   "property_rsf": 1.0,
+   "budget_year": 1.0,
+   "gl_code": 1.0,
+   "line_item": 1.0,
+   "section": 1.0,
+   "prior_year_budget": 1.0,
+   "prior_year_reforecast": 1.0,
+   "budget": 1.0,
+   "reforecast_vs_prior_budget_variance": 1.0,
+   "reforecast_vs_prior_budget_pct": 1.0,
+   "budget_vs_reforecast_variance": 1.0,
+   "budget_vs_reforecast_pct": 1.0,
+   "explanation_of_variance": 0.527
+  },
+  "hallucinations": [],
+  "misses": [],
+  "extra_rows": [],
+  "missing_rows": [],
+  "rows": {
+   "predicted": 55,
+   "truth": 55
+  }
+ },
+ "t12_001": {
+  "valid": true,
+  "errors": [],
+  "score": 0.806,
+  "per_field": {
+   "property_name": 0.807,
+   "period_start": 0.807,
+   "period_end": 0.807,
+   "gl_code": 0.807,
+   "line_item": 0.807,
+   "section": 0.807,
+   "category": 0.798,
+   "amount_total": 0.807,
+   "amount_first_month": 0.807,
+   "amount_last_month": 0.807,
+   "months_with_activity": 0.807
+  },
+  "hallucinations": [],
+  "misses": [],
+  "extra_rows": [],
+  "missing_rows": [
+   "529-999",
+   "534-999",
+   "539-999",
+   "549-999",
+   "559-999",
+   "599-999",
+   "619-999",
+   "629-999",
+   "639-999",
+   "649-999",
+   "659-999",
+   "669-999",
+   "799-999",
+   "829-999",
+   "830-999",
+   "835-999",
+   "837-999",
+   "849-999",
+   "859-999",
+   "869-999",
+   "871-999",
+   "999-900",
+   "199-999"
+  ],
+  "rows": {
+   "predicted": 96,
+   "truth": 119
+  }
+ },
+ "rentroll_001": {
+  "valid": true,
+  "errors": [],
+  "score": 1.0,
+  "per_field": {
+   "property_name": 1.0,
+   "report_period": 1.0,
+   "unit_number": 1.0,
+   "unit_type_code": 1.0,
+   "unit_square_feet": 1.0,
+   "unit_status": 1.0,
+   "resident_name": 1.0,
+   "market_rent": 1.0,
+   "monthly_rent": 1.0,
+   "monthly_other_charges": 1.0,
+   "monthly_total_charges": 1.0,
+   "deposit_held": 1.0,
+   "balance": 1.0,
+   "move_in_date": 1.0,
+   "lease_start_date": 1.0,
+   "lease_end_date": 1.0,
+   "expected_move_out_date": 1.0
+  },
+  "hallucinations": [],
+  "misses": [],
+  "extra_rows": [],
+  "missing_rows": [],
+  "rows": {
+   "predicted": 325,
+   "truth": 325
+  }
+ }
+}

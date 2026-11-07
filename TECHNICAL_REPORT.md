@@ -266,7 +266,8 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | E2 hints (3 runs) + judges | 17 | 0.0434 | 0.43% |
 | E2 extractor model choice (glm, haiku) + judge | 13 | 0.0236 | 0.24% |
 | E5 generalisation variants | 9 | 0.0125 | 0.13% |
-| **Total to date** | **213** | **0.3680** | **3.68%** |
+| Improvement round 1: table checks, plan-model comparison, cross-field checks | 26 | 0.0253 | 0.25% |
+| **Total to date** | **239** | **0.3933** | **3.93%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_

@@ -276,15 +276,15 @@
   "t12_001": {
    "valid": true,
    "errors": [],
-   "score": 0.9977,
+   "score": 0.9969,
    "per_field": {
     "property_name": 1.0,
     "period_start": 1.0,
     "period_end": 1.0,
     "gl_code": 1.0,
     "line_item": 1.0,
-    "section": 0.983,
-    "category": 0.992,
+    "section": 1.0,
+    "category": 0.966,
     "amount_total": 1.0,
     "amount_first_month": 1.0,
     "amount_last_month": 1.0,
@@ -302,7 +302,7 @@
   "rentroll_001": {
    "valid": true,
    "errors": [],
-   "score": 0.9976,
+   "score": 1.0,
    "per_field": {
     "property_name": 1.0,
     "report_period": 1.0,
@@ -312,7 +312,7 @@
     "unit_status": 1.0,
     "resident_name": 1.0,
     "market_rent": 1.0,
-    "monthly_rent": 0.96,
+    "monthly_rent": 1.0,
     "monthly_other_charges": 1.0,
     "monthly_total_charges": 1.0,
     "deposit_held": 1.0,

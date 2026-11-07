@@ -165,7 +165,10 @@
    "free_rent_months": {
     "value": 0,
     "citation": "",
-    "confidence": 0.65
+    "confidence": 0.65,
+    "page_numbers": [
+     2
+    ]
    },
    "security_deposit_amount": {
     "value": 2150,
@@ -235,7 +238,10 @@
    "renewal_options_count": {
     "value": 0,
     "citation": "",
-    "confidence": 0.65
+    "confidence": 0.65,
+    "page_numbers": [
+     2
+    ]
    },
    "renewal_term_months": {
     "value": [],
@@ -306,7 +312,7 @@
   "tokens_in": 0,
   "tokens_out": 0,
   "cost_usd": 0.0,
-  "latency_ms": 5199,
+  "latency_ms": 6730,
   "cache_hits": 27,
   "cost_usd_uncached": 0.021769,
   "models": {

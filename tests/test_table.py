@@ -46,7 +46,7 @@ RENT_PLAN = {
                      "rent": {"mode": "sum", "column": "D", "where": {"column": "C", "equals": "Rent"}},
                      "other": {"mode": "sum", "column": "D", "where": {"column": "C", "not_matches": "^(Rent|Charge Total.*)$"}},
                      "total": {"mode": "value", "column": "D", "where": {"column": "C", "matches": "Charge Total"}}},
-    "constants": {"prop": {"value": "Sunny Court", "cell": "A1"}},
+    "constants": {"prop": {"value": "Sunny Court", "cell": "A1"}}, "checks": [],
 }
 
 
@@ -96,7 +96,7 @@ def test_sections_row_aggregates_require_values_and_regex_columns():
             "columns": {"gl": {"column": "A", "regex": r"^(\d{3}-\d{3})"}, "name": {"column": "A", "regex": r"^\S+\s+(.*)$"},
                         "total": "E"},
             "row_aggregates": {"active": {"op": "count_nonzero", "columns": ["B", "D"]}},
-            "header_fields": {"section": {"column": "A", "header_row": {"nonempty": ["A"], "empty": ["B"]}}}}
+            "header_fields": {"section": {"column": "A", "header_row": {"nonempty": ["A"], "empty": ["B"]}}}, "checks": []}
     rows, spec, _ = run(plan, grid, schema)
     got = [(r["gl"]["value"], r["name"]["value"], r["section"]["value"], r["active"]["value"], r["total"]["value"]) for r in rows]
     assert got == [("510-500", "Gross Rent", "REVENUE", 2, 220), ("510-520", "Pet Rent", "REVENUE", 2, 10),
@@ -135,3 +135,26 @@ def test_freetext_split_over_lines_must_be_joined():
 def test_cell_reference_helpers():
     assert col_letter(1) == "A" and col_letter(28) == "AB" and col_index("AB") == 28
     assert split_ref("Willow Creek!F12") == ("Willow Creek", 12, 6) and split_ref("B3") == (None, 3, 2)
+
+
+def test_ambiguous_value_mode_is_flagged():
+    spec = heuristic_spec(RENT_SCHEMA)
+    grid = dict(RENT_GRID)
+    grid[5] = {"C": "Rent", "D": 40}                      # a second, different Rent line in the first record
+    plan = {**RENT_PLAN, "block_fields": {**RENT_PLAN["block_fields"],
+                                          "rent": {"mode": "value", "column": "D", "where": {"column": "C", "equals": "Rent"}}}}
+    diag: dict = {}
+    rows = T.finalise(T.execute(plan, sheet(grid), spec, diag), plan, spec)
+    assert any("several matching lines" in e for e in T.check(rows, spec, plan, diag))
+
+
+def test_cross_field_check_catches_a_misread_total():
+    spec = heuristic_spec(RENT_SCHEMA)
+    wrong_total = {**RENT_PLAN, "columns": {"unit": "A", "total": "D"},       # start-row amount, not the total line
+                   "block_fields": {k: v for k, v in RENT_PLAN["block_fields"].items() if k != "total"},
+                   "checks": [{"expr": "add(rent, other)", "equals": "total"}]}
+    rows = T.finalise(T.execute(wrong_total, sheet(RENT_GRID), spec), wrong_total, spec)
+    assert any("check add(rent, other) == total" in e for e in T.check(rows, spec, wrong_total))
+    good = {**RENT_PLAN, "checks": [{"expr": "add(rent, other)", "equals": "total"}]}
+    rows = T.finalise(T.execute(good, sheet(RENT_GRID), spec), good, spec)
+    assert not any(e.startswith("check") for e in T.check(rows, spec, good))

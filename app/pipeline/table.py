@@ -16,7 +16,7 @@ import logging
 import re
 from dataclasses import dataclass, field
 
-from app.ingest.grid import Grid, Sheet, col_index, col_letter, fmt, preview
+from app.ingest.grid import Grid, Sheet, col_index, col_letter, fmt, preview, split_ref
 from app.llm import LLMClient, UsageTracker
 from app.pipeline import formula as F
 from app.pipeline.normalise import normalise
@@ -49,7 +49,8 @@ just the rows you can see. Return ONE JSON object with these keys (omit keys you
           "where" is optional; rows whose where-column is empty never meet a where condition.
   "row_aggregates": {"<field>": {"op": "sum|count_nonzero", "columns": ["C", "N"]}}   - over the start row, columns C..N
   "header_fields": {"<field>": {"column": "B", "header_row": {"nonempty": ["B"], "empty": ["C"]}}}
-        - the nearest row ABOVE the record that satisfies header_row (e.g. a section title row without amounts)
+        - the nearest row ABOVE the record that satisfies header_row (e.g. a section title row without amounts).
+          Section title rows often have an EMPTY code/key column, so do not require the key column in header_row.
   "constants": {"<field>": {"value": <value>, "cell": "A2", "confidence": 0.0-1.0}}   - one value for the whole
         document (e.g. property name, report date), with the cell it comes from; give the value already in the
         field's format (dates as YYYY-MM-DD, numbers as numbers)
@@ -59,6 +60,10 @@ just the rows you can see. Return ONE JSON object with these keys (omit keys you
   "null_values": ["-- Vacant --", "N/A"]   - cell texts that mean "no value"
   "blank_defaults": {"<field>": 0}   - value to use when the cell is empty, only where the field list says so
   "missing": ["<field>"]   - fields that are not in the document at all
+  "checks": [{"expr": "add(monthly_rent, monthly_other_charges)", "equals": "monthly_total_charges"}]
+        - REQUIRED key: one entry for every relation between fields that a field description states (e.g. "should
+          equal A plus B"), as an expression over field keys (functions: add, sub, mul, div, sum, round) that must
+          equal another field; an empty list if no description states one. Code verifies each check on every row.
 Every field must appear exactly once in columns, block_fields, row_aggregates, header_fields, constants, classify
 or missing. Use column letters exactly as shown in the preview."""
 
@@ -157,6 +162,9 @@ def validate_plan(plan: dict, grid: Grid, spec: SchemaSpec) -> list[str]:
                 col_index(cond["column"])
             except (re.error, ValueError, KeyError) as exc:
                 errs.append(f"{key}: {exc}")
+    if not isinstance(plan.get("checks"), list):
+        errs.append("'checks' is required: list every relation between fields that a field description states "
+                    "(e.g. 'should equal rent plus other charges'), or [] if none")
     covered = set()
     for section in ("columns", "block_fields", "row_aggregates", "header_fields", "constants", "classify"):
         covered |= set((plan.get(section) or {}).keys())
@@ -244,6 +252,19 @@ def execute(plan: dict, grid: Grid, spec: SchemaSpec, diag: dict | None = None) 
         return out
 
     if diag is not None and blocks:
+        # a "value" block field whose where-condition matches several lines with different values is ambiguous
+        amb = {}
+        for k, b in (plan.get("block_fields") or {}).items():
+            if b.get("mode") != "value" or not b.get("where"):
+                continue
+            c = col_index(b["column"])
+            n = 0
+            for block in blocks:
+                vals = {fmt(sheet.get(x, c)) for x in block if _cell_ok(sheet, x, b["where"]) and sheet.get(x, c) is not None}
+                n += len(vals) > 1
+            if n:
+                amb[k] = n / len(blocks)
+        diag["ambiguous_value_fields"] = amb
         cont: dict[int, int] = {}
         for block in blocks:
             used = {c for x in block[1:] for c in sheet.row(x)}
@@ -312,9 +333,18 @@ def execute(plan: dict, grid: Grid, spec: SchemaSpec, diag: dict | None = None) 
             row[k] = cell(above[-1], col_index(h["column"])) if above else {"value": None, "citation": "", "source_locations": []}
         for k, cst in (plan.get("constants") or {}).items():
             ref = cst.get("cell") or ""
-            row[k] = {"value": cst.get("value"), "citation": f"[{sheet.name}!{ref}] {fmt(cst.get('value'))}" if ref else "",
-                      "source_locations": [f"{sheet.name}!{ref}"] if ref else [],
-                      "confidence": cst.get("confidence")}
+            fr = {"value": cst.get("value"), "citation": "", "source_locations": [], "confidence": cst.get("confidence")}
+            if ref:
+                try:
+                    _, cr, cc = split_ref(ref)
+                except ValueError:
+                    cr = None
+                if sheet.row_pages and cr is not None:      # grid rebuilt from a PDF: cite the page
+                    p = sheet.row_pages.get(cr, 1)
+                    fr.update(citation=f"[Page {p}] {fmt(cst.get('value'))}", page_numbers=[p])
+                else:
+                    fr.update(citation=f"[{sheet.name}!{ref}] {fmt(cst.get('value'))}", source_locations=[f"{sheet.name}!{ref}"])
+            row[k] = fr
         for k in plan.get("missing") or []:
             row[k] = {"value": None, "citation": "", "source_locations": []}
         out.append(row)
@@ -357,7 +387,31 @@ def finalise(rows: list[dict], plan: dict, spec: SchemaSpec) -> list[dict]:
 
 def check(rows: list[dict], spec: SchemaSpec, plan: dict, diag: dict | None = None) -> list[str]:
     errs = []
+    for chk in plan.get("checks") or []:
+        expr, target = chk.get("expr"), chk.get("equals")
+        if not isinstance(expr, str) or target not in spec.fields:
+            continue
+        evaluated = failed = 0
+        for r in rows:
+            vals = {k: fr.get("value") for k, fr in r.items()}
+            try:
+                got = F.evaluate(expr, vals)
+            except F.FormulaError:
+                continue
+            want = vals.get(target)
+            if not isinstance(want, (int, float)) or not isinstance(got, (int, float)):
+                continue
+            evaluated += 1
+            failed += abs(got - want) > max(0.01, abs(want) * 0.005)
+        if evaluated and failed / evaluated > 0.05:
+            errs.append(f"check {expr} == {target} fails in {failed} of {evaluated} rows: one of these fields is "
+                        f"probably read from the wrong place (e.g. a start-row column instead of a total line)")
     cont = (diag or {}).get("continued_columns", {})
+    for k, share in (diag or {}).get("ambiguous_value_fields", {}).items():
+        if share >= 0.01:
+            errs.append(f"block_fields.{k}: mode 'value' found several matching lines with different values in "
+                        f"{share:.0%} of records and would keep only the first; use 'sum' if they add up, or a narrower "
+                        f"'where' if only one is meant")
     for k, src in (plan.get("columns") or {}).items():
         letter = src.get("column") if isinstance(src, dict) else src
         f = spec.fields.get(k)

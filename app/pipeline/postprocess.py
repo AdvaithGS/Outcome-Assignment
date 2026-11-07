@@ -41,6 +41,19 @@ def _helper_value(v):
     return d if d else v
 
 
+def _page_of_value(value, doc: Document) -> list[int]:
+    """Locate the value itself (any common formatting) to find its page, when the citation does not give one."""
+    from app.eval.coverage import _find, classify, normalise_with_map
+    if not doc._page_offsets or value is None or isinstance(value, (bool, list)):
+        return []
+    norm, idx = normalise_with_map(doc.markdown)
+    status, offs = _find(value, classify(value), norm)
+    if status != "found" or not offs:
+        return []
+    pages = sorted({doc.page_at(idx[o]) for o in offs if doc.page_at(idx[o])})
+    return pages if len(pages) <= 2 else []                 # a value found on many pages says nothing
+
+
 def _ground(citation: str, doc: Document, doc_norm: str) -> tuple[bool, list[int]]:
     """Is the cited snippet really in the document, and on which pages?"""
     pages: list[int] = []
@@ -118,6 +131,8 @@ def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "
             out[key] = {"value": value, "citation": "", "confidence": 0.7 if absent_default else 0.6}
             continue
         grounded, pages = _ground(cites[key], doc, doc_norm)
+        if not pages:
+            pages = _page_of_value(value, doc)
         conf = (0.9 if grounded else 0.65) + conf_bonus
         fr = {"value": value, "citation": cites[key], "confidence": round(min(1.0, max(0.05, conf)), 2)}
         if pages:

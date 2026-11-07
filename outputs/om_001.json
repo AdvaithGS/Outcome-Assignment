@@ -234,7 +234,7 @@
   "tokens_in": 0,
   "tokens_out": 0,
   "cost_usd": 0.0,
-  "latency_ms": 19118,
+  "latency_ms": 23730,
   "cache_hits": 3,
   "cost_usd_uncached": 0.003407,
   "models": {
