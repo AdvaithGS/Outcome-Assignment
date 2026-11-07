@@ -77,10 +77,10 @@ def estimate(rows: list[dict], cfg: V1Config) -> tuple[float, list[str]]:
     return total, lines
 
 
-async def run(rows: list[dict], modes: list[str]) -> dict:
+async def run(rows: list[dict], modes: list[str], tag: str = "") -> dict:
     pipe = PipelineV1()
-    out_dir = ROOT / "outputs"
-    out_dir.mkdir(exist_ok=True)
+    out_dir = ROOT / "outputs" if not tag else ROOT / "experiments" / "e2" / tag
+    out_dir.mkdir(parents=True, exist_ok=True)
     specs_dir = ROOT / "experiments" / "schema_specs"
     specs_dir.mkdir(parents=True, exist_ok=True)
     sem = asyncio.Semaphore(3)
@@ -109,6 +109,7 @@ async def run(rows: list[dict], modes: list[str]) -> dict:
             d.mkdir(parents=True, exist_ok=True)
             (d / f"{r['document_id']}.json").write_text(json.dumps(res, indent=1))
             if mode == pipe.cfg.computed_mode:
+                out_dir.mkdir(parents=True, exist_ok=True)
                 (out_dir / f"{r['document_id']}.json").write_text(json.dumps(res, indent=1))
 
     try:
@@ -139,6 +140,7 @@ def main() -> int:
     ap.add_argument("--docs", nargs="*")
     ap.add_argument("--modes", nargs="*", default=["H", "M", "C"])
     ap.add_argument("--cap", type=float, default=0.08)
+    ap.add_argument("--tag", default="", help="write to experiments/e2/<tag>/ instead of outputs/ (experiments)")
     args = ap.parse_args()
     rows = [r for r in manifest() if not args.docs or r["document_id"] in args.docs]
     cfg = V1Config.from_env()
@@ -154,8 +156,21 @@ def main() -> int:
 
     os.environ.setdefault("LLM_RUN_ID", "samples-" + time.strftime("%Y%m%dT%H%M%S"))
     os.environ.setdefault("LLM_RUN_BUDGET_USD", str(args.cap))
-    report = asyncio.run(run(rows, args.modes))
+    report = asyncio.run(run(rows, args.modes, args.tag))
 
+    if args.tag:
+        sc = score_dir(ROOT / "experiments" / "e2" / args.tag, rows)
+        (ROOT / "experiments" / "e2" / args.tag / "scores.json").write_text(json.dumps(sc, indent=1, default=str))
+        for did, x in sc.items():
+            m = report.get(did, {}).get("meta", {})
+            print(f"{did:14s} {args.tag:10s} score={x['score']:.3f} halluc={len(x['hallucinations'])} "
+                  f"calls={m.get('model_calls', 0)} $={m.get('cost_usd', 0):.4f} uncached=${m.get('cost_usd_uncached', 0):.4f}")
+        for did, rep in report.items():
+            for n in rep.get("notes", []):
+                if n.startswith("ERROR"):
+                    print(f"{did:14s} {n}")
+        print(f"MEAN {args.tag}: {sum(x['score'] for x in sc.values()) / max(1, len(sc)):.3f}")
+        return 0
     print(f"\n{'doc':14s} {'mode':4s} {'valid':5s} {'score':>6s} {'rows':>9s} {'halluc':>6s} {'miss':>4s}   calls  $real    $uncached  s")
     scores = {m: score_dir(ROOT / "experiments" / "e2a" / m, rows) for m in args.modes}
     for r in rows:

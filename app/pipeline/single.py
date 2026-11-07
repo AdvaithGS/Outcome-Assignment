@@ -40,7 +40,21 @@ def _absent_text(a) -> str:
     return {None: "null"}.get(a, json.dumps(a)) if not isinstance(a, list) else "[]"
 
 
-def build_messages(spec: SchemaSpec, doc_text: str) -> list[dict]:
+FREETEXT_RULES = {
+    # default: phrase fields follow their description
+    "describe": "",
+    # E2 variant: copy the document's own words
+    "verbatim": ("\nFor fields of type freetext (a phrase or sentence about a term), copy the SHORTEST passage of the "
+                 "document that fully states the term, word for word; you may leave out words before or after the term, "
+                 "but do not paraphrase, summarise or add anything.\n"),
+    # E2 variant: short answer in the format of the description's example, keeping every fact
+    "concise": ("\nFor fields of type freetext, answer in the length and format of the description's example (e.g. "
+                "'base year 1993', '5% of the overdue amount'), using the document's own wording, and keep every number, "
+                "percentage, party and condition the document states for that term.\n"),
+}
+
+
+def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "describe") -> list[dict]:
     lines = []
     for f in spec.fields.values():
         t = f.type + (f" of {f.item_type}" if f.type == "list" and f.item_type else "")
@@ -53,16 +67,17 @@ def build_messages(spec: SchemaSpec, doc_text: str) -> list[dict]:
                         + "\n".join(f'- "{k}": {v}' for k, v in helpers.items()))
     user = (f"Document type: {spec.description or spec.name}\n\nFields:\n" + "\n".join(lines) + helper_block
             + f"\n\nDocument text:\n<<<\n{doc_text}\n>>>")
-    return [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}]
+    return [{"role": "system", "content": SYSTEM + FREETEXT_RULES.get(freetext_mode, "")},
+            {"role": "user", "content": user}]
 
 
 async def extract(spec: SchemaSpec, doc: Document, client: LLMClient, *, model: str, extra: dict,
                   fallback_model: str | None, fallback_extra: dict | None, usage: UsageTracker | None,
                   job_id: str | None = None, doc_id: str | None = None,
-                  deadline: float | None = None) -> tuple[dict | None, list[str]]:
+                  deadline: float | None = None, freetext_mode: str = "describe") -> tuple[dict | None, list[str]]:
     """-> (raw JSON object or None, notes)."""
     notes: list[str] = []
-    msgs = build_messages(spec, doc.markdown)
+    msgs = build_messages(spec, doc.markdown, freetext_mode)
     attempts = [(model, extra, msgs)]
     for i, (m, ex, ms) in enumerate(attempts):
         try:

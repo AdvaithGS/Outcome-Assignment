@@ -261,7 +261,9 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | Pipeline v1, run 2 (re-extraction after fixes) | 6 | 0.0135 | 0.13% |
 | Pipeline v1, table documents (stage 0 + plans + repairs + classify) | 11 | 0.0074 | 0.07% |
 | Table plans re-run after a prompt change (reproducibility) | 3 | 0.0029 | 0.03% |
-| **Total to date** | **158** | **0.2586** | **2.59%** |
+| Docker end-to-end check (box score in the container) | 2 | 0.0013 | 0.01% |
+| E2 free-text variants (verbatim, concise) + judge | 12 | 0.0291 | 0.29% |
+| **Total to date** | **172** | **0.2890** | **2.89%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_
