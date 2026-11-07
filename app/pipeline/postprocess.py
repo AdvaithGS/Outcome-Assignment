@@ -77,7 +77,86 @@ def _ground(citation: str, doc: Document, doc_norm: str) -> tuple[bool, list[int
     return grounded, [p for p in pages if p in valid_pages]
 
 
-def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "H") -> dict[str, dict]:
+_NUM_IN_TEXT = re.compile(r"\(?-?\$?\s?\d[\d,]*(?:\.\d+)?\s?%?\)?")
+_CELL_TAG = re.compile(r"^\s*\[([^\]!]+)!\$?([A-Za-z]{1,3})\$?(\d+)\]")
+
+
+def _clean_span(text: str) -> str:
+    text = re.sub(r"\[handwritten:\s*([^\]]*)\]", r"\1", text)
+    text = re.sub(r"~~[^~]*~~", "", text)
+    return " ".join(text.replace("**", "").replace("|", " ").split()).strip(" ;,")
+
+
+def locate_quote(quote: str, doc: Document, norm: str, idx: list[int]) -> tuple[int, int, bool] | None:
+    """-> (raw start, raw end, exact) of a quote in the document, tolerant of spacing/markup; None if not found."""
+    q = norm_text(quote or "")
+    if len(q) < 3:
+        return None
+    i = norm.find(q)
+    if i >= 0:
+        return idx[i], idx[i + len(q) - 1] + 1, True
+    for probe in (q[:60], q[-60:], q[:30], q[-30:]):
+        if len(probe) >= 12:
+            j = norm.find(probe)
+            if j >= 0:
+                return idx[j], min(len(doc.markdown), idx[j] + len(quote) + 20), False
+    return None
+
+
+def _pointer(f: FieldSpec, style: str, value, fr: dict, doc: Document, norm: str, idx: list[int]):
+    """Resolve a field's pointer: -> (value, citation, pages, confidence or None, source_locations)."""
+    quote = str(fr.get("quote") or "") if isinstance(fr, dict) else ""
+    cite = str(fr.get("citation") or "") if isinstance(fr, dict) else ""
+    grid = doc.meta.get("grid")
+    m = _CELL_TAG.match(cite)
+    if grid is not None and m and style in ("pointer", "quote"):            # spreadsheet: read the exact cell
+        try:
+            sheet = grid.sheet(m.group(1))
+            from app.ingest.grid import col_index, fmt
+            cell = sheet.get(int(m.group(3)), col_index(m.group(2)))
+            if cell is not None:
+                v = normalise(cell, f.type, f.item_type) if style == "pointer" else fmt(cell, 10_000)
+                if v is not None:
+                    ref = f"{sheet.name}!{m.group(2).upper()}{m.group(3)}"
+                    return v, f"[{ref}] {fmt(cell)}", [], 0.95, [ref]
+        except (KeyError, ValueError):
+            pass
+    span = locate_quote(quote, doc, norm, idx) if quote else None
+    pages = []
+    if span and doc._page_offsets:
+        a, b = doc.page_at(span[0]), doc.page_at(max(span[0], span[1] - 1))
+        pages = sorted({p for p in (a, b) if p})
+    conf = None
+    if style == "quote":
+        text = _clean_span(doc.markdown[span[0]:span[1]]) if span and span[2] else _clean_span(quote)
+        if text:
+            value = text
+        conf = 0.9 if span and span[2] else (0.75 if span else 0.6)
+    elif style == "pointer" and value is not None and quote:
+        if f.type in ("number", "integer", "percent", "year"):
+            cands = [x for x in (to_number(t) for t in _NUM_IN_TEXT.findall(quote)) if x is not None]
+            agree = any(_same(value, c) for c in cands)
+            conf = 0.95 if agree and span else (0.8 if agree else 0.6)
+        elif f.type == "date":
+            qd = to_date(quote)
+            conf = 0.95 if qd == value and span else (0.6 if qd and qd != value else (0.85 if span else 0.65))
+        else:
+            inside = norm_text(str(value)) in norm_text(quote) or norm_text(str(value)) in norm
+            conf = 0.9 if inside and span else (0.75 if inside or span else 0.6)
+    elif style == "pointer" and value is None and quote and f.type in ("number", "integer", "percent", "year"):
+        cands = [x for x in (to_number(t) for t in _NUM_IN_TEXT.findall(quote)) if x is not None]
+        if len(cands) == 1:
+            value, conf = normalise(cands[0], f.type), 0.7
+    if span and quote and value is not None:
+        tag = f"[Page {pages[0]}] " if pages else (_TAG.match(cite).group(0) if _TAG.match(cite) else "")
+        cite = f"{tag}{_clean_span(quote)[:200]}"
+    return value, cite, pages, conf, []
+
+
+def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "H", style: str = "value") -> dict[str, dict]:
+    from app.pipeline.single import field_style
+    if style == "pointer":
+        doc_norm_map = __import__("app.eval.coverage", fromlist=["normalise_with_map"]).normalise_with_map(doc.markdown)
     raw = raw or {}
     helpers_raw = raw.get("_helpers") if isinstance(raw.get("_helpers"), dict) else {}
     doc_norm = norm_text(doc.markdown)
@@ -130,12 +209,24 @@ def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "
         if value is None or absent_default:
             out[key] = {"value": value, "citation": "", "confidence": 0.7 if absent_default else 0.6}
             continue
+        p_conf, locs = None, []
+        if style == "pointer":
+            fst = field_style(f)
+            value, cites[key], p_pages, p_conf, locs = _pointer(f, fst, value, raw.get(key) if isinstance(raw.get(key), dict) else {},
+                                                               doc, doc_norm_map[0], doc_norm_map[1])
+            if value is None:
+                out[key] = {"value": None, "citation": "", "confidence": 0.6}
+                continue
         grounded, pages = _ground(cites[key], doc, doc_norm)
+        if style == "pointer" and p_pages:
+            pages = p_pages
         if not pages:
             pages = _page_of_value(value, doc)
-        conf = (0.9 if grounded else 0.65) + conf_bonus
+        conf = (p_conf if p_conf is not None else (0.9 if grounded else 0.65)) + conf_bonus
         fr = {"value": value, "citation": cites[key], "confidence": round(min(1.0, max(0.05, conf)), 2)}
         if pages:
             fr["page_numbers"] = pages
+        if locs:
+            fr["source_locations"] = locs
         out[key] = fr
     return out

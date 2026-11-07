@@ -155,3 +155,56 @@ def test_absent_defaults_grounding_and_pages():
     assert out["free"] == {"value": 0, "citation": "", "confidence": 0.7}   # "0 if none"
     bad = postprocess(_spec(), {**RAW, "deposit": {"value": 2150, "citation": "[Page 2] invented text"}}, _doc(), "H")
     assert bad["deposit"]["value"] == 2150 and bad["deposit"]["confidence"] < 0.9   # ungrounded: lower confidence only
+
+
+# ------------------------------------------------------------------ pointer mode
+
+def test_field_style_comes_from_type_and_description_only():
+    from app.pipeline.single import field_style
+    s = heuristic_spec({"fields": {
+        "fee": {"name": "Late Fee", "description": "The late charge as the lease states it, in a short phrase."},
+        "exp": {"name": "Expenses", "description": "How expenses pass through, a short phrase, e.g. 'base year 1993'."},
+        "amt": {"name": "Deposit", "description": "Security deposit as a number"},
+        "loc": {"name": "LOC", "description": "true if a letter of credit is required, false otherwise."}}}).fields
+    for k in ("fee", "exp"):
+        s[k].type = "freetext"
+    assert [field_style(s[k]) for k in ("fee", "exp", "amt", "loc")] == ["quote", "summary", "pointer", "value"]
+
+
+def test_pointer_mode_quotes_numbers_and_fallback():
+    spec = heuristic_spec({"fields": {
+        "fee": {"name": "Late Fee", "description": "The late charge as the lease states it."},
+        "deposit": {"name": "Deposit", "description": "Security deposit as a number"},
+        "start": {"name": "Start", "description": "Commencement date, YYYY-MM-DD"}}})
+    spec.fields["fee"].type = "freetext"
+    b = MarkdownBuilder()
+    b.page(1)
+    b.text("Tenant shall pay a late charge of the greater of $75.00 or 6% of the unpaid rent.")
+    b.page(2)
+    b.text("SECURITY DEPOSIT: ~~2,400~~ [handwritten: 2150]. Term commencing May 1, 1993.")
+    doc = b.build(source="x.pdf", kind="pdf", variant="t", pages=[PageInfo(1, "text", 1), PageInfo(2, "text", 1)])
+    raw = {"fee": {"value": "greater of $75 or 6%", "quote": "the greater of $75.00 or 6% of the unpaid rent",
+                   "citation": "[Page 1] late charge"},
+           "deposit": {"value": 2150, "quote": "SECURITY DEPOSIT: ~~2,400~~ [handwritten: 2150]", "citation": ""},
+           "start": {"value": "1993-05-01", "quote": "commencing May 1, 1993 (paraphrased, not in the text)", "citation": ""}}
+    out = postprocess(spec, raw, doc, "H", "pointer")
+    assert out["fee"]["value"] == "the greater of $75.00 or 6% of the unpaid rent"     # the exact span is the answer
+    assert out["fee"]["citation"].startswith("[Page 1] the greater of") and out["fee"]["page_numbers"] == [1]
+    assert out["deposit"]["value"] == 2150 and out["deposit"]["page_numbers"] == [2]
+    assert out["deposit"]["confidence"] >= 0.9                                          # value found in its quote
+    assert out["start"]["value"] == "1993-05-01"                                        # quote not found: model value kept
+    assert out["start"]["confidence"] < 0.9
+
+
+def test_pointer_mode_reads_spreadsheet_cells():
+    from app.ingest.grid import Grid, Sheet, _index_rows, grid_document
+    s = Sheet("Summary")
+    s.cells = {(1, 1): "Property", (1, 2): "Willow Creek", (2, 1): "Units", (2, 2): 325.0}
+    doc = grid_document(Grid(source="x.xlsx", kind="xlsx", sheets=[_index_rows(s)]))
+    spec = heuristic_spec({"fields": {"name": {"name": "Property", "description": "Property name"},
+                                      "units": {"name": "Units", "description": "Number of units, as a number"}}})
+    raw = {"name": {"value": "Willow Creek Apts", "quote": "Willow Creek", "citation": "[Summary!B1] Willow Creek"},
+           "units": {"value": 324, "quote": "325", "citation": "[Summary!B2] 325"}}
+    out = postprocess(spec, raw, doc, "H", "pointer")
+    assert out["name"]["value"] == "Willow Creek" and out["name"]["source_locations"] == ["Summary!B1"]
+    assert out["units"]["value"] == 325 and out["units"]["citation"] == "[Summary!B2] 325"

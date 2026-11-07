@@ -1,0 +1,119 @@
+[
+ {
+  "variant": "lease_002 terse+renamed",
+  "score": 0.65,
+  "rows": {
+   "predicted": 1,
+   "truth": 1
+  },
+  "hallucinations": 0,
+  "misses": 7,
+  "per_field_below_1": {
+   "landlord_legal_name": 0.0,
+   "property_name": 0.0,
+   "permitted_use": 0.0,
+   "rent_commencement_date": 0.0,
+   "rent_schedule_annual_rent_per_rsf": 0.0,
+   "total_base_rent": 0.0,
+   "letter_of_credit_required": 0.0,
+   "electricity_provision": 0.0,
+   "renewal_option_exists": 0.0,
+   "renewal_options_count": 0.0,
+   "early_termination_right": 0.0,
+   "right_to_sublet": 0.0,
+   "late_fee": 0.0,
+   "holdover_rent": 0.0
+  },
+  "notes": [],
+  "cost_usd": 0.0
+ },
+ {
+  "variant": "lease_001 terse+renamed",
+  "score": 0.6,
+  "rows": {
+   "predicted": 1,
+   "truth": 1
+  },
+  "hallucinations": 0,
+  "misses": 7,
+  "per_field_below_1": {
+   "premises": 0.0,
+   "permitted_use": 0.0,
+   "lease_execution_date": 0.0,
+   "rent_commencement_date": 0.0,
+   "rent_schedule_annual_rent_per_rsf": 0.0,
+   "base_rent_escalation": 0.0,
+   "free_rent_months": 0.0,
+   "letter_of_credit_required": 0.0,
+   "expense_structure": 0.0,
+   "electricity_provision": 0.0,
+   "renewal_option_exists": 0.0,
+   "renewal_options_count": 0.0,
+   "early_termination_right": 0.0,
+   "right_to_sublet": 0.0,
+   "late_fee": 0.0,
+   "holdover_rent": 0.0
+  },
+  "notes": [],
+  "cost_usd": 0.0
+ },
+ {
+  "variant": "boxscore contract schema",
+  "score": 1.0,
+  "rows": {
+   "predicted": 10,
+   "truth": 10
+  },
+  "hallucinations": 0,
+  "misses": 0,
+  "per_field_below_1": {},
+  "notes": [
+   "plan ok after 2 call(s)"
+  ],
+  "cost_usd": 0.0
+ },
+ {
+  "variant": "rentroll as CSV",
+  "score": 0.9455,
+  "rows": {
+   "predicted": 325,
+   "truth": 325
+  },
+  "hallucinations": 0,
+  "misses": 0,
+  "per_field_below_1": {
+   "monthly_total_charges": 0.074
+  },
+  "notes": [
+   "no plan passed all checks after 3 calls; used the best one (check add(monthly_rent, monthly_other_charges) == monthly_total_charges fails in 306 of 330 rows: one of these fields is probably read from the wrong place (e.g. a start-row column instead of a total line))"
+  ],
+  "cost_usd": 0.000362
+ },
+ {
+  "variant": "t12 terse+renamed",
+  "score": 0.5422,
+  "rows": {
+   "predicted": 140,
+   "truth": 119
+  },
+  "hallucinations": 0,
+  "misses": 353,
+  "per_field_below_1": {
+   "property_name": 0.0,
+   "period_start": 0.85,
+   "period_end": 0.85,
+   "gl_code": 0.85,
+   "line_item": 0.85,
+   "section": 0.014,
+   "category": 0.0,
+   "amount_total": 0.85,
+   "amount_first_month": 0.85,
+   "amount_last_month": 0.85,
+   "months_with_activity": 0.0
+  },
+  "notes": [
+   "plan ok after 1 call(s)"
+  ],
+  "cost_usd": 0.001249
+ }
+]

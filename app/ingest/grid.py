@@ -196,7 +196,9 @@ def grid_document(grid: Grid):
         b.heading(f"Sheet {s.name}", force=True)
         b.text("\n".join(f"[{s.name}!row {r}] " + " | ".join(f"{col_letter(c)}{r}={fmt(v)}" for c, v in sorted(s.row(r).items()))
                           for r in s.nonempty_rows()))
-    return b.build(source=grid.source, kind=grid.kind, variant="grid-text")
+    doc = b.build(source=grid.source, kind=grid.kind, variant="grid-text")
+    doc.meta["grid"] = grid          # lets pointer mode read exact cells
+    return doc
 
 
 _NUMERIC = re.compile(r"^\(?-?\$?[\d,]+(\.\d+)?%?\)?$")

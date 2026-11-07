@@ -70,11 +70,42 @@ General rules for these documents:
 """
 
 
-def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "describe", hints: bool = False) -> list[dict]:
+_QUOTE_CUES = ("as the lease states it", "as the document states it", "as written", "verbatim", "exactly as",
+               "as stated in", "as the lease states", "as the document states", "word for word")
+
+
+def field_style(f) -> str:
+    """How a field is extracted in pointer mode, decided from its type and description only (no field names):
+    quote   - free text the description wants as written: the answer IS an exact span of the document
+    summary - other free text: a short phrase (concise rule)
+    pointer - a value printed in the document (number, date, percentage, name, code): value + exact supporting quote
+    value   - judged or derived (booleans, lists, computed): value as answered, quote used for grounding only"""
+    d = (f.original + " " + f.description).lower()
+    if f.computed or f.type in ("bool", "list"):
+        return "value"
+    if f.type == "freetext":
+        return "quote" if any(c in d for c in _QUOTE_CUES) else "summary"
+    return "pointer"
+
+
+POINTER_RULES = """
+For EVERY field also return "quote": the exact characters copied from the document text (same spelling, punctuation and
+spacing), the shortest passage that contains or states the value; "" when the value is null.
+- Fields marked QUOTE: "value" must be exactly that quote, the shortest passage that states the term, word for word.
+- Fields marked SUMMARY: "value" is a short phrase in the format of the description's example, keeping every number,
+  percentage and condition the document states for that term; "quote" is the passage it summarises.
+- For spreadsheet documents, put the cell address in the citation, e.g. "[Sheet1!B4] 4250".
+"""
+
+
+def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "describe", hints: bool = False,
+                   style: str = "value") -> list[dict]:
     lines = []
     for f in spec.fields.values():
         t = f.type + (f" of {f.item_type}" if f.type == "list" and f.item_type else "")
         flags = f"{t}; if absent: {_absent_text(f.absent)}" + ("; COMPUTED" if f.computed else "")
+        if style == "pointer" and field_style(f) in ("quote", "summary"):
+            flags += "; " + field_style(f).upper()
         lines.append(f'- "{f.key}" ({f.name}) [{flags}]: {f.description}')
     helpers = spec.helpers()
     helper_block = ""
@@ -83,7 +114,8 @@ def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "descri
                         + "\n".join(f'- "{k}": {v}' for k, v in helpers.items()))
     user = (f"Document type: {spec.description or spec.name}\n\nFields:\n" + "\n".join(lines) + helper_block
             + f"\n\nDocument text:\n<<<\n{doc_text}\n>>>")
-    return [{"role": "system", "content": SYSTEM + FREETEXT_RULES.get(freetext_mode, "") + (HINTS if hints else "")},
+    rules = POINTER_RULES if style == "pointer" else FREETEXT_RULES.get(freetext_mode, "")
+    return [{"role": "system", "content": SYSTEM + rules + (HINTS if hints else "")},
             {"role": "user", "content": user}]
 
 
@@ -91,10 +123,10 @@ async def extract(spec: SchemaSpec, doc: Document, client: LLMClient, *, model: 
                   fallback_model: str | None, fallback_extra: dict | None, usage: UsageTracker | None,
                   job_id: str | None = None, doc_id: str | None = None,
                   deadline: float | None = None, freetext_mode: str = "describe",
-                  hints: bool = False) -> tuple[dict | None, list[str]]:
+                  hints: bool = False, style: str = "value") -> tuple[dict | None, list[str]]:
     """-> (raw JSON object or None, notes)."""
     notes: list[str] = []
-    msgs = build_messages(spec, doc.markdown, freetext_mode, hints)
+    msgs = build_messages(spec, doc.markdown, freetext_mode, hints, style)
     attempts = [(model, extra, msgs)]
     for i, (m, ex, ms) in enumerate(attempts):
         try:

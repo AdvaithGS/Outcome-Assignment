@@ -82,6 +82,7 @@ class TableResult:
     errors: list[str] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
     method: str = "plan"
+    partial: bool = False
 
 
 # ------------------------------------------------------------------------------- prompts
@@ -526,17 +527,22 @@ async def rows_fallback(grid: Grid, spec: SchemaSpec, client: LLMClient, *, mode
     return out
 
 
+FALLBACK_MAX_ROWS = 400      # above this the LLM-writes-rows fallback is too slow/expensive; use the best plan instead
+
+
 async def extract_table(spec: SchemaSpec, grid: Grid, client: LLMClient, *, model: str, extra: dict,
                         usage: UsageTracker | None, job_id: str | None = None,
-                        deadline: float | None = None) -> TableResult:
+                        deadline: float | None = None, max_plans: int = 3) -> TableResult:
     msgs = plan_messages(spec, grid)
     errors: list[str] = []
     plan = None
-    for attempt in range(2):
+    best = None                                   # (n_errors, rows, plan, errors) of the best failing plan
+    for attempt in range(max_plans):
         r = await client.chat(model=model, messages=msgs, stage="table_plan", job_id=job_id, usage=usage,
                               temperature=0, max_tokens=6000, timeout_s=120, deadline=deadline,
                               response_format={"type": "json_object"}, **extra)
         plan = parse_json(r.content)
+        rows: list[dict] = []
         if plan is None:
             errors = ["the plan was not a JSON object"]
         else:
@@ -557,13 +563,24 @@ async def extract_table(spec: SchemaSpec, grid: Grid, client: LLMClient, *, mode
                                        job_id=job_id, deadline=deadline)
                     notes = [f"plan ok after {attempt + 1} call(s)"] + ([f"{dropped} duplicate rows merged"] if dropped else [])
                     return TableResult(rows=_cite_cells(rows), plan=plan, notes=notes)
+                if rows and (best is None or len(errors) < best[0]):
+                    best = (len(errors), rows, plan, errors)
         log.info("plan rejected", extra={"job_id": job_id, "attempt": attempt + 1, "errors": errors[:5]})
-        if attempt == 0:
+        if attempt + 1 < max_plans:
             msgs = msgs + [{"role": "assistant", "content": (r.content or "")[:8000]},
                            {"role": "user", "content": "Executing that plan on the full grid found these problems:\n- "
                                                        + "\n- ".join(errors[:10]) + "\nReturn a corrected plan (the "
                                                        "complete JSON object)."}]
+    size = max(len(s.nonempty_rows()) for s in grid.sheets)
+    if size > FALLBACK_MAX_ROWS and best is not None:
+        _, rows, plan, errors = best
+        rows, _ = dedupe(rows, spec)
+        if plan.get("classify"):
+            await classify(rows, plan, spec, client, model=model, extra=extra, usage=usage, job_id=job_id, deadline=deadline)
+        return TableResult(rows=_cite_cells(rows), plan=plan, errors=errors, method="best_plan", partial=True,
+                           notes=[f"no plan passed all checks after {max_plans} calls; used the best one "
+                                  f"({'; '.join(errors[:2])})"])
     rows = await rows_fallback(grid, spec, client, model=model, extra=extra, usage=usage, job_id=job_id, deadline=deadline)
     rows = finalise(rows, {}, spec)
-    return TableResult(rows=_cite_cells(rows), plan=plan, errors=errors, method="rows_fallback",
-                       notes=[f"plan failed twice ({'; '.join(errors[:3])}); LLM wrote the rows"])
+    return TableResult(rows=_cite_cells(rows), plan=plan, errors=errors, method="rows_fallback", partial=True,
+                       notes=[f"plans failed ({'; '.join(errors[:3])}); LLM wrote the rows"])
