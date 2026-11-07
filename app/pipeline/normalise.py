@@ -134,5 +134,9 @@ def normalise(value, ftype: str, item_type: str | None = None):
         return to_month(value)
     if ftype == "bool":
         return to_bool(value)
+    if isinstance(value, float) and value.is_integer():
+        value = int(value)                           # 1205.0 in a text field reads "1205"
+    if isinstance(value, date):
+        return value.isoformat()
     s = str(value).strip()
     return s or None

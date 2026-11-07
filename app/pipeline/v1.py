@@ -5,6 +5,7 @@ Every model choice is configuration (env or V1Config), so experiments swap model
 """
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 from dataclasses import dataclass, field
@@ -18,6 +19,8 @@ from app.pipeline.ingest import ingest
 from app.pipeline.postprocess import postprocess
 from app.pipeline.schema_analysis import SchemaSpec, analyse
 from app.pipeline.single import extract
+from app.pipeline.table import extract_table
+from app.ingest.grid import grid_document, grid_from_pdf, load_grid
 
 LUNA_OFF = ("openai/gpt-6-luna", {"reasoning": {"enabled": False}})
 
@@ -41,6 +44,8 @@ class V1Config:
     docx_image_ocr: str = "rapidocr"
     pdf_text_engine: str = "pdfplumber"
     computed_mode: str = "H"              # M | C | H
+    table_model: str = LUNA_OFF[0]
+    table_extra: dict = field(default_factory=lambda: dict(LUNA_OFF[1]))
 
     @classmethod
     def from_env(cls, env=None) -> "V1Config":
@@ -55,6 +60,8 @@ class V1Config:
         c.vision_extra = _extra(e.get("VISION_EXTRA"), c.vision_extra)
         c.scanned_mode = e.get("SCANNED_MODE", c.scanned_mode)
         c.computed_mode = e.get("COMPUTED_MODE", c.computed_mode)
+        c.table_model = e.get("TABLE_MODEL", c.table_model)
+        c.table_extra = _extra(e.get("TABLE_EXTRA"), c.table_extra)
         return c
 
 
@@ -64,6 +71,7 @@ class Extraction:
     doc: Document | None
     raw: dict | None
     notes: list[str]
+    table_rows: list[dict] | None = None
 
 
 class PipelineV1:
@@ -86,8 +94,16 @@ class PipelineV1:
         deadline = ctx.deadline - 20
         spec = await analyse(schema, self.client, model=self.cfg.analysis_model, extra=self.cfg.analysis_extra,
                              usage=ctx.usage, job_id=ctx.job_id, deadline=deadline)
-        if spec.table or ctx.file_type not in ("pdf", "docx"):
-            return Extraction(spec, None, None, ["table extraction not implemented yet (layer 1 step 2)"])
+        if spec.table:
+            return await self._extract_table(path, spec, ctx, deadline)
+        if ctx.file_type not in ("pdf", "docx"):
+            # a single-entry field list on a spreadsheet: read the grid as text and use the prose extractor
+            grid = await asyncio.to_thread(load_grid, path, ctx.file_type)
+            doc = grid_document(grid)
+            raw, notes = await extract(spec, doc, self.client, model=self.cfg.extract_model, extra=self.cfg.extract_extra,
+                                       fallback_model=self.cfg.fallback_model, fallback_extra=self.cfg.fallback_extra,
+                                       usage=ctx.usage, job_id=ctx.job_id, doc_id=ctx.file_name, deadline=deadline)
+            return Extraction(spec, doc, raw, notes)
         ctx.set_stage("PARSING")
         doc = await ingest(path, ctx.file_type, client=self.client, cfg=self.cfg, cache=self.cache, usage=ctx.usage,
                            job_id=ctx.job_id, doc_id=ctx.file_name, deadline=deadline)
@@ -97,7 +113,22 @@ class PipelineV1:
                                    usage=ctx.usage, job_id=ctx.job_id, doc_id=ctx.file_name, deadline=deadline)
         return Extraction(spec, doc, raw, notes)
 
+    async def _extract_table(self, path: Path, spec: SchemaSpec, ctx: JobContext, deadline: float) -> Extraction:
+        ctx.set_stage("PARSING")
+        if ctx.file_type in ("xlsx", "csv"):
+            grid = await asyncio.to_thread(load_grid, path, ctx.file_type)
+        else:
+            grid = await asyncio.to_thread(grid_from_pdf, path)
+            if grid is None:
+                return Extraction(spec, None, None, ["no table grid could be rebuilt from this document"])
+        ctx.set_stage("EXTRACTING")
+        res = await extract_table(spec, grid, self.client, model=self.cfg.table_model, extra=self.cfg.table_extra,
+                                  usage=ctx.usage, job_id=ctx.job_id, deadline=deadline)
+        return Extraction(spec, None, None, res.notes, table_rows=res.rows)
+
     def rows(self, ex: Extraction, mode: str | None = None) -> PipelineOutput:
+        if ex.table_rows is not None:
+            return PipelineOutput(rows=ex.table_rows or [{}], notes=ex.notes)
         if ex.doc is None:
             return PipelineOutput(rows=[{}], notes=ex.notes)
         row = postprocess(ex.spec, ex.raw, ex.doc, mode or self.cfg.computed_mode)

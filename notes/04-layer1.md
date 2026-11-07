@@ -163,3 +163,44 @@ the formula). **Decision: keep H**, which also uses the printed figure when ther
 interpretation errors seen in E1b (premises with floor text, property name, rent commencement date, submarket).
 lease_002's "hallucination" is a validator artefact: the answer "none" normalises to null, so our
 "none; fixed monthly Base Rent…" counts as invented. Lesson for descriptions: when the answer is "none", output exactly "none".
+
+## 11. Step 2: table documents (the user's plan design)
+
+**Built:** `app/ingest/grid.py` (XLSX/CSV grids with cell addresses, merged cells filled; fixed-size preview;
+PDF table grid from word positions: lines → fragments → column gutters, page headers/footers that recur on 3+ pages
+removed, each row keeps its page), `app/pipeline/table.py` (plan prompt, validation, executor, checks, one repair,
+distinct-value classification, LLM-writes-rows fallback), wired into pipeline v1 for any schema with a primary field.
+
+**Plan format:** the user's spec plus `record_start` / `require_values` / `skip_if` / `record_end` (records by rule,
+multi-row records), block modes `first` / `join` / `sum` / `value` / `count` with `where` conditions, `header_fields`
+(nearest section row above), `row_aggregates`, partial-cell columns (`{"column": "A", "regex": "^(\\d{4}-\\d{4})"}`),
+and `classify` (labels per distinct input combination, one small call).
+
+**What the data required (found by inspection, all generic):**
+- The rent roll lists 5 units twice (main list + "Future Resident Details"): duplicates of the primary key are merged
+  (first kept); only a high duplicate share is treated as a bad plan.
+- In some rent-roll blocks market rent and deposit sit on a later line: block mode `first`.
+- The T12's TOTAL rows with their own GL code are rows; section headers are rows with a label and no amounts.
+- The budget PDF prints GL code and name in one cell: partial-cell columns. Wrapped explanations: block `join`.
+  Repeated page headers looked like section headers on pages 2–8: removed as boilerplate.
+
+**Executor check with hand-written plans ($0):** boxscore 1.000, rentroll 1.000, t12 0.909 (category left to the
+LLM), budget 0.999 after the boilerplate fix.
+
+**With LLM-written plans (gpt-6-luna, reasoning off):**
+
+| Doc | Score | Plan calls | $ |
+|---|---|---|---|
+| boxscore_001 | 1.000 | 1 | 0.0012 |
+| rentroll_001 | 1.000 (325/325 rows, 5 duplicates merged) | 1 | 0.0015 |
+| t12_001 | 0.998 | 2 (repair) + classify | 0.0030 |
+| budget_001 | 0.999 | 2 (repair) | 0.0017 |
+
+Two generic checks drove the repairs: a per-row field whose description mentions a column cannot be "missing"
+(the T12 plan had dropped the first/last month columns), and a free-text field mapped to a column that continues
+onto following lines must be joined (the budget plan read only the first line of each explanation).
+
+**All 8 samples, official validator (`tools/validate.py outputs/ …`), replay run ($0): mean 0.922**
+(boxscore 1.000, budget 0.999, rentroll 1.000, t12 0.998, om 0.931, lease_003 0.850, lease_001 0.800, lease_002 0.800).
+Table-step spend: $0.0074. Remaining gap: the single-entry documents (free text under the strict matcher,
+interpretation conventions).

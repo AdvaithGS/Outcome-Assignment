@@ -259,7 +259,8 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | E1b round 2a (gemini-flash on failures) | 4 | 0.0618 | 0.62% |
 | Pipeline v1, run 1 (4 single-entry docs, incl. 46 vision pages) | 67 | 0.0487 | 0.49% |
 | Pipeline v1, run 2 (re-extraction after fixes) | 6 | 0.0135 | 0.13% |
-| **Total to date** | **144** | **0.2484** | **2.48%** |
+| Pipeline v1, table documents (stage 0 + plans + repairs + classify) | 11 | 0.0074 | 0.07% |
+| **Total to date** | **155** | **0.2557** | **2.56%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_

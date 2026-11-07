@@ -1,0 +1,157 @@
+{
+ "name": "operating_statement_lines",
+ "description": "Line items from a trailing-twelve-month (T12) operating statement. One row per general ledger line that carries an amount. Section headers and subtotal rows without their own GL code are not rows.",
+ "table": true,
+ "fields": {
+  "property_name": {
+   "key": "property_name",
+   "name": "Property",
+   "original": "Property name or identifier from the report header. Same for every row.",
+   "description": "Return the property name or identifier from the report header. Use the same value for every row.",
+   "type": "text",
+   "item_type": null,
+   "absent": null,
+   "scope": "document",
+   "group": "property",
+   "primary": false,
+   "computed": null
+  },
+  "period_start": {
+   "key": "period_start",
+   "name": "Period Start",
+   "original": "First month of the statement period as the first day of that month, YYYY-MM-DD. Same for every row.",
+   "description": "Return the first month of the statement period as the first day of that month, formatted YYYY-MM-DD. Use the same value for every row.",
+   "type": "date",
+   "item_type": null,
+   "absent": null,
+   "scope": "document",
+   "group": "dates",
+   "primary": false,
+   "computed": null
+  },
+  "period_end": {
+   "key": "period_end",
+   "name": "Period End",
+   "original": "Last month of the statement period as the last day of that month, YYYY-MM-DD. Same for every row.",
+   "description": "Return the last month of the statement period as the last day of that month, formatted YYYY-MM-DD. Use the same value for every row.",
+   "type": "date",
+   "item_type": null,
+   "absent": null,
+   "scope": "document",
+   "group": "dates",
+   "primary": false,
+   "computed": null
+  },
+  "gl_code": {
+   "key": "gl_code",
+   "name": "GL Code",
+   "original": "General ledger account code of the line, exactly as shown, e.g. 510-500. One per row.",
+   "description": "Return the general ledger account code of the line exactly as shown, e.g. 510-500. Return one code per row; do not alter, normalize, or omit characters.",
+   "type": "text",
+   "item_type": null,
+   "absent": null,
+   "scope": "row",
+   "group": "account",
+   "primary": true,
+   "computed": null
+  },
+  "line_item": {
+   "key": "line_item",
+   "name": "Line Item",
+   "original": "Account name of the line exactly as shown, trimmed of leading whitespace.",
+   "description": "Return the account name of the line exactly as shown, trimmed of leading whitespace. Do not rewrite or normalize the name.",
+   "type": "text",
+   "item_type": null,
+   "absent": null,
+   "scope": "row",
+   "group": "account",
+   "primary": false,
+   "computed": null
+  },
+  "section": {
+   "key": "section",
+   "name": "Section",
+   "original": "The nearest section header above the line, e.g. 'REVENUE', 'REIMBURSEMENTS AND CONCESSIONS', 'Payroll'. Exactly as shown.",
+   "description": "Return the nearest section header above the line exactly as shown, e.g. 'REVENUE', 'REIMBURSEMENTS AND CONCESSIONS', 'Payroll'.",
+   "type": "text",
+   "item_type": null,
+   "absent": null,
+   "scope": "row",
+   "group": "classification",
+   "primary": false,
+   "computed": null
+  },
+  "category": {
+   "key": "category",
+   "name": "Category",
+   "original": "One of: Revenue, Expense, Other. Revenue for income lines, Expense for operating and non-operating expense lines, Other for anything that is neither (e.g. balance sheet or capital lines).",
+   "description": "Return exactly one of: Revenue, Expense, Other. Use Revenue for income lines, Expense for operating and non-operating expense lines, and Other for anything that is neither (e.g. balance sheet or capital lines).",
+   "type": "text",
+   "item_type": null,
+   "absent": null,
+   "scope": "row",
+   "group": "classification",
+   "primary": false,
+   "computed": null
+  },
+  "amount_total": {
+   "key": "amount_total",
+   "name": "Total Amount",
+   "original": "The line's value in the Total column for the full period, as a number. Negative numbers stay negative.",
+   "description": "Return the line's value in the Total column for the full period as a number. Preserve the sign: negative numbers stay negative. Include the amount for this GL line only; do not substitute a subtotal or section total.",
+   "type": "number",
+   "item_type": null,
+   "absent": null,
+   "scope": "row",
+   "group": "financials",
+   "primary": false,
+   "computed": null
+  },
+  "amount_first_month": {
+   "key": "amount_first_month",
+   "name": "First Month Amount",
+   "original": "The line's value in the first monthly column of the period, as a number.",
+   "description": "Return the line's value in the first monthly column of the period as a number. Include the amount for this GL line only; do not substitute a subtotal or section total.",
+   "type": "number",
+   "item_type": null,
+   "absent": null,
+   "scope": "row",
+   "group": "financials",
+   "primary": false,
+   "computed": null
+  },
+  "amount_last_month": {
+   "key": "amount_last_month",
+   "name": "Last Month Amount",
+   "original": "The line's value in the last monthly column of the period, as a number.",
+   "description": "Return the line's value in the last monthly column of the period as a number. Include the amount for this GL line only; do not substitute a subtotal or section total.",
+   "type": "number",
+   "item_type": null,
+   "absent": null,
+   "scope": "row",
+   "group": "financials",
+   "primary": false,
+   "computed": null
+  },
+  "months_with_activity": {
+   "key": "months_with_activity",
+   "name": "Months with Activity",
+   "original": "Count of monthly columns in which the line has a non-zero value, as a number from 0 to 12.",
+   "description": "Return the count of monthly columns in which the line has a non-zero value, as a number from 0 to 12 inclusive.",
+   "type": "integer",
+   "item_type": null,
+   "absent": null,
+   "scope": "row",
+   "group": "financials",
+   "primary": false,
+   "computed": {
+    "formula": "count_nonzero(monthly_amounts)",
+    "operands": {
+     "monthly_amounts": "The values in all 12 monthly columns for this line, in period order; extract each as a number."
+    },
+    "prefer_stated": false
+   }
+  }
+ },
+ "source": "llm"
+}

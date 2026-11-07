@@ -63,8 +63,16 @@ def estimate(rows: list[dict], cfg: V1Config) -> tuple[float, list[str]]:
             prompt = sum(len(m["content"]) for m in build_messages(spec, "")) // 4 + doc_tokens
             cost += estimate_cost(cfg.extract_model, prompt, 60 * len(spec.fields)) or 0
             lines.append(f"  {r['document_id']:14s} scanned pages={scanned:3d} prompt≈{prompt:6d} tok  ${cost:.4f}")
+        elif r["kind"] in ("xlsx", "csv", "pdf"):
+            from app.ingest.grid import grid_from_pdf, load_grid
+            from app.pipeline.table import plan_messages
+            grid = grid_from_pdf(path) if r["kind"] == "pdf" else load_grid(path, r["kind"])
+            prompt = sum(len(m["content"]) for m in plan_messages(spec, grid)) // 4
+            cost += (estimate_cost(cfg.table_model, prompt, 2500) or 0) * 2      # plan + possible repair
+            cost += estimate_cost(cfg.table_model, 3000, 1500) or 0               # classify, if used
+            lines.append(f"  {r['document_id']:14s} table plan prompt≈{prompt:6d} tok             ${cost:.4f}")
         else:
-            lines.append(f"  {r['document_id']:14s} (table: stage 0 only for now)               ${cost:.4f}")
+            lines.append(f"  {r['document_id']:14s} (PDF table: grid not built yet)              ${cost:.4f}")
         total += cost
     return total, lines
 
