@@ -221,3 +221,21 @@ def test_page_selection_for_vision():
     assert page_needs_vision(table, 0.92, 0.01)[1].startswith("table-like")
     form = "\n".join(["SECURITY DEPOSIT: $2,400", "TERM OF LEASE: Five years"] + ["general text line"] * 8)
     assert page_needs_vision(form, 0.92, 0.01)[1].startswith("form-like")
+
+
+
+def test_terse_field_detection():
+    from app.pipeline.schema_analysis import terse_fields
+    schema = {"fields": {"a": {"name": "Category", "description": "Category"},
+                         "b": {"name": "Months", "description": ""},
+                         "c": {"name": "Units", "description": "Total unit count"},
+                         "d": {"name": "Rent", "description": "Monthly base rent for the unit as a number"}}}
+    assert terse_fields(schema) == ["a", "b", "c"]
+    import json as _j
+    for name in ("lease_abstraction", "rent_roll_units", "operating_statement_lines", "boxscore", "budget_variance",
+                 "offering_memorandum"):
+        try:
+            sch = _j.load(open(f"sample/schemas/{name}.json"))
+        except FileNotFoundError:
+            continue
+        assert len(terse_fields(sch)) <= 2, name            # real field lists are (almost) never terse

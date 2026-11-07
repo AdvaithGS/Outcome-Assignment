@@ -1,0 +1,67 @@
+[
+ {
+  "variant": "lease_002 terse+renamed",
+  "score": 0.8,
+  "rows": {
+   "predicted": 1,
+   "truth": 1
+  },
+  "hallucinations": 0,
+  "misses": 2,
+  "per_field_below_1": {
+   "property_name": 0.0,
+   "building_address": 0.0,
+   "rent_schedule_annual_rent_per_rsf": 0.0,
+   "total_base_rent": 0.0,
+   "renewal_options_count": 0.0,
+   "right_to_sublet": 0.0,
+   "late_fee": 0.0,
+   "holdover_rent": 0.0
+  },
+  "notes": [],
+  "cost_usd": 0.006349
+ },
+ {
+  "variant": "lease_001 terse+renamed",
+  "score": 0.75,
+  "rows": {
+   "predicted": 1,
+   "truth": 1
+  },
+  "hallucinations": 0,
+  "misses": 2,
+  "per_field_below_1": {
+   "premises": 0.0,
+   "rent_schedule_annual_rent_per_rsf": 0.0,
+   "base_rent_escalation": 0.0,
+   "free_rent_months": 0.0,
+   "expense_structure": 0.0,
+   "electricity_provision": 0.0,
+   "renewal_options_count": 0.0,
+   "right_to_sublet": 0.0,
+   "late_fee": 0.0,
+   "holdover_rent": 0.0
+  },
+  "notes": [],
+  "cost_usd": 0.004238
+ },
+ {
+  "variant": "t12 terse+renamed",
+  "score": 0.7815,
+  "rows": {
+   "predicted": 119,
+   "truth": 119
+  },
+  "hallucinations": 0,
+  "misses": 124,
+  "per_field_below_1": {
+   "property_name": 0.0,
+   "section": 0.0,
+   "category": 0.597
+  },
+  "notes": [
+   "plan ok after 1 call(s)"
+  ],
+  "cost_usd": 0.002736
+ }
+]

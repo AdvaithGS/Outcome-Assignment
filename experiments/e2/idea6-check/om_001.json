@@ -1,0 +1,251 @@
+{
+ "entries": [
+  {
+   "property_name": {
+    "value": "Marlowe Park Modern Apartments",
+    "citation": "[Section 008: PROPERTY & SITE DESCRIPTION MECHANICAL / ELECTRICAL / PLUMBING] Property Name Marlowe Park Modern Apartments",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "address": {
+    "value": "7420 E 52nd Ave.",
+    "citation": "[Section 004: OFFERING SUMMARY] Address 7420 E 52nd Ave. Fairhaven, CO 80271",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "city": {
+    "value": "Fairhaven",
+    "citation": "[Section 004: OFFERING SUMMARY] Address 7420 E 52nd Ave. Fairhaven, CO 80271",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "state": {
+    "value": "CO",
+    "citation": "[Section 004: OFFERING SUMMARY] Address 7420 E 52nd Ave. Fairhaven, CO 80271",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "zip_code": {
+    "value": "80271",
+    "citation": "[Section 004: OFFERING SUMMARY] Address 7420 E 52nd Ave. Fairhaven, CO 80271",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "county": {
+    "value": "Harlan",
+    "citation": "[Section 008: PROPERTY & SITE DESCRIPTION MECHANICAL / ELECTRICAL / PLUMBING] County Harlan",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "submarket": {
+    "value": "Fairhaven International Airport",
+    "citation": "[Section 049: FINANCIAL ANALYSIS] [13] Property is located in Harlan County in the Fairhaven International Airport submarket.",
+    "confidence": 0.9,
+    "page_numbers": [
+     18
+    ]
+   },
+   "broker_name": {
+    "value": "Ridgeline Capital Advisors",
+    "citation": "[Section 003: EXECUTIVE SUMMARY] Ridgeline Capital Advisors is pleased to present",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "units": {
+    "value": 188,
+    "citation": "[Section 004: OFFERING SUMMARY] Number of Units 188",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "year_built": {
+    "value": 2022,
+    "citation": "[Section 008: PROPERTY & SITE DESCRIPTION MECHANICAL / ELECTRICAL / PLUMBING] Year Built 2022",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "year_renovated": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "building_type": {
+    "value": "Garden",
+    "citation": "[Section 004: OFFERING SUMMARY] Building Type Garden",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "number_of_buildings": {
+    "value": 13,
+    "citation": "[Section 004: OFFERING SUMMARY] Number of Buildings 13",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "stories": {
+    "value": "2 & 3",
+    "citation": "[Section 004: OFFERING SUMMARY] Number of Stories 2 & 3",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "rentable_sf": {
+    "value": 190142,
+    "citation": "[Section 004: OFFERING SUMMARY] Rentable SF 190,142 SF",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "average_unit_sf": {
+    "value": 1011,
+    "citation": "[Section 004: OFFERING SUMMARY] Avg. Unit Size 1,011 SF",
+    "confidence": 1.0,
+    "page_numbers": [
+     2
+    ]
+   },
+   "site_acres": {
+    "value": 9.52,
+    "citation": "[Section 004: OFFERING SUMMARY] Site Area 9.520 acres",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "parking_spaces": {
+    "value": 266,
+    "citation": "[Section 012: FEES PARKING BREAKDOWN (& FEES)] Total Parking Spaces 266",
+    "confidence": 0.9,
+    "page_numbers": [
+     4
+    ]
+   },
+   "parking_ratio": {
+    "value": 1.41,
+    "citation": "[Section 012: FEES PARKING BREAKDOWN (& FEES)] Parking Ratio 1.41",
+    "confidence": 0.9,
+    "page_numbers": [
+     4
+    ]
+   },
+   "asking_price": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "price_per_unit": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "asking_cap_rate": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "occupancy_pct": {
+    "value": 71,
+    "citation": "[Section 051: PROPERTY NAME CITY YEAR BUILT # OF UNITS OCC. AVG SF RENT $/SF] **Marlowe Park Modern Apartments is 71% leased as of the 9/13/2023 rent roll",
+    "confidence": 0.9,
+    "page_numbers": [
+     19
+    ]
+   },
+   "average_in_place_rent": {
+    "value": 2260,
+    "citation": "[Section 037: FINANCIAL ANALYSIS] Total/Avg 188 100% 1,011 190,142 $2,260 $2.23 $424,970",
+    "confidence": 0.9,
+    "page_numbers": [
+     13
+    ]
+   },
+   "market_rent": {
+    "value": 2260,
+    "citation": "[Section 005: LEASING INFORMATION**] Market Rent $2,260",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "market_rent_psf": {
+    "value": 2.23,
+    "citation": "[Section 005: LEASING INFORMATION**] Market Rent PSF $2.23",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "unit_types": {
+    "value": [
+     "Aspen",
+     "Birch",
+     "Cedar w/ Attached Garage",
+     "Dogwood w/ Attached Garage (2)",
+     "Elm",
+     "Fir w/ Attached Garage",
+     "Hazel w/ Attached Garage",
+     "Ironwood"
+    ],
+    "citation": "[Section 017: PROPERTY OVERVIEW] Floorplan Type Bed / Bath Sq. Ft. Units Aspen Standard 1 / 1",
+    "confidence": 0.9,
+    "page_numbers": [
+     6
+    ]
+   },
+   "noi_t12": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "noi_proforma": {
+    "value": 3521352,
+    "citation": "[Page 14] Net Operating Income $3,521,352 $18,731",
+    "confidence": 0.9,
+    "page_numbers": [
+     14
+    ]
+   }
+  }
+ ],
+ "metadata": {
+  "model_calls": 0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "latency_ms": 4013,
+  "cache_hits": 3,
+  "cost_usd_uncached": 0.003407,
+  "models": {
+   "openai/gpt-6-luna": {
+    "calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "cost_usd": 0.0,
+    "cache_hits": 3
+   }
+  }
+ },
+ "schema": "offering_memorandum"
+}

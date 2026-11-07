@@ -199,9 +199,68 @@ def parse_json(content: str | None) -> dict | None:
     return obj if isinstance(obj, dict) else None
 
 
+EXPAND_SYSTEM = """Some fields in a client's field list have no real description, only a name. Using standard commercial
+real estate conventions, write a precise description for EACH listed terse field: what the value is, which figure to
+take when a document could show several, the output format (numbers as plain numbers, dates YYYY-MM-DD, percentages as
+printed), and for label-type fields the usual set of allowed labels. Absence: end the description with "null if the
+document does not state it" — never 0, an empty string or a placeholder for a missing value. Only two exceptions: a
+yes/no field is false when the document grants no such thing, and a list field is an empty list when there is nothing
+to list. Infer the document type from ALL field names together (e.g. a lease abstract, a rent
+roll, a T12 operating statement, a budget variance report). Describe the field generically: never invent facts about a
+particular document. Return ONE JSON object: {"document_description": "...", "fields": {"<key>": "<description>"}}."""
+
+
+def terse_fields(schema: dict) -> list[str]:
+    """Fields whose description adds nothing to the name (empty, a repeat of the name, or three words or fewer)."""
+    out = []
+    for k, f in schema["fields"].items():
+        d = re.sub(r"[^a-z0-9 ]", " ", str(f.get("description") or "").lower()).split()
+        n = re.sub(r"[^a-z0-9 ]", " ", str(f.get("name") or k).lower()).split()
+        if not d or d == n or len(d) <= 3:
+            out.append(k)
+    return out
+
+
+async def expand_terse(schema: dict, client: LLMClient, *, model: str, extra: dict | None, usage: UsageTracker | None,
+                       job_id: str | None, deadline: float | None) -> tuple[dict, list[str]]:
+    """-> (schema with terse descriptions filled in, keys that were expanded). Unchanged if nothing is terse."""
+    keys = terse_fields(schema)
+    if not keys:
+        return schema, []
+    payload = {"document_description": schema.get("description") or "",
+               "all_field_names": {k: v.get("name") or k for k, v in schema["fields"].items()},
+               "terse_fields": {k: {"name": schema["fields"][k].get("name") or k,
+                                    "description": schema["fields"][k].get("description") or "",
+                                    **({"primary": True} if schema["fields"][k].get("primary") else {})} for k in keys}}
+    try:
+        r = await client.chat(model=model, messages=[{"role": "system", "content": EXPAND_SYSTEM},
+                                                     {"role": "user", "content": json.dumps(payload, indent=1, sort_keys=True)}],
+                              stage="schema_expand", job_id=job_id, usage=usage, temperature=0, max_tokens=6000,
+                              timeout_s=90, deadline=deadline, response_format={"type": "json_object"}, **(extra or {}))
+        data = parse_json(r.content) or {}
+    except Exception as exc:  # noqa: BLE001 - an enhancement; never fail the job over it
+        log.warning("terse expansion failed", extra={"job_id": job_id, "error": str(exc)[:200]})
+        return schema, []
+    new = {**schema, "fields": {k: dict(v) for k, v in schema["fields"].items()}}
+    if not schema.get("description") and isinstance(data.get("document_description"), str):
+        new["description"] = data["document_description"]
+    done = []
+    for k in keys:
+        d = (data.get("fields") or {}).get(k)
+        if isinstance(d, str) and len(d.split()) > 3:
+            new["fields"][k]["description"] = d.strip()
+            done.append(k)
+    return new, done
+
+
 async def analyse(schema: dict, client: LLMClient | None, *, model: str, extra: dict | None = None,
                   usage: UsageTracker | None = None, job_id: str | None = None,
                   deadline: float | None = None) -> SchemaSpec:
+    # expand only field lists that are broadly terse (≥ 25% of fields); one short description in a rich list has
+    # enough context from the other fields (e.g. the OM's "City.")
+    if client is not None and len(terse_fields(schema)) >= max(1, 0.25 * len(schema["fields"])):
+        schema, _ = await expand_terse(schema, client, model=model, extra=extra, usage=usage, job_id=job_id,
+                                       deadline=deadline)
     spec = heuristic_spec(schema)
     if client is None:
         return spec

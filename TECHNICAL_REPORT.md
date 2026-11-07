@@ -273,7 +273,8 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | Multi-sheet tables + re-run of sample table plans | 8 | 0.0057 | 0.06% |
 | Load tests in Docker (2 configurations × 16 jobs, cache off) | 206 | 0.1587 | 1.59% |
 | Selective vision + resolution test + judge | 8 | 0.0124 | 0.12% |
-| **Total to date** | **546** | **0.6630** | **6.63%** |
+| Terse field-list expansion (2 iterations on E5 variants) | 16 | 0.0268 | 0.27% |
+| **Total to date** | **562** | **0.6898** | **6.90%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_

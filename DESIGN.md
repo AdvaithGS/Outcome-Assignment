@@ -28,7 +28,9 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
   (Tesseract, RapidOCR) could not read the handwritten correction to a security deposit or a garbled name; vision
   could, and was faster than RapidOCR. Tesseract stays as the per-page fallback.
 - **Field lists are analysed once per schema**: types, "value when absent" (0 / false / []), groups, rewritten
-  descriptions, and formulas for computed fields in a small safe expression language.
+  descriptions, and formulas for computed fields in a small safe expression language. Field lists that are mostly
+  bare names get standard real-estate definitions first (one extra call): a lease list with descriptions removed
+  scores 0.80 instead of 0.65, with no invented values.
 - **Leases and OMs: the whole document in one call.** Cheap models scored the same on full documents as on
   hand-picked relevant passages, so a Locator stage did not pay for itself at these sizes; it is reserved for very
   long documents.
@@ -76,7 +78,7 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 | Table plan, repair, labels | gpt-6-luna, reasoning off | ~$0.001–0.003 per document |
 
 Per document (uncached): digital lease/OM ~$0.003–0.005, scanned 25-page lease ~$0.022, any table ~$0.002.
-**Development spend so far: $0.663 of the $10** (546 calls, incl. two Docker load tests), almost all of it on experiments; every response is
+**Development spend so far: $0.690 of the $10** (562 calls, incl. two Docker load tests), almost all of it on experiments; every response is
 cached, so re-scoring after a downstream change costs $0.
 
 ## What broke and how it was handled
@@ -114,9 +116,6 @@ cached, so re-scoring after a downstream change costs $0.
 
 ## With another week
 
-- Unseen field lists with terse descriptions: stage 0 should infer standard definitions from field names (e.g. a
-  "category" with the usual labels, "months with activity" as a count). E5: such lists fail safe (nulls) but lose
-  0.2–0.3 of their score.
 - Rent commencement after free rent: a rule for it fixed that field but leaked into the rent schedule; needs a
   field-scoped hint rather than a global one.
 - Escalation: run a second cheap model and send only disagreeing fields to a stronger one (disagreement caught
