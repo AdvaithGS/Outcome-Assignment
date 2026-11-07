@@ -4,9 +4,10 @@
 > evidence behind it, written so reviewers can comment on specific decisions. Section 11 lists the questions where
 > input is most useful. Compiled from `DESIGN.md`, `TECHNICAL_REPORT.md` and the working notes in `notes/`.
 >
-> **Status (2026-11-07):** sample-set mean **0.939** on the official validator (0.967 with an LLM judge on free-text
-> fields), **0 invented values**, every output valid, `docker compose up` verified end to end. Development spend
-> **$0.49 of the $10** budget. 101 automated tests.
+> **Status (2026-11-07):** sample-set mean **0.936** on the official validator (0.964 with an LLM judge on free-text
+> fields), **0 invented values**, every output valid, **$0.0042 per document** uncached. Load test at 10 jobs in flight:
+> 16/16 succeeded, p50 50 s / p95 83 s, nothing lost or duplicated. `docker compose up` verified end to end.
+> Development spend **$0.69 of the $10** budget. 104 automated tests.
 
 ---
 
@@ -38,14 +39,19 @@ or duplicated) · Design/code 35.
 | t12_001 | XLSX table | **0.999** | 0.999 | 0 | 119/119 | $0.0028 |
 | rentroll_001 | XLSX table (3,000-row sheet) | **1.000** | 1.000 | 0 | 325/325 | $0.0018 |
 | om_001 | Digital PDF, single entry (22 pp) | 0.966 | 0.966 | 0 | 1/1 | $0.0034 |
-| lease_001 | Scanned PDF, 1993, handwriting (25 pp) | 0.900 | 0.925 | 0 | 1/1 | $0.0218 |
-| lease_002 | DOCX (33 pp) | 0.825 | 0.875 | 0 | 1/1 | $0.0050 |
-| lease_003 | Scanned PDF (21 pp) | 0.825 | 0.975 | 0 | 1/1 | $0.0225 |
-| **Mean / average** | | **0.939** | **0.967** | **0** | | **$0.0075** |
+| lease_001 | Scanned PDF, 1993, handwriting (25 pp) | 0.850 | 0.875 | 0 | 1/1 | $0.0091 |
+| lease_002 | DOCX (33 pp) | 0.825 | 0.900 | 0 | 1/1 | $0.0050 |
+| lease_003 | Scanned PDF (21 pp) | 0.850 | 0.975 | 0 | 1/1 | $0.0089 |
+| **Mean / average** | | **0.936** | **0.964** | **0** | | **$0.0042** |
 
 ¹ Judged: free-text fields re-checked by an LLM judge from another model family (the graders' scorer is "slightly
 more lenient on free-text fields"). ² Uncached, i.e. what a fresh run costs; includes the field-list analysis,
 which in a real run is shared by all documents with the same field list.
+
+Scanned leases now send only the pages local OCR flags as hard to the vision model (§5.1): their cost fell from
+~$0.022 to ~$0.009 per document (−44% on the sample average), with the same accuracy within noise (3-lease mean
+0.873 vs 0.879 strict). The lease_001 / lease_003 changes against full vision are one yes/no judgement and two
+free-text phrasings; no OCR-sensitive value changed.
 
 All-null baseline (valid output, no extraction): **0.087**.
 
@@ -57,9 +63,10 @@ All-null baseline (valid output, no extraction): **0.087**.
 | Rent roll **split over two sheets** | Multi-sheet tables | 1.000 | $0.0012 |
 | Rent roll **as CSV** | Format change | 1.000 | $0.0015 |
 | Box score with the **contract's** field list (different keys) | Unseen field list | 1.000 | ~$0.001 |
-| T12 / lease_002 / lease_001 with keys renamed to `field_NN` and **descriptions removed** | Worst-case unseen field list | 0.54 / 0.65 / 0.63 | ~$0.001–0.004 |
+| T12 / lease_002 / lease_001 with keys renamed to `field_NN` and **descriptions removed** | Worst-case unseen field list | **0.78 / 0.80 / 0.75** (was 0.54 / 0.65 / 0.63) | ~$0.002–0.005 |
 
-With no descriptions at all the pipeline **fails safe**: it returns nulls, never invented values.
+With no descriptions, stage 0 first writes standard real-estate definitions from the field names (§5.0), and the
+pipeline still **fails safe**: 0 invented values on every variant.
 
 ### 2.3 Latency (measured on the development machine)
 
@@ -69,9 +76,21 @@ With no descriptions at all the pipeline **fails safe**: it returns nulls, never
 | `/health` after `docker compose up` (image built) | ~2 s |
 | Table documents | ~5–15 s (box score in Docker: 17 s end to end) |
 | Digital single-entry documents | ~20–40 s |
-| Scanned leases (25 vision pages) | ~45–60 s |
+| Scanned leases, every page by vision | ~45–60 s (selective vision sends ~2–6 pages; not re-timed) |
 
-Not yet measured: behaviour at 10 jobs in flight (load test pending).
+**Load test** (Docker, real pipeline, LLM cache off; 16 jobs = 8 samples × 2 tenants, 10 in flight, topped up as jobs
+finish):
+
+| | Before tuning (4 jobs/worker, 8 model calls) | **Tuned defaults (10, 24)** |
+|---|---|---|
+| Terminal states | 16/16 SUCCESS, all valid | 16/16 SUCCESS, all valid |
+| Lost / duplicated; tenant isolation | 0 / 0; ✓ | 0 / 0; ✓ |
+| `POST /jobs` max | 145 ms | 447 ms |
+| p50 / p95 / max per job | 129 / 203 / 227 s | **49.5 / 82.6 / 98.7 s** |
+| Wall time, 16 jobs | 249 s | 99 s |
+
+Before tuning, latency was mostly queueing (20 s table jobs waited behind scanned leases). The remaining time is
+processing, dominated by scanned leases; this run was before selective vision, which cuts their vision calls ~80%.
 
 ---
 
@@ -133,11 +152,14 @@ flowchart TD
     F[File] --> T{"Type by content<br/>(not extension)"}
     T -->|PDF| P{"Text layer<br/>per page?"}
     P -->|yes| PT[pdfplumber text]
-    P -->|no| PV["Vision transcription<br/>(Tesseract fallback)"]
+    P -->|no| PO["Tesseract on every scanned page"]
+    PO --> PQ{"Page hard for OCR?<br/>confidence · garbled text<br/>uncertain line · table · form"}
+    PQ -->|no| PK[Tesseract text]
+    PQ -->|yes| PV["Vision transcription<br/>(Tesseract fallback)"]
     T -->|DOCX| D["Own XML parser<br/>section anchors · image OCR"]
     T -->|XLSX / CSV| G["Grid with cell addresses"]
     S0 --> R{"Field marked primary?"}
-    PT & PV & D & G --> R
+    PT & PK & PV & D & G --> R
     R -->|"no: single entry<br/>(lease, OM)"| A["Stage 3a · whole-document extraction<br/>one call · concise free text · domain hints<br/>computed fields return inputs + printed figure"]
     R -->|"yes: table<br/>(rent roll, T12, budget, box score)"| B["Stage 3b · LLM writes a PLAN from a fixed-size preview<br/>code executes it on the full grid"]
     A --> PP["Stage 4 · post-processing (code)<br/>normalise · absent defaults · formulas · citation grounding · pages · confidence"]
@@ -167,6 +189,18 @@ targeted at the questions that mattered.
   (`months_between`, `sum`, `mul`, `div`, `round`, …; parsed with a whitelist, never `eval`).
 - **Why:** unseen field lists must work; and in E1b most remaining errors were interpretation errors that every model
   shared, which clearer descriptions fix and bigger models do not.
+- **Terse field lists (one extra call, only when needed):** a field is terse if its description is empty, repeats its
+  name or has ≤ 3 words; when ≥ 25% of a list is terse, stage 0 first writes standard real-estate definitions for
+  those fields (inferring the document type from all names together). None of the 6 sample lists triggers it.
+
+  | Terse + renamed variant | Before | Definitions v1 | **v2 (adopted)** | Full descriptions |
+  |---|---|---|---|---|
+  | lease_002 | 0.650 (0 invented) | 0.550 (9 invented) | **0.800 (0)** | 0.825 |
+  | lease_001 | 0.625 (0) | 0.610 (6) | **0.750 (0)** | 0.850 |
+  | T12 | 0.542 (140/119 rows) | 0.542 | **0.781 (119/119)** | 0.999 |
+
+  v1 invented absence conventions ("0 if absent"), which became wrong defaults; v2 says "null if the document does
+  not state it", with two exceptions (yes/no → false, lists → empty).
 - **Fallback:** if the call fails, heuristic types and the original descriptions are used.
 
 ### 5.1 Ingestion (stage 1)
@@ -176,7 +210,7 @@ targeted at the questions that mattered.
 | Input | Option | Result | Chosen |
 |---|---|---|---|
 | Digital PDF | pdftotext, pdftotext `-layout`, pdfplumber, PyMuPDF, pymupdf4llm | All capture 99–100%; layout mode costs 2–3.5× tokens for nothing; pdfplumber best on the budget table | **pdfplumber** |
-| Scanned PDF | Tesseract (200/300 dpi, psm 3/6), RapidOCR | RapidOCR 85–89% verbatim vs Tesseract 80–85%, but ~3× CPU; **neither reads handwriting** | Vision (below); Tesseract fallback |
+| Scanned PDF | Tesseract (200/300 dpi, psm 3/6), RapidOCR | RapidOCR 85–89% verbatim vs Tesseract 80–85%, but ~3× CPU; **neither reads handwriting** | Tesseract for easy pages, vision for hard ones (below) |
 | DOCX | python-docx, mammoth, own XML parser | Same text; only the own parser yields usable sections (49, median ~240 tokens) and image transcriptions | **Own parser** |
 
 **E1a: vision transcription of the pages local OCR got wrong** ($0.014):
@@ -189,7 +223,31 @@ targeted at the questions that mattered.
 | glm-5.3-flash | ✓ | ✓ | ✓ | ~0.0005 |
 | qwen3-vl | ✗ ambiguous | ✓ | ✓ | 0.0007–0.0020 |
 
-→ **Scanned pages: gpt-6-luna vision (reasoning off), Tesseract as per-page fallback.**
+→ **Hard scanned pages: gpt-6-luna vision (reasoning off), Tesseract as per-page fallback.**
+
+**Selective vision: which pages go to the vision model.** Tesseract reads every scanned page first (free). Labels
+came from the cached vision transcriptions: did OCR lose an answer value that vision caught? (Vision marks
+"handwriting" on nearly every page of the 1993 lease because of initials, so handwriting alone is not useful.) Three
+pages qualify: lease_001 p2 (handwritten deposit), p25 (garbled guarantor), lease_003 p3 (rent table). A page goes to
+vision if **any** signal fires:
+
+| Signal | Threshold | Catches on the samples |
+|---|---|---|
+| Mean Tesseract word confidence | < 0.88 | lease_001 p2, p25 and others |
+| Words below confidence 50 | ≥ 5% | (overlaps confidence) |
+| Lines with 3+ numbers (tables, rent schedules) | ≥ 15% | lease_003 p3 |
+| "LABEL:" lines (summary / reference pages) | ≥ 10% | form pages |
+| Garbled text: broken tokens ("MART/N") / unusual characters | ≥ 5% / ≥ 2% | only a page already flagged; safety net |
+| One uncertain line: 2+ words below 60, a digit, a real word, not a stamp/footer recurring on other pages | 1 line | alone, both lease_001 needed pages; no extra pages |
+
+Flags all 3 needed pages and 6/25 + 2/21 pages overall. The footer filter is fuzzy (letters only, similarity ≥ 0.75 on
+2+ other pages) because Tesseract reads the same stamp differently on each page ("1D#3 03122", "ID#3 03118"); exact
+matching let 3 stamp pages through. Rejected: any low-confidence word next to a digit (19/25 pages); any line with 2
+low words (16/25); a dictionary check (no word list in the image). Table documents keep vision on every page (their
+plan needs a consistent layout).
+
+**Vision image size:** 1,100 px instead of 1,500 px cuts vision input ~45%, but lost the landlord's legal name on
+the hardest page; with selective vision the saving would be ~$0.001 per document → **1,500 px for all documents**.
 
 **DOCX findings that shaped the parser:** no Word heading styles at all (headings detected by rule, including
 run-in headings like "17. HOLDING OVER. Tenant shall…"); the table of contents repeats every heading (TOC mode);
@@ -316,12 +374,14 @@ value**: E1b showed it is a weak error signal (precision 0.06–0.24).
 | Stage | Model | Cost |
 |---|---|---|
 | Field-list analysis | gpt-6-luna, reasoning off | ~$0.001 per new field list |
-| Scanned-page transcription | gpt-6-luna, reasoning off | ~$0.0006 per page |
+| Scanned-page transcription (hard pages only) | gpt-6-luna, reasoning off | ~$0.0006–0.0007 per page |
 | Lease / OM extraction | gpt-6-luna, reasoning off (fallback claude-haiku-5.5) | ~$0.003–0.005 per document |
 | Table plans | gpt-6-luna, reasoning off; last repair by claude-haiku-5.5 | ~$0.001–0.003 per document |
 | Free-text judge (evaluation only) | claude-haiku-5.5 | — |
 
-**Where a scanned lease's ~$0.022 goes:** ~75% vision transcription (25 pages), ~20% extraction, ~5% field-list analysis.
+**Where a scanned lease's ~$0.009 goes** (ledger medians: ~$0.0007 per vision page, ~$0.0007 per field-list
+analysis): vision 15–50% (2 pages on lease_003, 6 on lease_001), field-list analysis ~8% (shared across documents
+with the same list), extraction the rest. With every page by vision it was ~$0.022, ~75% of it vision.
 
 ---
 
@@ -346,9 +406,11 @@ value**: E1b showed it is a weak error signal (precision 0.06–0.24).
 |---|---|---|---|
 | Language / stack | Python, FastAPI, SQLite | — | Best document tooling; validator is Python |
 | Digital PDF text | pdfplumber | 4 other readers | E0 |
-| Scanned pages | Vision (luna, reasoning off) + Tesseract fallback | Local OCR only; other vision models | E1a: only vision reads handwriting |
+| Scanned pages | Tesseract first; vision (luna, reasoning off) only on pages flagged hard | Local OCR only; vision on every page; other vision models | E1a: only vision reads handwriting; selective = same accuracy, −60% scanned cost |
+| Vision image size | 1,500 px long side | 1,100 px; 1,100 px for single-entry only | Lost a legal name at 1,100 px; ~$0.001/doc saving |
 | DOCX | Own XML parser with heuristic and run-in headings | python-docx, mammoth | E0 sections, image transcription |
 | DOCX pages | Not produced (section anchors instead) | LibreOffice rendering | Image size and start-up risk |
+| Terse field lists | Stage 0 writes standard definitions when ≥ 25% are terse | Leave as is | E5: +0.15–0.24, 0 invented |
 | Single-entry strategy | Whole document, one call | Locator + slices; per-group calls | E1b: no long-context penalty |
 | Extractor model | gpt-6-luna, reasoning off | glm, haiku, deepseek | E2: tied with the final prompt, cheapest |
 | Free-text style | Concise (switchable to verbatim) | Describe, verbatim | E2: best strict, near-best judged |
@@ -358,6 +420,7 @@ value**: E1b showed it is a weak error signal (precision 0.06–0.24).
 | Tables | LLM plan, code executes | LLM writes rows; LLM writes code | Cost flat, no invented values |
 | Table safety | Required checks + 2 repairs (last by haiku) + bounded fallback | Plan voting; other plan models | §5.3 |
 | Job store / queue | SQLite table as queue, leases | Redis, Postgres | No extra container; tested guarantees |
+| Concurrency defaults | 10 jobs per worker, 24 concurrent model calls | 4 / 8 | Load test: p50 129 → 50 s, p95 203 → 83 s |
 | Escalation (2nd model) | Not yet | Disagreement → stronger model | Remaining errors are phrasing/interpretation |
 
 ---
@@ -371,6 +434,11 @@ value**: E1b showed it is a weak error signal (precision 0.06–0.24).
 - Committed outputs could not be reproduced after a prompt change → replay mode now proves reproducibility.
 - Scanned table pages transcribed independently chose **different column layouts** → page 1's header imposed on the rest.
 - A failed table plan triggered a **31-call fallback** on a big sheet → bounded fallback, second-model repair.
+- The first load test queued 20 s table jobs behind scanned leases for ~200 s → higher worker and model-call
+  concurrency (`docker-compose.yml` also had to pass the setting through).
+- Standard definitions for terse field lists first **invented "0 if absent" conventions** (9 invented values) →
+  "null if not stated" rule; and the OM's single "City." description triggered expansion → only when ≥ 25% are terse.
+- Footer stamps defeated an exact-match boilerplate filter (OCR reads them differently on each page) → fuzzy match.
 
 ---
 
@@ -378,9 +446,9 @@ value**: E1b showed it is a weak error signal (precision 0.06–0.24).
 
 | Gap | Impact | Idea |
 |---|---|---|
-| No load test at 10 jobs in flight yet | Load/latency score; 30-min gate | Measure p50/p95, then tune worker and model-call concurrency |
-| Scanned documents send every page to vision | Spend (~75% of a scanned lease's cost), latency | OCR first; vision only on weak/handwritten/table pages or pages the extraction needs |
-| Field lists with terse or missing descriptions lose 0.2–0.3 | Unseen field lists | Stage 0 infers standard definitions from field names |
+| A hard scanned page that every OCR signal misses is read by Tesseract alone | A value lost on such a page | Send a page to vision when the extraction cites it for a null or low-confidence field |
+| Load test predates selective vision | p50/p95 of scanned leases likely lower; not re-measured | Re-run (~$0.07) |
+| Terse field lists still lose 0.03–0.2 against full descriptions | Unseen field lists | Accept (no invented values) |
 | Interpretation conventions (rent start after free rent; subject property's in-place rent; property name from the cover) | ~3–4 sample cells | Field-scoped hints written by stage 0 (risk of fitting the samples) |
 | Very long documents (100+ pages) | Untested | Locator path (designed, not built) |
 | Docker image 1.46 GB, 188 s build | Start-up gate if build time counts | Slim the image |
@@ -392,8 +460,8 @@ value**: E1b showed it is a weak error signal (precision 0.06–0.24).
 
 1. **Free-text style:** concise (best under strict matching) or verbatim (best under an LLM judge)? We don't know
    exactly how the graders judge free text.
-2. **Selective vision for scanned pages:** which signal should decide that a page needs the vision model (OCR
-   confidence, handwriting detection, table detection, the extraction's own requests)?
+2. **Selective vision for scanned pages:** the rule (§5.1) was tuned on 3 pages that needed vision across 2 leases.
+   Would you trust it on unseen scans, or pay ~$0.013 more per scanned lease for vision on every page?
 3. **Interpretation hints:** worth adding field-scoped real-estate conventions, or too much risk of fitting the samples?
 4. **Escalation:** is a second-model check per document worth ~+$0.004/doc for the remaining error types?
 5. **Latency vs cost:** prefer parallel field-group calls (faster, slightly dearer) or one call per document?
@@ -403,11 +471,13 @@ value**: E1b showed it is a weak error signal (precision 0.06–0.24).
 
 ## 12. Planned next steps (ranked)
 
-1. Load test at 10 jobs in flight in Docker; tune `WORKER_CONCURRENCY` / `LLM_MAX_CONCURRENCY`.
-2. Selective vision for scanned documents; lower vision image resolution (test on the hardest pages).
-3. Stage 0: standard definitions for terse field names.
-4. Shorter citations / parallel field groups, if the load test shows extraction time dominates.
-5. Docker polish: commit SHA in `/health`, slimmer image.
+Done since the first version of this document: load test and concurrency tuning; selective vision (with garbage-text
+and uncertain-line signals); vision resolution test; standard definitions for terse field lists.
+
+1. Field-scoped interpretation hints (question 3), only if they generalise beyond the samples.
+2. Re-run the load test with selective vision.
+3. Docker polish: commit SHA in `/health`, slimmer image.
+4. Shorter citations / parallel field groups, if scanned leases still dominate latency.
 
 ---
 
@@ -424,9 +494,13 @@ value**: E1b showed it is a weak error signal (precision 0.06–0.24).
 | E2 free text, hints, model choice, E5 generalisation | 53 | 0.1082 |
 | Improvement rounds (table checks, pointer modes, scanned tables, multi-sheet) | 119 | 0.1239 |
 | Docker end-to-end check (recorded in the container's own ledger) | 2 | 0.0013 |
-| **Total** | **332** | **0.4919** |
+| Load tests in Docker, cache off (before / after tuning; container ledgers) | 206 | 0.1587 |
+| Selective vision, resolution test, judge | 8 | 0.0121 |
+| Standard definitions for terse field lists (v1, v2) | 16 | 0.0268 |
+| **Total** | **562** | **0.6895** |
 
-Computed from `ledger/spend.jsonl` by run id (every call maps to a phase).
+Computed from `ledger/spend.jsonl` by run id (every call maps to a phase), plus the Docker containers' own ledgers.
+The garbage-text and uncertain-line signals cost $0 (local OCR and cached replays).
 
 ## Appendix B: configuration reference
 
@@ -441,8 +515,10 @@ Computed from `ledger/spend.jsonl` by run id (every call maps to a phase).
 | `HINTS` | `on` | Generic domain rules |
 | `EXTRACT_STYLE` | `value` | `value` / `pointer` / `hybrid` |
 | `COMPUTED_MODE` | `H` | `M` / `C` / `H` |
-| `WORKER_CONCURRENCY` | 4 | Jobs per worker process |
-| `LLM_MAX_CONCURRENCY` | 8 | Concurrent model calls per process |
+| `SCANNED_MODE` | `selective` | `selective` (OCR first, vision for hard pages) / `vision` (every page) / `ocr` |
+| `VISION_LONG_SIDE` | 1500 | Long side of images sent to the vision model (px) |
+| `WORKER_CONCURRENCY` | 10 | Jobs per worker process |
+| `LLM_MAX_CONCURRENCY` | 24 | Concurrent model calls per process |
 | `LLM_TIMEOUT_S` | 90 | Default total time per call attempt |
 | `JOB_DEADLINE_S` | 1200 | Internal deadline from submission |
 | `LLM_CACHE_MODE` | `read_write` | `off` / `read_write` / `replay` / `refresh` |
@@ -455,7 +531,7 @@ Computed from `ledger/spend.jsonl` by run id (every call maps to a phase).
 | `app/pipeline/` | Stage 0 analysis, ingestion orchestration, single-entry extractor, table planner/executor, post-processing, formula language |
 | `app/ingest/` | PDF / DOCX / OCR / grid readers, anchored document model |
 | `app/llm/` | Model chokepoint: cache, ledger, pricing, retries, usage |
-| `app/eval/` | Experiments: E0, E1a, E1b, judge, run_samples, generalisation |
+| `app/eval/` | Experiments: E0, E1a, E1b, judge, run_samples, generalisation, load test |
 | `notes/` | Working notes per step (ideation → revision → results) |
 | `experiments/` | Scores and verdicts (no document content) |
-| `tests/` | 101 tests |
+| `tests/` | 104 tests |
