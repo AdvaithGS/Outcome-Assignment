@@ -1,0 +1,428 @@
+{
+ "lease_001_p2|local:tesseract": {
+  "page": "lease_001_p2",
+  "model": "local:tesseract",
+  "passed": 9,
+  "total": 19,
+  "failed": [
+   "landlord_legal_name=TRENT MA-II HOLLIS OFFICE PLAZA, INC.",
+   "building_address=1850 Hollis Road, Fairmont Hills, Illinois 60517",
+   "pro_rata_share=0.91",
+   "lease_commencement_date=1993-05-01",
+   "rent_commencement_date=1993-05-01",
+   "lease_expiration_date=1998-04-30",
+   "security_deposit_amount=2150.0",
+   "expense_structure=base year 1993",
+   "deposit 2150 marked handwritten",
+   "2,400 marked struck"
+  ],
+  "cost_usd": 0.0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "latency_ms": 855
+ },
+ "lease_001_p2|local:rapidocr": {
+  "page": "lease_001_p2",
+  "model": "local:rapidocr",
+  "passed": 12,
+  "total": 19,
+  "failed": [
+   "building_address=1850 Hollis Road, Fairmont Hills, Illinois 60517",
+   "lease_expiration_date=1998-04-30",
+   "expense_structure=base year 1993",
+   "base_year_expenses=1993",
+   "base_year_taxes=1993",
+   "deposit 2150 marked handwritten",
+   "2,400 marked struck"
+  ],
+  "cost_usd": 0.0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "latency_ms": 4819
+ },
+ "lease_001_p25|local:tesseract": {
+  "page": "lease_001_p25",
+  "model": "local:tesseract",
+  "passed": 0,
+  "total": 1,
+  "failed": [
+   "guarantor_name=Martin J. Delacroix"
+  ],
+  "cost_usd": 0.0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "latency_ms": 666
+ },
+ "lease_001_p25|local:rapidocr": {
+  "page": "lease_001_p25",
+  "model": "local:rapidocr",
+  "passed": 0,
+  "total": 1,
+  "failed": [
+   "guarantor_name=Martin J. Delacroix"
+  ],
+  "cost_usd": 0.0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "latency_ms": 3016
+ },
+ "lease_001_p18|local:tesseract": {
+  "page": "lease_001_p18",
+  "model": "local:tesseract",
+  "passed": 11,
+  "total": 17,
+  "failed": [
+   "rent_schedule_start_dates=1994-05-01",
+   "rent_schedule_end_dates=1995-04-30",
+   "rent_schedule_monthly_rent=1990.0",
+   "rent_schedule_monthly_rent=2111.0",
+   "base_rent_escalation=fixed steps per schedule",
+   "free_rent_months=0.0"
+  ],
+  "cost_usd": 0.0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "latency_ms": 1219
+ },
+ "lease_001_p18|local:rapidocr": {
+  "page": "lease_001_p18",
+  "model": "local:rapidocr",
+  "passed": 15,
+  "total": 17,
+  "failed": [
+   "base_rent_escalation=fixed steps per schedule",
+   "free_rent_months=0.0"
+  ],
+  "cost_usd": 0.0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "latency_ms": 4867
+ },
+ "lease_002_img1|local:tesseract": {
+  "page": "lease_002_img1",
+  "model": "local:tesseract",
+  "passed": 0,
+  "total": 2,
+  "failed": [
+   "handwritten date 8/21/25",
+   "tenant name"
+  ],
+  "cost_usd": 0.0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "latency_ms": 516
+ },
+ "lease_002_img1|local:rapidocr": {
+  "page": "lease_002_img1",
+  "model": "local:rapidocr",
+  "passed": 2,
+  "total": 2,
+  "failed": [],
+  "cost_usd": 0.0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "latency_ms": 2902
+ },
+ "lease_001_p25|z-ai/glm-5.3-flash": {
+  "page": "lease_001_p25",
+  "model": "z-ai/glm-5.3-flash",
+  "passed": 1,
+  "total": 1,
+  "failed": [],
+  "cost_usd": 0.0,
+  "tokens_in": 1888,
+  "tokens_out": 363,
+  "latency_ms": 3137,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 32
+ },
+ "lease_001_p2|z-ai/glm-5.3-flash": {
+  "page": "lease_001_p2",
+  "model": "z-ai/glm-5.3-flash",
+  "passed": 11,
+  "total": 19,
+  "failed": [
+   "building_address=1850 Hollis Road, Fairmont Hills, Illinois 60517",
+   "lease_execution_date=1993-03-05",
+   "lease_commencement_date=1993-05-01",
+   "rent_commencement_date=1993-05-01",
+   "lease_expiration_date=1998-04-30",
+   "expense_structure=base year 1993",
+   "base_year_expenses=1993",
+   "base_year_taxes=1993"
+  ],
+  "cost_usd": 0.0,
+  "tokens_in": 1888,
+  "tokens_out": 799,
+  "latency_ms": 4049,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 27
+ },
+ "lease_001_p18|z-ai/glm-5.3-flash": {
+  "page": "lease_001_p18",
+  "model": "z-ai/glm-5.3-flash",
+  "passed": 15,
+  "total": 17,
+  "failed": [
+   "base_rent_escalation=fixed steps per schedule",
+   "free_rent_months=0.0"
+  ],
+  "cost_usd": 0.0,
+  "tokens_in": 1888,
+  "tokens_out": 884,
+  "latency_ms": 5710,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 74
+ },
+ "lease_002_img1|z-ai/glm-5.3-flash": {
+  "page": "lease_002_img1",
+  "model": "z-ai/glm-5.3-flash",
+  "passed": 2,
+  "total": 2,
+  "failed": [],
+  "cost_usd": 0.0,
+  "tokens_in": 2374,
+  "tokens_out": 3000,
+  "latency_ms": 17346,
+  "cached": true,
+  "finish": "length",
+  "reasoning_tokens": 0
+ },
+ "lease_001_p2|openai/gpt-6-luna": {
+  "page": "lease_001_p2",
+  "model": "openai/gpt-6-luna",
+  "passed": 15,
+  "total": 19,
+  "failed": [
+   "building_address=1850 Hollis Road, Fairmont Hills, Illinois 60517",
+   "expense_structure=base year 1993",
+   "base_year_expenses=1993",
+   "base_year_taxes=1993"
+  ],
+  "cost_usd": 0.00111005,
+  "tokens_in": 1733,
+  "tokens_out": 1787,
+  "latency_ms": 16512,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 1155
+ },
+ "lease_001_p25|openai/gpt-6-luna": {
+  "page": "lease_001_p25",
+  "model": "openai/gpt-6-luna",
+  "passed": 1,
+  "total": 1,
+  "failed": [],
+  "cost_usd": 0.00103155,
+  "tokens_in": 1733,
+  "tokens_out": 1630,
+  "latency_ms": 17822,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 1310
+ },
+ "lease_001_p18|openai/gpt-6-luna": {
+  "page": "lease_001_p18",
+  "model": "openai/gpt-6-luna",
+  "passed": 15,
+  "total": 17,
+  "failed": [
+   "base_rent_escalation=fixed steps per schedule",
+   "free_rent_months=0.0"
+  ],
+  "cost_usd": 0.00112355,
+  "tokens_in": 1733,
+  "tokens_out": 1814,
+  "latency_ms": 16669,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 1010
+ },
+ "lease_001_p2|anthropic/claude-haiku-5.5": {
+  "page": "lease_001_p2",
+  "model": "anthropic/claude-haiku-5.5",
+  "passed": 15,
+  "total": 19,
+  "failed": [
+   "building_address=1850 Hollis Road, Fairmont Hills, Illinois 60517",
+   "expense_structure=base year 1993",
+   "base_year_expenses=1993",
+   "base_year_taxes=1993"
+  ],
+  "cost_usd": 0.0010406,
+  "tokens_in": 1941,
+  "tokens_out": 1693,
+  "latency_ms": 9019,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 482
+ },
+ "lease_001_p25|anthropic/claude-haiku-5.5": {
+  "page": "lease_001_p25",
+  "model": "anthropic/claude-haiku-5.5",
+  "passed": 1,
+  "total": 1,
+  "failed": [],
+  "cost_usd": 0.0006821,
+  "tokens_in": 1941,
+  "tokens_out": 976,
+  "latency_ms": 7495,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 482
+ },
+ "lease_002_img1|openai/gpt-6-luna": {
+  "page": "lease_002_img1",
+  "model": "openai/gpt-6-luna",
+  "passed": 2,
+  "total": 2,
+  "failed": [],
+  "cost_usd": 0.000848925,
+  "tokens_in": 2184,
+  "tokens_out": 1152,
+  "latency_ms": 13580,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 953
+ },
+ "lease_001_p18|anthropic/claude-haiku-5.5": {
+  "page": "lease_001_p18",
+  "model": "anthropic/claude-haiku-5.5",
+  "passed": 15,
+  "total": 17,
+  "failed": [
+   "base_rent_escalation=fixed steps per schedule",
+   "free_rent_months=0.0"
+  ],
+  "cost_usd": 0.0010861,
+  "tokens_in": 1941,
+  "tokens_out": 1784,
+  "latency_ms": 9039,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 509
+ },
+ "lease_002_img1|anthropic/claude-haiku-5.5": {
+  "page": "lease_002_img1",
+  "model": "anthropic/claude-haiku-5.5",
+  "passed": 2,
+  "total": 2,
+  "failed": [],
+  "cost_usd": 0.0005797,
+  "tokens_in": 2427,
+  "tokens_out": 674,
+  "latency_ms": 6371,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 241
+ },
+ "lease_001_p25|qwen/qwen3-vl-235b-a22b-instruct": {
+  "page": "lease_001_p25",
+  "model": "qwen/qwen3-vl-235b-a22b-instruct",
+  "passed": 1,
+  "total": 1,
+  "failed": [],
+  "cost_usd": 0.00088124,
+  "tokens_in": 1464,
+  "tokens_out": 302,
+  "latency_ms": 12766,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 0
+ },
+ "lease_002_img1|qwen/qwen3-vl-235b-a22b-instruct": {
+  "page": "lease_002_img1",
+  "model": "qwen/qwen3-vl-235b-a22b-instruct",
+  "passed": 2,
+  "total": 2,
+  "failed": [],
+  "cost_usd": 0.00073943,
+  "tokens_in": 1793,
+  "tokens_out": 191,
+  "latency_ms": 11642,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 0
+ },
+ "lease_001_p2|qwen/qwen3-vl-235b-a22b-instruct": {
+  "page": "lease_001_p2",
+  "model": "qwen/qwen3-vl-235b-a22b-instruct",
+  "passed": 16,
+  "total": 19,
+  "failed": [
+   "building_address=1850 Hollis Road, Fairmont Hills, Illinois 60517",
+   "expense_structure=base year 1993",
+   "2,400 marked struck"
+  ],
+  "cost_usd": 0.00168874,
+  "tokens_in": 1464,
+  "tokens_out": 727,
+  "latency_ms": 19067,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 0
+ },
+ "lease_001_p18|qwen/qwen3-vl-235b-a22b-instruct": {
+  "page": "lease_001_p18",
+  "model": "qwen/qwen3-vl-235b-a22b-instruct",
+  "passed": 15,
+  "total": 17,
+  "failed": [
+   "base_rent_escalation=fixed steps per schedule",
+   "free_rent_months=0.0"
+  ],
+  "cost_usd": 0.00199534,
+  "tokens_in": 1464,
+  "tokens_out": 893,
+  "latency_ms": 19153,
+  "cached": true,
+  "finish": "stop",
+  "reasoning_tokens": 0
+ },
+ "lease_001_p2|openai/gpt-6-luna+noreason": {
+  "page": "lease_001_p2",
+  "model": "openai/gpt-6-luna+noreason",
+  "passed": 11,
+  "total": 19,
+  "failed": [
+   "building_address=1850 Hollis Road, Fairmont Hills, Illinois 60517",
+   "lease_execution_date=1993-03-05",
+   "lease_commencement_date=1993-05-01",
+   "rent_commencement_date=1993-05-01",
+   "lease_expiration_date=1998-04-30",
+   "expense_structure=base year 1993",
+   "base_year_expenses=1993",
+   "base_year_taxes=1993"
+  ],
+  "cost_usd": 0.00057005,
+  "tokens_in": 1733,
+  "tokens_out": 707,
+  "latency_ms": 7097,
+  "cached": false,
+  "finish": "stop",
+  "reasoning_tokens": 0
+ },
+ "lease_001_p2|anthropic/claude-haiku-5.5+noreason": {
+  "page": "lease_001_p2",
+  "model": "anthropic/claude-haiku-5.5+noreason",
+  "passed": 14,
+  "total": 19,
+  "failed": [
+   "building_address=1850 Hollis Road, Fairmont Hills, Illinois 60517",
+   "lease_execution_date=1993-03-05",
+   "expense_structure=base year 1993",
+   "base_year_expenses=1993",
+   "base_year_taxes=1993"
+  ],
+  "cost_usd": 0.0007894,
+  "tokens_in": 1939,
+  "tokens_out": 1191,
+  "latency_ms": 7077,
+  "cached": false,
+  "finish": "stop",
+  "reasoning_tokens": 0
+ }
+}

@@ -345,3 +345,38 @@ Revised early phases for this scope:
 3. The E0 measurement tool: **coverage** of answer values per representation, **tokens**, **seconds**,
    and **anchor quality** (did each answer's citation land inside exactly one section, and how big are the sections).
 4. Prerequisite: Tesseract on this machine (`sudo pacman -S tesseract tesseract-data-eng`). pip packages go in the venv.
+
+---
+
+## 12. Results: E0 (free) and E1a (vision transcription, $0.0141)
+
+### 12.1 E0 conclusions (details: `experiments/e0/summary.md`)
+- **Digital PDF:** every text engine captures 99–100% of non-computed answer values; pdfplumber ≈ PyMuPDF
+  (95% citations located on om_001, all on the right page, ~7.4k tokens). Layout mode costs 2–3.5× tokens for
+  no gain; pymupdf4llm is slower and worse on the budget table. Per-page scan detection caught om_001's image-only page.
+- **Scanned PDF:** RapidOCR@200 > Tesseract@200 ≈ @300 ≈ psm6 (lease_001 85.0 vs 82.5%, lease_003 88.5 vs 85.3%
+  verbatim), but ~3× the CPU per page (~27–31 s vs ~9 s under contention; 227 s vs 27 s wall for 25 pages).
+  Clean scans are solved by every engine (rasterised om/budget 99.6–100%).
+  Local OCR cannot read the handwritten correction and garbles the guarantor name.
+- **DOCX:** all readers give the same text; only the XML parser yields usable sections (49, median ~240 tokens)
+  and image transcriptions.
+- **Coordinates:** DOCX sections work. PDF heading sections are too fine (median 20–50 tokens on om_001),
+  so **pages** are the natural Locator unit for PDFs.
+- Matcher fixes during E0 (measurement only): OCR comma/full-stop slips, "March 5. 1993", trailing zeros ("9.520"),
+  pre-printed "19 93" years.
+
+### 12.2 E1a: targeted vision test (4 images: lease_001 p2, p25, p18; lease_002 signature image)
+
+| Model | p2 handwritten deposit (`~~2,400~~ [handwritten: 2150]`) | p25 guarantor | p18 table (control) | DOCX handwritten date | $/page (list) | Latency | Notes |
+|---|---|---|---|---|---|---|---|
+| local RapidOCR | ✗ | ✗ | ✓ | ✓ | 0 | ~3–5 s CPU | |
+| local Tesseract | ✗ | ✗ | partial | ✗ | 0 | ~1 s CPU | |
+| **z-ai/glm-5.3-flash** | ✓ (also marks handwritten "93") | ✓ | ✓ | ✓ | ~0.0003–0.0007 (provider billed **$0** on our key) | **3–6 s** | **Looped to the 3,000-token cap on the signature page** |
+| **openai/gpt-6-luna** | ✓ | ✓ | ✓ | ✓ | 0.0010–0.0011; **0.0006 with reasoning off** (still ✓) | 13–18 s; 7 s reasoning off | 950–1,300 hidden reasoning tokens/page by default |
+| **anthropic/claude-haiku-5.5** | ✓ | ✓ | ✓ | ✓ | 0.0006–0.0011 | 6–9 s | Reasoning off: **wrongly marked the year "19 ~~93~~" as struck** |
+| qwen/qwen3-vl-235b | **✗ ambiguous** (`$ 2,400– 2150M`) | ✓ | ✓ | ✓ | 0.0007–0.0020 | 11–19 s | Merges "19 93" → "1993" but loses the strike-through |
+
+- Image input ≈ 1.5–2.4k tokens per page at 1,500 px long side.
+- **Round 2 (gemini-3.8-flash) skipped:** every achievable checkpoint was solved by a round-1 model.
+- **Cost:** round 1 $0.0128 (16 calls) + reasoning-off test $0.0014 (2 calls) + smoke $0.000004 = **$0.0141**.
+- Re-scoring after the matcher fix ran in `replay` mode: $0.

@@ -72,6 +72,8 @@ def _num_pattern(x: float) -> re.Pattern:
 def _date_pattern(d: date) -> re.Pattern:
     m, ma, day, y, yy = MONTHS[d.month - 1], MONTHS[d.month - 1][:3], d.day, d.year, f"{d.year % 100:02d}"
     ordn = rf"(?:{day}(?:st|nd|rd|th)?|{WORD_ORD[day - 1]})"
+    # pre-printed "19__" forms filled in by hand transcribe as "19 93"
+    y = rf"{str(y)[:2]}\s?{str(y)[2:]}"
     yr = rf"(?:{y}|'?{yy})"
     alts = [  # "[,.]?" because OCR often reads the comma after the day as a full stop
         rf"{m}\s+{ordn}[,.]?\s+{y}", rf"{ma}\.?\s+{ordn}[,.]?\s+{y}",

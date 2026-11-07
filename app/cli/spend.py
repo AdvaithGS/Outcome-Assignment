@@ -10,6 +10,7 @@ import os
 import sys
 from collections import defaultdict
 
+from app.envfile import load_env_file
 from app.llm.ledger import SpendLedger
 
 
@@ -22,10 +23,11 @@ def _table(title: str, groups: dict[str, list[dict]], top: int | None = None) ->
     for name, recs in rows:
         print(f"  {str(name)[:40]:40s} {len(recs):6d} {sum(not r.get('ok') for r in recs):6d} "
               f"{sum(r.get('tokens_in') or 0 for r in recs):10d} {sum(r.get('tokens_out') or 0 for r in recs):9d} "
-              f"{sum(r.get('cost_usd') or 0 for r in recs):9.4f}")
+              f"{sum(r.get('cost_usd') or 0 for r in recs):10.6f}")
 
 
 def main() -> int:
+    load_env_file()
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--path", default=os.environ.get("LLM_LEDGER_PATH", "ledger/spend.jsonl"))
     ap.add_argument("--run")
@@ -36,9 +38,9 @@ def main() -> int:
     total = sum(r.get("cost_usd") or 0 for r in recs)
     unpriced = sum(1 for r in recs if r.get("ok") and r.get("cost_source") in ("unknown", "none"))
     scope = f"run {args.run}" if args.run else "all runs"
-    print(f"{scope}: {len(recs)} calls, ${total:.4f} spent")
+    print(f"{scope}: {len(recs)} calls, ${total:.6f} spent")
     if not args.run:
-        print(f"budget ${args.budget:.2f}: ${args.budget - total:.4f} left ({total / args.budget:.1%} used)")
+        print(f"budget ${args.budget:.2f}: ${args.budget - total:.6f} left ({total / args.budget:.3%} used)")
     if unpriced:
         print(f"WARNING: {unpriced} successful calls have no cost (unknown model price)")
     if not recs:
