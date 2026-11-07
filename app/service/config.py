@@ -56,7 +56,7 @@ class Settings:
             worker_concurrency=int(e.get("WORKER_CONCURRENCY", "4")),
             queue_limit=int(e.get("QUEUE_LIMIT", "500")),
             poll_s=float(e.get("WORKER_POLL_S", "0.5")),
-            pipeline=e.get("PIPELINE", "null"),
+            pipeline=e.get("PIPELINE", "v1"),     # the dataclass default stays "null" so tests never call a model
             version=_git_sha(),
         )
         for d in (s.data_dir, s.uploads_dir, s.results_dir):
