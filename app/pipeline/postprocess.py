@@ -155,7 +155,7 @@ def _pointer(f: FieldSpec, style: str, value, fr: dict, doc: Document, norm: str
 
 def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "H", style: str = "value") -> dict[str, dict]:
     from app.pipeline.single import field_style
-    if style == "pointer":
+    if style in ("pointer", "hybrid"):
         doc_norm_map = __import__("app.eval.coverage", fromlist=["normalise_with_map"]).normalise_with_map(doc.markdown)
     raw = raw or {}
     helpers_raw = raw.get("_helpers") if isinstance(raw.get("_helpers"), dict) else {}
@@ -210,15 +210,15 @@ def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "
             out[key] = {"value": value, "citation": "", "confidence": 0.7 if absent_default else 0.6}
             continue
         p_conf, locs = None, []
-        if style == "pointer":
-            fst = field_style(f)
+        if style in ("pointer", "hybrid"):
+            fst = field_style(f, style)
             value, cites[key], p_pages, p_conf, locs = _pointer(f, fst, value, raw.get(key) if isinstance(raw.get(key), dict) else {},
                                                                doc, doc_norm_map[0], doc_norm_map[1])
             if value is None:
                 out[key] = {"value": None, "citation": "", "confidence": 0.6}
                 continue
         grounded, pages = _ground(cites[key], doc, doc_norm)
-        if style == "pointer" and p_pages:
+        if style in ("pointer", "hybrid") and p_pages:
             pages = p_pages
         if not pages:
             pages = _page_of_value(value, doc)

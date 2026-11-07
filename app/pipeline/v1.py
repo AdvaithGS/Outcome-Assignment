@@ -46,7 +46,7 @@ class V1Config:
     computed_mode: str = "H"              # M | C | H
     freetext_mode: str = "concise"        # concise | verbatim | describe (E2-freetext; concise = safer under strict scoring)
     hints: bool = True                    # generic CRE extraction rules (E2-hints, v3 adopted)
-    extract_style: str = "value"          # value | pointer (pointer: values backed by exact quotes, resolved in code)
+    extract_style: str = "value"          # value | pointer | hybrid (values backed by exact quotes, resolved in code)
     table_model: str = LUNA_OFF[0]
     table_extra: dict = field(default_factory=lambda: dict(LUNA_OFF[1]))
 
@@ -79,6 +79,7 @@ class Extraction:
     notes: list[str]
     table_rows: list[dict] | None = None
     partial: bool = False
+    style: str | None = None                # overrides cfg.extract_style for this document
 
 
 class PipelineV1:
@@ -105,14 +106,14 @@ class PipelineV1:
             return await self._extract_table(path, spec, ctx, deadline)
         if ctx.file_type not in ("pdf", "docx"):
             # a single-entry field list on a spreadsheet: read the grid as text and use the prose extractor
+            # (pointer: cell addresses are exact, so values are read from the cells themselves)
             grid = await asyncio.to_thread(load_grid, path, ctx.file_type)
             doc = grid_document(grid)
             raw, notes = await extract(spec, doc, self.client, model=self.cfg.extract_model, extra=self.cfg.extract_extra,
                                        fallback_model=self.cfg.fallback_model, fallback_extra=self.cfg.fallback_extra,
                                        usage=ctx.usage, job_id=ctx.job_id, doc_id=ctx.file_name, deadline=deadline,
-                                   freetext_mode=self.cfg.freetext_mode, hints=self.cfg.hints,
-                                   style=self.cfg.extract_style)
-            return Extraction(spec, doc, raw, notes)
+                                   freetext_mode=self.cfg.freetext_mode, hints=self.cfg.hints, style="hybrid")
+            return Extraction(spec, doc, raw, notes, style="hybrid")
         ctx.set_stage("PARSING")
         doc = await ingest(path, ctx.file_type, client=self.client, cfg=self.cfg, cache=self.cache, usage=ctx.usage,
                            job_id=ctx.job_id, doc_id=ctx.file_name, deadline=deadline)
@@ -134,7 +135,8 @@ class PipelineV1:
                 return Extraction(spec, None, None, ["no table grid could be rebuilt from this document"])
         ctx.set_stage("EXTRACTING")
         res = await extract_table(spec, grid, self.client, model=self.cfg.table_model, extra=self.cfg.table_extra,
-                                  usage=ctx.usage, job_id=ctx.job_id, deadline=deadline)
+                                  usage=ctx.usage, job_id=ctx.job_id, deadline=deadline,
+                                  repair_model=self.cfg.fallback_model, repair_extra=self.cfg.fallback_extra)
         return Extraction(spec, None, None, res.notes, table_rows=res.rows, partial=res.partial)
 
     def rows(self, ex: Extraction, mode: str | None = None) -> PipelineOutput:
@@ -142,7 +144,7 @@ class PipelineV1:
             return PipelineOutput(rows=ex.table_rows or [{}], partial=ex.partial, notes=ex.notes)
         if ex.doc is None:
             return PipelineOutput(rows=[{}], notes=ex.notes)
-        row = postprocess(ex.spec, ex.raw, ex.doc, mode or self.cfg.computed_mode, self.cfg.extract_style)
+        row = postprocess(ex.spec, ex.raw, ex.doc, mode or self.cfg.computed_mode, ex.style or self.cfg.extract_style)
         return PipelineOutput(rows=[row], partial=ex.raw is None, notes=ex.notes)
 
     async def run(self, path: Path, schema: dict, ctx: JobContext) -> PipelineOutput:

@@ -532,15 +532,19 @@ FALLBACK_MAX_ROWS = 400      # above this the LLM-writes-rows fallback is too sl
 
 async def extract_table(spec: SchemaSpec, grid: Grid, client: LLMClient, *, model: str, extra: dict,
                         usage: UsageTracker | None, job_id: str | None = None,
-                        deadline: float | None = None, max_plans: int = 3) -> TableResult:
+                        deadline: float | None = None, max_plans: int = 3,
+                        repair_model: str | None = None, repair_extra: dict | None = None) -> TableResult:
+    """The last plan attempt uses `repair_model` (a second opinion from another model family) when given."""
     msgs = plan_messages(spec, grid)
     errors: list[str] = []
     plan = None
     best = None                                   # (n_errors, rows, plan, errors) of the best failing plan
     for attempt in range(max_plans):
-        r = await client.chat(model=model, messages=msgs, stage="table_plan", job_id=job_id, usage=usage,
+        last = attempt == max_plans - 1 and attempt > 0 and repair_model
+        m, ex = (repair_model, repair_extra or {}) if last else (model, extra)
+        r = await client.chat(model=m, messages=msgs, stage="table_plan", job_id=job_id, usage=usage,
                               temperature=0, max_tokens=6000, timeout_s=120, deadline=deadline,
-                              response_format={"type": "json_object"}, **extra)
+                              response_format={"type": "json_object"}, **ex)
         plan = parse_json(r.content)
         rows: list[dict] = []
         if plan is None:
@@ -561,7 +565,8 @@ async def extract_table(spec: SchemaSpec, grid: Grid, client: LLMClient, *, mode
                     if plan.get("classify"):
                         await classify(rows, plan, spec, client, model=model, extra=extra, usage=usage,
                                        job_id=job_id, deadline=deadline)
-                    notes = [f"plan ok after {attempt + 1} call(s)"] + ([f"{dropped} duplicate rows merged"] if dropped else [])
+                    notes = [f"plan ok after {attempt + 1} call(s)" + (f" (last by {m})" if last else "")] + (
+                        [f"{dropped} duplicate rows merged"] if dropped else [])
                     return TableResult(rows=_cite_cells(rows), plan=plan, notes=notes)
                 if rows and (best is None or len(errors) < best[0]):
                     best = (len(errors), rows, plan, errors)

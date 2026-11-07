@@ -29,7 +29,7 @@
  },
  {
   "variant": "lease_001 terse+renamed",
-  "score": 0.6,
+  "score": 0.625,
   "rows": {
    "predicted": 1,
    "truth": 1
@@ -37,11 +37,10 @@
   "hallucinations": 0,
   "misses": 7,
   "per_field_below_1": {
+   "building_address": 0.0,
    "premises": 0.0,
-   "permitted_use": 0.0,
    "lease_execution_date": 0.0,
    "rent_commencement_date": 0.0,
-   "rent_schedule_annual_rent_per_rsf": 0.0,
    "base_rent_escalation": 0.0,
    "free_rent_months": 0.0,
    "letter_of_credit_required": 0.0,
@@ -74,20 +73,19 @@
  },
  {
   "variant": "rentroll as CSV",
-  "score": 0.9455,
+  "score": 1.0,
   "rows": {
    "predicted": 325,
    "truth": 325
   },
   "hallucinations": 0,
   "misses": 0,
-  "per_field_below_1": {
-   "monthly_total_charges": 0.074
-  },
+  "per_field_below_1": {},
   "notes": [
-   "no plan passed all checks after 3 calls; used the best one (check add(monthly_rent, monthly_other_charges) == monthly_total_charges fails in 306 of 330 rows: one of these fields is probably read from the wrong place (e.g. a start-row column instead of a total line))"
+   "plan ok after 3 call(s) (last by anthropic/claude-haiku-5.5)",
+   "5 duplicate rows merged"
   ],
-  "cost_usd": 0.000362
+  "cost_usd": 0.001519
  },
  {
   "variant": "t12 terse+renamed",
@@ -114,6 +112,6 @@
   "notes": [
    "plan ok after 1 call(s)"
   ],
-  "cost_usd": 0.001249
+  "cost_usd": 0.0
  }
 ]

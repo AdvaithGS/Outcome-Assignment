@@ -74,7 +74,7 @@ _QUOTE_CUES = ("as the lease states it", "as the document states it", "as writte
                "as stated in", "as the lease states", "as the document states", "word for word")
 
 
-def field_style(f) -> str:
+def field_style(f, mode: str = "pointer") -> str:
     """How a field is extracted in pointer mode, decided from its type and description only (no field names):
     quote   - free text the description wants as written: the answer IS an exact span of the document
     summary - other free text: a short phrase (concise rule)
@@ -84,6 +84,8 @@ def field_style(f) -> str:
     if f.computed or f.type in ("bool", "list"):
         return "value"
     if f.type == "freetext":
+        if mode == "hybrid":
+            return "summary"                 # hybrid: every free-text field is a concise summary, never a raw quote
         return "quote" if any(c in d for c in _QUOTE_CUES) else "summary"
     return "pointer"
 
@@ -104,8 +106,8 @@ def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "descri
     for f in spec.fields.values():
         t = f.type + (f" of {f.item_type}" if f.type == "list" and f.item_type else "")
         flags = f"{t}; if absent: {_absent_text(f.absent)}" + ("; COMPUTED" if f.computed else "")
-        if style == "pointer" and field_style(f) in ("quote", "summary"):
-            flags += "; " + field_style(f).upper()
+        if style in ("pointer", "hybrid") and field_style(f, style) in ("quote", "summary"):
+            flags += "; " + field_style(f, style).upper()
         lines.append(f'- "{f.key}" ({f.name}) [{flags}]: {f.description}')
     helpers = spec.helpers()
     helper_block = ""
@@ -114,7 +116,7 @@ def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "descri
                         + "\n".join(f'- "{k}": {v}' for k, v in helpers.items()))
     user = (f"Document type: {spec.description or spec.name}\n\nFields:\n" + "\n".join(lines) + helper_block
             + f"\n\nDocument text:\n<<<\n{doc_text}\n>>>")
-    rules = POINTER_RULES if style == "pointer" else FREETEXT_RULES.get(freetext_mode, "")
+    rules = POINTER_RULES if style in ("pointer", "hybrid") else FREETEXT_RULES.get(freetext_mode, "")
     return [{"role": "system", "content": SYSTEM + rules + (HINTS if hints else "")},
             {"role": "user", "content": user}]
 

@@ -37,7 +37,14 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
   own arithmetic was wrong in 4 of the lease computed cells; the formulas were right in all of them.
 - **Tables: the LLM writes an extraction plan, code executes it** (the plan format is the user's design). Cost is
   ~$0.001–0.003 per table regardless of length, values are copied from cells (no invented values), and every value
-  carries its cell address. Checks plus one repair call catch bad plans; the LLM-writes-rows fallback is the last resort.
+  carries its cell address. Plans must state the cross-field relations their descriptions give ("should equal rent plus
+  other charges") as checks that code verifies on every row; failing plans get two repair rounds, the last one by a
+  second model (claude-haiku-5.5). The LLM-writes-rows fallback only runs for small tables (≤ 400 rows); larger ones use
+  the best plan and finish PARTIAL, so cost stays bounded.
+- **The same "LLM points, code fills" idea for single-entry documents** (pointer mode: each value backed by an exact
+  quote that code locates) tied the current approach on accuracy (0.935 judged) with slightly more correct page
+  citations; it is used by default only where it is strictly better: single-entry field lists over spreadsheets,
+  whose values are read from the exact cells.
 - **Service:** the SQLite job table is the queue (atomic claims, leases + heartbeats, fencing, idempotency by file +
   schema + tenant). A pipeline error never loses a document: it is retried, then finished as PARTIAL with valid nulls.
 
@@ -62,7 +69,7 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 | Table plan, repair, labels | gpt-6-luna, reasoning off | ~$0.001–0.003 per document |
 
 Per document (uncached): digital lease/OM ~$0.003–0.005, scanned 25-page lease ~$0.022, any table ~$0.002.
-**Development spend so far: $0.368 of the $10** (213 calls), almost all of it on experiments; every response is
+**Development spend so far: $0.466 of the $10** (295 calls), almost all of it on experiments; every response is
 cached, so re-scoring after a downstream change costs $0.
 
 ## What broke and how it was handled
@@ -74,6 +81,8 @@ cached, so re-scoring after a downstream change costs $0.
 - **Bad table plans** (columns declared "missing", wrapped text read only on its first line): generic checks now
   detect both and trigger one repair call.
 - **Page headers in rebuilt PDF tables** looked like section titles: lines repeated on 3+ pages are removed.
+- **A failed table plan triggered the LLM-writes-rows fallback on a 3,000-row sheet** (31 calls before a run cap
+  stopped it): the fallback is now limited to small tables and bad plans get a second-opinion repair instead.
 - **glm-5.3-flash rejects `reasoning: off`** (400, "Reasoning is mandatory"): every call fell back to the fallback
   model, which kept jobs succeeding; model settings are now checked per model in experiments.
 - **The rent roll lists 5 units twice** (main list and a later "future residents" section): repeated primary keys

@@ -169,6 +169,7 @@ def test_field_style_comes_from_type_and_description_only():
     for k in ("fee", "exp"):
         s[k].type = "freetext"
     assert [field_style(s[k]) for k in ("fee", "exp", "amt", "loc")] == ["quote", "summary", "pointer", "value"]
+    assert [field_style(s[k], "hybrid") for k in ("fee", "exp", "amt", "loc")] == ["summary", "summary", "pointer", "value"]
 
 
 def test_pointer_mode_quotes_numbers_and_fallback():

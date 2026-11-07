@@ -267,7 +267,9 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | E2 extractor model choice (glm, haiku) + judge | 13 | 0.0236 | 0.24% |
 | E5 generalisation variants | 9 | 0.0125 | 0.13% |
 | Improvement round 1: table checks, plan-model comparison, cross-field checks | 26 | 0.0253 | 0.25% |
-| **Total to date** | **239** | **0.3933** | **3.93%** |
+| Pointer mode on samples + E5 re-runs (incl. a capped 31-call fallback) + judge | 44 | 0.0578 | 0.58% |
+| Hybrid pointer mode + haiku final table repair + judge | 5 | 0.0156 | 0.16% |
+| **Total to date** | **295** | **0.4664** | **4.66%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_
