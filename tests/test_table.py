@@ -158,3 +158,43 @@ def test_cross_field_check_catches_a_misread_total():
     good = {**RENT_PLAN, "checks": [{"expr": "add(rent, other)", "equals": "total"}]}
     rows = T.finalise(T.execute(good, sheet(RENT_GRID), spec), good, spec)
     assert not any(e.startswith("check") for e in T.check(rows, spec, good))
+
+
+def test_grid_from_transcribed_markdown_pages():
+    from app.ingest.grid import grid_from_markdown_pages
+    head = "| Code | Name | Amount |\n|---|---|---|\n"
+    pages = ["# Lakeview Tower\nBudget 2021\n" + head + "| 6101 | Base Rent | 7,481,754 |\n| 6102 | Abatement | -487,261 |",
+             head + "| 6105 | Parking | 216,185 |",
+             head + "| 6108 | Utilities | 27,000 |"]
+    g = grid_from_markdown_pages(pages, "budget_scan.pdf")
+    s = g.sheets[0]
+    rows = [[v for _, v in sorted(s.row(r).items())] for r in s.nonempty_rows()]
+    assert rows[0] == ["Lakeview Tower"] and rows[1] == ["Budget 2021"]
+    assert sum(1 for r in rows if r[0] == "Code") == 1                 # repeated column header kept once
+    assert ["6105", "Parking", "216,185"] in rows
+    r6105 = next(r for r in s.nonempty_rows() if s.get(r, 1) == "6105")
+    assert s.row_pages[r6105] == 2
+
+
+def test_grid_from_docx_tables_and_paragraphs(tmp_path):
+    import docx
+    from app.ingest.grid import grid_from_docx
+    d = docx.Document()
+    d.add_paragraph("Sunny Court Rent Roll")
+    t = d.add_table(rows=3, cols=3)
+    for r, vals in enumerate([("Unit", "Rent", "Status"), ("101", "1,400", "Occupied"), ("102", "1,550", "Vacant")]):
+        for c, v in enumerate(vals):
+            t.cell(r, c).text = v
+    p = tmp_path / "rr.docx"
+    d.save(p)
+    g = grid_from_docx(p)
+    s = g.sheets[0]
+    rows = [[v for _, v in sorted(s.row(r).items())] for r in s.nonempty_rows()]
+    assert rows == [["Sunny Court Rent Roll"], ["Unit", "Rent", "Status"], ["101", "1,400", "Occupied"],
+                    ["102", "1,550", "Vacant"]]
+    spec = heuristic_spec({"name": "rr", "fields": {"unit": {"name": "Unit", "description": "Unit", "primary": True},
+                                                    "rent": {"name": "Rent", "description": "Rent as a number"}}})
+    plan = {"sheet": s.name, "record_start": {"column": "A", "pattern": r"\d{3}"}, "columns": {"unit": "A", "rent": "B"},
+            "checks": []}
+    out = T.finalise(T.execute(plan, g, spec), plan, spec)
+    assert [(r["unit"]["value"], r["rent"]["value"]) for r in out] == [("101", 1400), ("102", 1550)]

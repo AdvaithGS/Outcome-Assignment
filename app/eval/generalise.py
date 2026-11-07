@@ -70,6 +70,22 @@ def rentroll_csv() -> Path:
     return out
 
 
+def image_only_pdf(name: str, dpi: int = 200) -> Path:
+    """A scanned copy of a sample PDF: every page rendered to an image, no text layer (known answers, real scan path)."""
+    import pymupdf
+    DERIVED.mkdir(parents=True, exist_ok=True)
+    out = DERIVED / f"{name}_scanned.pdf"
+    if not out.exists():
+        src = pymupdf.open(SAMPLE / "sample-data-documents" / f"{name}.pdf")
+        dst = pymupdf.open()
+        for page in src:
+            pix = page.get_pixmap(dpi=dpi, colorspace=pymupdf.csGRAY)
+            p = dst.new_page(width=page.rect.width, height=page.rect.height)
+            p.insert_image(p.rect, pixmap=pix)
+        dst.save(out)
+    return out
+
+
 def variants() -> list[dict]:
     d = SAMPLE / "sample-data-documents"
     return [
@@ -83,6 +99,8 @@ def variants() -> list[dict]:
          "schema": identity(load("rent_roll_units"))},
         {"name": "t12 terse+renamed", "doc": "t12_001", "file": d / "t12_001.xlsx", "type": "xlsx",
          "schema": terse_renamed(load("operating_statement_lines"))},
+        {"name": "budget scanned (image-only PDF)", "doc": "budget_001", "file": "scan:budget_001", "type": "pdf",
+         "schema": identity(load("budget_variance"))},
     ]
 
 
@@ -97,12 +115,16 @@ def score(result: dict, mapping: dict, doc: str) -> dict:
     return validate.score(pred, tr, schema)
 
 
-async def run_all() -> list[dict]:
+async def run_all(only: str | None = None) -> list[dict]:
     pipe = PipelineV1()
     out = []
     try:
         for v in variants():
+            if only and only.lower() not in v["name"].lower():
+                continue
             path = v["file"] or rentroll_csv()
+            if isinstance(path, str) and path.startswith("scan:"):
+                path = image_only_pdf(path.split(":", 1)[1])
             schema, mapping = v["schema"]
             ctx = JobContext(job_id=f"e5-{v['doc']}", org="", file_name=Path(path).name, file_type=v["type"],
                              deadline=time.monotonic() + 1800, usage=UsageTracker())
@@ -127,6 +149,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--go", action="store_true")
     ap.add_argument("--cap", type=float, default=0.04)
+    ap.add_argument("--only", help="run only variants whose name contains this text")
     args = ap.parse_args()
     for v in variants():
         print(f"  {v['name']:28s} {len(v['schema'][0]['fields'])} fields, {len(v['schema'][1])} scored")
@@ -135,9 +158,10 @@ def main() -> int:
         return 0
     os.environ.setdefault("LLM_RUN_ID", "e5-generalise")
     os.environ.setdefault("LLM_RUN_BUDGET_USD", str(args.cap))
-    results = asyncio.run(run_all())
+    results = asyncio.run(run_all(args.only))
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "scores.json").write_text(json.dumps(results, indent=1, default=str))
+    name = "scores.json" if not args.only else f"scores_{args.only.replace(' ', '_')}.json"
+    (OUT / name).write_text(json.dumps(results, indent=1, default=str))
     for r in results:
         if "error" in r:
             print(f"{r['variant']:28s} ERROR {r['error']}")

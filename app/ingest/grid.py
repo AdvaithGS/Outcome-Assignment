@@ -291,3 +291,102 @@ def grid_from_pdf(path: str | Path, min_table_lines: int = 5):
             prev = sheet.cells.get((r, c))
             sheet.cells[(r, c)] = f"{prev} {text}" if prev is not None else text
     return Grid(source=Path(path).name, kind="pdf", sheets=[_index_rows(sheet)])
+
+
+def _drop_repeated(rows: list[tuple[int, list[str]]], min_pages: int = 3) -> list[tuple[int, list[str]]]:
+    """Page headers/footers/repeated column headers: a row whose text (digits ignored) recurs on min_pages+ pages is
+    kept only once."""
+    def sig(cells):
+        return re.sub(r"\d+", "#", " ".join(cells)).strip().lower()
+    pages_of: dict[str, set[int]] = {}
+    for pno, cells in rows:
+        pages_of.setdefault(sig(cells), set()).add(pno)
+    seen, kept = set(), []
+    for pno, cells in rows:
+        k = sig(cells)
+        if len(pages_of[k]) >= min_pages:
+            if k in seen:
+                continue
+            seen.add(k)
+        kept.append((pno, cells))
+    return kept
+
+
+def _sheet_from_rows(name: str, rows: list[tuple[int, list[str]]], kind: str, source: str) -> "Grid":
+    sheet = Sheet(name)
+    sheet.row_pages = {}
+    for r, (pno, cells) in enumerate(rows, start=1):
+        if pno:
+            sheet.row_pages[r] = pno
+        for c, v in enumerate(cells, start=1):
+            v = _clean(v.strip() if isinstance(v, str) else v)
+            if v is not None:
+                sheet.cells[(r, c)] = v
+    if not sheet.row_pages:
+        sheet.row_pages = None
+    return Grid(source=source, kind=kind, sheets=[_index_rows(sheet)])
+
+
+_MD_SEP = re.compile(r"^\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?$")
+
+
+def grid_from_markdown_pages(pages: list[str], source: str, min_table_rows: int = 3) -> "Grid | None":
+    """Grid from per-page Markdown (vision transcriptions of scanned pages): every Markdown table row becomes a grid
+    row (cells in order), every other non-empty line a one-cell row (titles, dates, notes stay visible to the plan).
+    Rows keep their page; repeated page headers are dropped."""
+    rows: list[tuple[int, list[str]]] = []
+    n_table = 0
+    for pno, text in enumerate(pages, start=1):
+        for line in text.splitlines():
+            t = line.strip()
+            if not t or _MD_SEP.match(t):
+                continue
+            if t.startswith("|") and t.count("|") >= 2:
+                cells = [re.sub(r"(\*\*|__)(.*?)\1", r"\2", c).strip() for c in t.strip("|").split("|")]
+                rows.append((pno, cells))
+                n_table += 1
+            else:
+                rows.append((pno, [re.sub(r"^#+\s*|\*\*", "", t).strip()]))
+    if n_table < min_table_rows:
+        return None
+    return _sheet_from_rows(Path(source).stem, _drop_repeated(rows), "pdf", Path(source).name)
+
+
+def grid_from_docx(path: str | Path) -> "Grid | None":
+    """Grid from a DOCX: each Word table row becomes a grid row (merged cells padded), each paragraph a one-cell row,
+    in document order. Returns None when the document has no table."""
+    import zipfile
+    from xml.etree import ElementTree as ET
+    from app.ingest.docx import _DocxParser, _w
+    rows: list[tuple[int, list[str]]] = []
+    n_table = 0
+    with zipfile.ZipFile(path) as z:
+        parser = _DocxParser(z, ocr_engine=None, min_image_bytes=10 ** 12, cache=None)
+        body = ET.fromstring(z.read("word/document.xml")).find(_w("body"))
+
+        def walk(container):
+            nonlocal n_table
+            for el in container:
+                if el.tag == _w("p"):
+                    text = parser.para(el)[0]
+                    if text:
+                        rows.append((0, [text]))
+                elif el.tag == _w("tbl"):
+                    for tr in el.findall(_w("tr")):
+                        cells = []
+                        for tc in tr.findall(_w("tc")):
+                            pr = tc.find(_w("tcPr"))
+                            span = pr.find(_w("gridSpan")) if pr is not None else None
+                            span = int(span.get(f"{{{'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}}}val") or 1) if span is not None else 1
+                            cells.append(parser.cell_text(tc))
+                            cells.extend([""] * (span - 1))
+                        rows.append((0, cells))
+                        n_table += 1
+                elif el.tag == _w("sdt"):
+                    content = el.find(_w("sdtContent"))
+                    if content is not None:
+                        walk(content)
+        walk(body)
+    if n_table == 0:
+        return None
+    return _sheet_from_rows(Path(path).stem, rows, "docx", Path(path).name)

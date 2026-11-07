@@ -1,0 +1,21 @@
+[
+ {
+  "variant": "budget scanned (image-only PDF)",
+  "score": 0.9909,
+  "rows": {
+   "predicted": 55,
+   "truth": 55
+  },
+  "hallucinations": 0,
+  "misses": 0,
+  "per_field_below_1": {
+   "section": 0.982,
+   "explanation_of_variance": 0.891
+  },
+  "notes": [
+   "table rebuilt from 8 transcribed page(s)",
+   "plan ok after 2 call(s)"
+  ],
+  "cost_usd": 0.006726
+ }
+]

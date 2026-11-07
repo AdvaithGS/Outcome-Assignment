@@ -20,7 +20,9 @@ from app.pipeline.postprocess import postprocess
 from app.pipeline.schema_analysis import SchemaSpec, analyse
 from app.pipeline.single import extract
 from app.pipeline.table import extract_table
-from app.ingest.grid import grid_document, grid_from_pdf, load_grid
+from app.ingest.grid import grid_document, grid_from_docx, grid_from_markdown_pages, grid_from_pdf, load_grid
+from app.ingest.pdf import is_scanned_page, page_texts
+from app.pipeline.ingest import transcribe_table_pages
 
 LUNA_OFF = ("openai/gpt-6-luna", {"reasoning": {"enabled": False}})
 
@@ -127,17 +129,31 @@ class PipelineV1:
 
     async def _extract_table(self, path: Path, spec: SchemaSpec, ctx: JobContext, deadline: float) -> Extraction:
         ctx.set_stage("PARSING")
+        notes: list[str] = []
         if ctx.file_type in ("xlsx", "csv"):
             grid = await asyncio.to_thread(load_grid, path, ctx.file_type)
-        else:
-            grid = await asyncio.to_thread(grid_from_pdf, path)
+        elif ctx.file_type == "docx":
+            grid = await asyncio.to_thread(grid_from_docx, path)
             if grid is None:
-                return Extraction(spec, None, None, ["no table grid could be rebuilt from this document"])
+                return Extraction(spec, None, None, ["DOCX has no table for a table field list"])
+        else:
+            texts = await asyncio.to_thread(page_texts, path, self.cfg.pdf_text_engine)
+            scanned = [i for i, t in enumerate(texts) if is_scanned_page(t)]
+            grid = None if len(scanned) * 2 >= len(texts) else await asyncio.to_thread(grid_from_pdf, path)
+            if grid is None:
+                # scanned (or mostly scanned) table: transcribe every page, tables as Markdown, then build the grid
+                got = await transcribe_table_pages(path, len(texts), client=self.client, cfg=self.cfg,
+                                                   cache=self.cache, usage=ctx.usage, job_id=ctx.job_id,
+                                                   doc_id=ctx.file_name, deadline=deadline)
+                grid = grid_from_markdown_pages([got[i][0] for i in range(len(texts))], path.name)
+                notes.append(f"table rebuilt from {len(texts)} transcribed page(s)")
+                if grid is None:
+                    return Extraction(spec, None, None, notes + ["no table found in the transcribed pages"])
         ctx.set_stage("EXTRACTING")
         res = await extract_table(spec, grid, self.client, model=self.cfg.table_model, extra=self.cfg.table_extra,
                                   usage=ctx.usage, job_id=ctx.job_id, deadline=deadline,
                                   repair_model=self.cfg.fallback_model, repair_extra=self.cfg.fallback_extra)
-        return Extraction(spec, None, None, res.notes, table_rows=res.rows, partial=res.partial)
+        return Extraction(spec, None, None, notes + res.notes, table_rows=res.rows, partial=res.partial)
 
     def rows(self, ex: Extraction, mode: str | None = None) -> PipelineOutput:
         if ex.table_rows is not None:

@@ -41,6 +41,9 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
   other charges") as checks that code verifies on every row; failing plans get two repair rounds, the last one by a
   second model (claude-haiku-5.5). The LLM-writes-rows fallback only runs for small tables (≤ 400 rows); larger ones use
   the best plan and finish PARTIAL, so cost stays bounded.
+- **Tables in every format:** XLSX/CSV grids; PDF tables rebuilt from word positions; DOCX tables; and scanned PDF
+  tables, transcribed page by page by the vision model into Markdown tables with page 1's column layout imposed on
+  the other pages (a scanned copy of the sample budget scores 0.991 against 0.999 for the original).
 - **The same "LLM points, code fills" idea for single-entry documents** (pointer mode: each value backed by an exact
   quote that code locates) tied the current approach on accuracy (0.935 judged) with slightly more correct page
   citations; it is used by default only where it is strictly better: single-entry field lists over spreadsheets,
@@ -69,7 +72,7 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 | Table plan, repair, labels | gpt-6-luna, reasoning off | ~$0.001–0.003 per document |
 
 Per document (uncached): digital lease/OM ~$0.003–0.005, scanned 25-page lease ~$0.022, any table ~$0.002.
-**Development spend so far: $0.466 of the $10** (295 calls), almost all of it on experiments; every response is
+**Development spend so far: $0.486 of the $10** (324 calls), almost all of it on experiments; every response is
 cached, so re-scoring after a downstream change costs $0.
 
 ## What broke and how it was handled

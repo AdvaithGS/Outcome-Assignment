@@ -33,6 +33,42 @@ VISION_PROMPT = (
     "- Do not correct spelling, do not summarise, do not add commentary.\n"
     "- If something is illegible, write [illegible]."
 )
+# For table documents: the grid is built from these Markdown tables and one plan maps fixed columns, so every page
+# must keep the printed column layout exactly (pages are transcribed independently and in parallel).
+TABLE_VISION_PROMPT = (
+    "Transcribe this page of a table document into Markdown, exactly as written.\n"
+    "- Every printed column of the table becomes exactly ONE Markdown column, including columns without a heading "
+    "(e.g. an account code and its name printed side by side are TWO columns). Never merge two printed columns into one "
+    "cell and never split one.\n"
+    "- Keep one Markdown row per printed row; a section title row keeps its text in the column where it is printed and "
+    "leaves the other cells empty. Text that wraps onto several printed lines inside one cell stays in that one cell.\n"
+    "- Text outside the table (titles, header lines, dates) goes on its own lines above or below the table.\n"
+    "- Mark struck-through text as ~~text~~ and handwriting as [handwritten: text]. Do not correct spelling and do not "
+    "add commentary."
+)
+
+
+def table_header(markdown: str) -> str | None:
+    """The first Markdown table row of a transcribed page (the column header), if any."""
+    for line in markdown.splitlines():
+        t = line.strip()
+        if t.startswith("|") and t.count("|") >= 3:
+            return t
+    return None
+
+
+async def transcribe_table_pages(path: Path, n_pages: int, **kw) -> dict[int, tuple[str, str]]:
+    """Table documents: transcribe page 1 first, then the remaining pages in parallel with page 1's column header as a
+    layout to follow, so every page yields the same columns (one plan maps fixed columns)."""
+    first = await transcribe_pages(path, [0], prompt=TABLE_VISION_PROMPT, **kw)
+    header = table_header(first[0][0]) if 0 in first else None
+    prompt = TABLE_VISION_PROMPT
+    if header:
+        ncols = header.strip("|").count("|") + 1
+        prompt += ("\n- This page continues a table whose columns are (from its first page):\n" + header +
+                   f"\n  Use exactly these {ncols} columns in this order for every table row on this page.")
+    rest = await transcribe_pages(path, list(range(1, n_pages)), prompt=prompt, **kw) if n_pages > 1 else {}
+    return {**first, **rest}
 LONG_SIDE = 1500
 RENDER_DPI = 200
 
@@ -49,9 +85,10 @@ def _resize_png(data: bytes) -> bytes:
 
 
 async def transcribe(image_png: bytes, client: LLMClient, *, model: str, extra: dict, usage: UsageTracker | None,
-                     job_id: str | None, doc_id: str | None, deadline: float | None = None) -> str:
+                     job_id: str | None, doc_id: str | None, deadline: float | None = None,
+                     prompt: str = VISION_PROMPT) -> str:
     url = "data:image/png;base64," + b64encode(image_png).decode()
-    msgs = [{"role": "user", "content": [{"type": "text", "text": VISION_PROMPT},
+    msgs = [{"role": "user", "content": [{"type": "text", "text": prompt},
                                          {"type": "image_url", "image_url": {"url": url}}]}]
     r = await client.chat(model=model, messages=msgs, stage="vision_transcribe", job_id=job_id, doc_id=doc_id,
                           usage=usage, temperature=0, max_tokens=3000, timeout_s=60, deadline=deadline, **extra)
@@ -59,6 +96,29 @@ async def transcribe(image_png: bytes, client: LLMClient, *, model: str, extra: 
     if r.finish_reason == "length":
         raise RuntimeError("vision transcription hit the token cap (possible runaway output)")
     return text
+
+
+async def transcribe_pages(path: Path, indices: list[int], *, client: LLMClient | None, cfg, cache: ArtifactCache,
+                           usage: UsageTracker | None = None, job_id: str | None = None, doc_id: str | None = None,
+                           deadline: float | None = None, file_sha: str | None = None,
+                           prompt: str = VISION_PROMPT) -> dict[int, tuple[str, str]]:
+    """Render the given 0-based pages and transcribe them (vision model; local OCR fallback). -> {index: (text, method)}"""
+    sha = file_sha or await asyncio.to_thread(file_sha256, path)
+
+    async def one(i: int):
+        img = await asyncio.to_thread(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
+        if client is not None and cfg.scanned_mode == "vision":
+            try:
+                text = await transcribe(_resize_png(img), client, model=cfg.vision_model, extra=cfg.vision_extra,
+                                        usage=usage, job_id=job_id, doc_id=doc_id, deadline=deadline, prompt=prompt)
+                return i, text, f"vision:{cfg.vision_model}"
+            except Exception as exc:  # noqa: BLE001 - fall back to local OCR for this page
+                log.warning("vision transcription failed; using local OCR", extra={"job_id": job_id, "page": i + 1,
+                                                                                   "error": str(exc)[:200]})
+        r = await asyncio.to_thread(run_ocr, cfg.fallback_ocr, img, cache=cache)
+        return i, r.text, f"ocr:{cfg.fallback_ocr}"
+
+    return {i: (t, m) for i, t, m in await asyncio.gather(*(one(i) for i in indices))}
 
 
 async def ingest(path: Path, file_type: str, *, client: LLMClient | None, cfg, cache: ArtifactCache,
@@ -83,20 +143,9 @@ async def ingest(path: Path, file_type: str, *, client: LLMClient | None, cfg, c
     scanned = [i for i, t in enumerate(texts) if is_scanned_page(t)]
     pages = [PageInfo(number=i + 1, method="text", chars=len(t)) for i, t in enumerate(texts)]
 
-    async def one(i: int):
-        img = await asyncio.to_thread(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
-        if client is not None and cfg.scanned_mode == "vision":
-            try:
-                text = await transcribe(_resize_png(img), client, model=cfg.vision_model, extra=cfg.vision_extra,
-                                        usage=usage, job_id=job_id, doc_id=doc_id, deadline=deadline)
-                return i, text, f"vision:{cfg.vision_model}"
-            except Exception as exc:  # noqa: BLE001 - fall back to local OCR for this page
-                log.warning("vision transcription failed; using local OCR", extra={"job_id": job_id, "page": i + 1,
-                                                                                   "error": str(exc)[:200]})
-        r = await asyncio.to_thread(run_ocr, cfg.fallback_ocr, img, cache=cache)
-        return i, r.text, f"ocr:{cfg.fallback_ocr}"
-
-    for i, text, method in await asyncio.gather(*(one(i) for i in scanned)):
+    got = await transcribe_pages(path, scanned, client=client, cfg=cfg, cache=cache, usage=usage, job_id=job_id,
+                                 doc_id=doc_id, deadline=deadline, file_sha=sha)
+    for i, (text, method) in got.items():
         texts[i] = text
         pages[i] = PageInfo(number=i + 1, method=method, chars=len(text))
     return assemble_pdf(path.name, texts, pages, variant=f"{cfg.pdf_text_engine}+{cfg.scanned_mode}",
