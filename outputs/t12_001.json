@@ -64,7 +64,7 @@
    },
    "amount_first_month": {
     "value": 703733.07,
-    "citation": "[Report1!C13] 703733.07",
+    "citation": "[Report1!C13:C13] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C13"
@@ -72,7 +72,7 @@
    },
    "amount_last_month": {
     "value": 707564.91,
-    "citation": "[Report1!N13] 707564.91",
+    "citation": "[Report1!N13:N13] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N13"
@@ -162,7 +162,7 @@
    },
    "amount_first_month": {
     "value": 118.76,
-    "citation": "[Report1!C14] 118.76",
+    "citation": "[Report1!C14:C14] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C14"
@@ -170,7 +170,7 @@
    },
    "amount_last_month": {
     "value": 177.19,
-    "citation": "[Report1!N14] 177.19",
+    "citation": "[Report1!N14:N14] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N14"
@@ -260,7 +260,7 @@
    },
    "amount_first_month": {
     "value": -6390,
-    "citation": "[Report1!C15] -6390",
+    "citation": "[Report1!C15:C15] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C15"
@@ -268,7 +268,7 @@
    },
    "amount_last_month": {
     "value": 14641,
-    "citation": "[Report1!N15] 14641",
+    "citation": "[Report1!N15:N15] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N15"
@@ -358,7 +358,7 @@
    },
    "amount_first_month": {
     "value": 64,
-    "citation": "[Report1!C16] 64",
+    "citation": "[Report1!C16:C16] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C16"
@@ -366,7 +366,7 @@
    },
    "amount_last_month": {
     "value": 5921,
-    "citation": "[Report1!N16] 5921",
+    "citation": "[Report1!N16:N16] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N16"
@@ -456,7 +456,7 @@
    },
    "amount_first_month": {
     "value": -28683,
-    "citation": "[Report1!C17] -28683",
+    "citation": "[Report1!C17:C17] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C17"
@@ -464,7 +464,7 @@
    },
    "amount_last_month": {
     "value": -8833,
-    "citation": "[Report1!N17] -8833",
+    "citation": "[Report1!N17:N17] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N17"
@@ -554,7 +554,7 @@
    },
    "amount_first_month": {
     "value": 48.29,
-    "citation": "[Report1!C18] 48.29",
+    "citation": "[Report1!C18:C18] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C18"
@@ -562,7 +562,7 @@
    },
    "amount_last_month": {
     "value": 81.82,
-    "citation": "[Report1!N18] 81.82",
+    "citation": "[Report1!N18:N18] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N18"
@@ -652,7 +652,7 @@
    },
    "amount_first_month": {
     "value": 668891.12,
-    "citation": "[Report1!C19] 668891.12",
+    "citation": "[Report1!C19:C19] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C19"
@@ -660,7 +660,7 @@
    },
    "amount_last_month": {
     "value": 719552.92,
-    "citation": "[Report1!N19] 719552.92",
+    "citation": "[Report1!N19:N19] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N19"
@@ -750,7 +750,7 @@
    },
    "amount_first_month": {
     "value": -10628.65,
-    "citation": "[Report1!C21] -10628.65",
+    "citation": "[Report1!C21:C21] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C21"
@@ -758,7 +758,7 @@
    },
    "amount_last_month": {
     "value": -17946.45,
-    "citation": "[Report1!N21] -17946.45",
+    "citation": "[Report1!N21:N21] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N21"
@@ -848,7 +848,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C22] 0",
+    "citation": "[Report1!C22:C22] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C22"
@@ -856,7 +856,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N22] 0",
+    "citation": "[Report1!N22:N22] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N22"
@@ -946,7 +946,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C23] 0",
+    "citation": "[Report1!C23:C23] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C23"
@@ -954,7 +954,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N23] 0",
+    "citation": "[Report1!N23:N23] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N23"
@@ -1044,7 +1044,7 @@
    },
    "amount_first_month": {
     "value": 6486.94,
-    "citation": "[Report1!C24] 6486.94",
+    "citation": "[Report1!C24:C24] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C24"
@@ -1052,7 +1052,7 @@
    },
    "amount_last_month": {
     "value": 1483.2,
-    "citation": "[Report1!N24] 1483.2",
+    "citation": "[Report1!N24:N24] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N24"
@@ -1142,7 +1142,7 @@
    },
    "amount_first_month": {
     "value": -1985,
-    "citation": "[Report1!C25] -1985",
+    "citation": "[Report1!C25:C25] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C25"
@@ -1150,7 +1150,7 @@
    },
    "amount_last_month": {
     "value": -1985,
-    "citation": "[Report1!N25] -1985",
+    "citation": "[Report1!N25:N25] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N25"
@@ -1240,7 +1240,7 @@
    },
    "amount_first_month": {
     "value": -1974,
-    "citation": "[Report1!C26] -1974",
+    "citation": "[Report1!C26:C26] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C26"
@@ -1248,7 +1248,7 @@
    },
    "amount_last_month": {
     "value": -1881,
-    "citation": "[Report1!N26] -1881",
+    "citation": "[Report1!N26:N26] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N26"
@@ -1338,7 +1338,7 @@
    },
    "amount_first_month": {
     "value": -8100.71,
-    "citation": "[Report1!C27] -8100.71",
+    "citation": "[Report1!C27:C27] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C27"
@@ -1346,7 +1346,7 @@
    },
    "amount_last_month": {
     "value": -20329.25,
-    "citation": "[Report1!N27] -20329.25",
+    "citation": "[Report1!N27:N27] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N27"
@@ -1436,7 +1436,7 @@
    },
    "amount_first_month": {
     "value": 660790.41,
-    "citation": "[Report1!C28] 660790.41",
+    "citation": "[Report1!C28:C28] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C28"
@@ -1444,7 +1444,7 @@
    },
    "amount_last_month": {
     "value": 699223.67,
-    "citation": "[Report1!N28] 699223.67",
+    "citation": "[Report1!N28:N28] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N28"
@@ -1534,7 +1534,7 @@
    },
    "amount_first_month": {
     "value": 211.35,
-    "citation": "[Report1!C30] 211.35",
+    "citation": "[Report1!C30:C30] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C30"
@@ -1542,7 +1542,7 @@
    },
    "amount_last_month": {
     "value": 195.18,
-    "citation": "[Report1!N30] 195.18",
+    "citation": "[Report1!N30:N30] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N30"
@@ -1632,7 +1632,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C31] 0",
+    "citation": "[Report1!C31:C31] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C31"
@@ -1640,7 +1640,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N31] 0",
+    "citation": "[Report1!N31:N31] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N31"
@@ -1730,7 +1730,7 @@
    },
    "amount_first_month": {
     "value": 27549.85,
-    "citation": "[Report1!C32] 27549.85",
+    "citation": "[Report1!C32:C32] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C32"
@@ -1738,7 +1738,7 @@
    },
    "amount_last_month": {
     "value": 27734.68,
-    "citation": "[Report1!N32] 27734.68",
+    "citation": "[Report1!N32:N32] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N32"
@@ -1828,7 +1828,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C33] 0",
+    "citation": "[Report1!C33:C33] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C33"
@@ -1836,7 +1836,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N33] 0",
+    "citation": "[Report1!N33:N33] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N33"
@@ -1926,7 +1926,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C34] 0",
+    "citation": "[Report1!C34:C34] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C34"
@@ -1934,7 +1934,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N34] 0",
+    "citation": "[Report1!N34:N34] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N34"
@@ -2024,7 +2024,7 @@
    },
    "amount_first_month": {
     "value": 675.89,
-    "citation": "[Report1!C35] 675.89",
+    "citation": "[Report1!C35:C35] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C35"
@@ -2032,7 +2032,7 @@
    },
    "amount_last_month": {
     "value": 3376.6,
-    "citation": "[Report1!N35] 3376.6",
+    "citation": "[Report1!N35:N35] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N35"
@@ -2122,7 +2122,7 @@
    },
    "amount_first_month": {
     "value": 1435.77,
-    "citation": "[Report1!C36] 1435.77",
+    "citation": "[Report1!C36:C36] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C36"
@@ -2130,7 +2130,7 @@
    },
    "amount_last_month": {
     "value": -2383.93,
-    "citation": "[Report1!N36] -2383.93",
+    "citation": "[Report1!N36:N36] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N36"
@@ -2220,7 +2220,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C37] 0",
+    "citation": "[Report1!C37:C37] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C37"
@@ -2228,7 +2228,7 @@
    },
    "amount_last_month": {
     "value": 206,
-    "citation": "[Report1!N37] 206",
+    "citation": "[Report1!N37:N37] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N37"
@@ -2318,7 +2318,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C38] 0",
+    "citation": "[Report1!C38:C38] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C38"
@@ -2326,7 +2326,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N38] 0",
+    "citation": "[Report1!N38:N38] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N38"
@@ -2416,7 +2416,7 @@
    },
    "amount_first_month": {
     "value": 565.99,
-    "citation": "[Report1!C39] 565.99",
+    "citation": "[Report1!C39:C39] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C39"
@@ -2424,7 +2424,7 @@
    },
    "amount_last_month": {
     "value": 304.4,
-    "citation": "[Report1!N39] 304.4",
+    "citation": "[Report1!N39:N39] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N39"
@@ -2514,7 +2514,7 @@
    },
    "amount_first_month": {
     "value": 87,
-    "citation": "[Report1!C40] 87",
+    "citation": "[Report1!C40:C40] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C40"
@@ -2522,7 +2522,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N40] 0",
+    "citation": "[Report1!N40:N40] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N40"
@@ -2612,7 +2612,7 @@
    },
    "amount_first_month": {
     "value": 993,
-    "citation": "[Report1!C41] 993",
+    "citation": "[Report1!C41:C41] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C41"
@@ -2620,7 +2620,7 @@
    },
    "amount_last_month": {
     "value": 1164,
-    "citation": "[Report1!N41] 1164",
+    "citation": "[Report1!N41:N41] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N41"
@@ -2710,7 +2710,7 @@
    },
    "amount_first_month": {
     "value": 1756.77,
-    "citation": "[Report1!C42] 1756.77",
+    "citation": "[Report1!C42:C42] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C42"
@@ -2718,7 +2718,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N42] 0",
+    "citation": "[Report1!N42:N42] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N42"
@@ -2808,7 +2808,7 @@
    },
    "amount_first_month": {
     "value": 112.88,
-    "citation": "[Report1!C43] 112.88",
+    "citation": "[Report1!C43:C43] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C43"
@@ -2816,7 +2816,7 @@
    },
    "amount_last_month": {
     "value": 185.39,
-    "citation": "[Report1!N43] 185.39",
+    "citation": "[Report1!N43:N43] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N43"
@@ -2906,7 +2906,7 @@
    },
    "amount_first_month": {
     "value": 272.92,
-    "citation": "[Report1!C44] 272.92",
+    "citation": "[Report1!C44:C44] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C44"
@@ -2914,7 +2914,7 @@
    },
    "amount_last_month": {
     "value": 418.61,
-    "citation": "[Report1!N44] 418.61",
+    "citation": "[Report1!N44:N44] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N44"
@@ -3004,7 +3004,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C45] 0",
+    "citation": "[Report1!C45:C45] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C45"
@@ -3012,7 +3012,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N45] 0",
+    "citation": "[Report1!N45:N45] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N45"
@@ -3102,7 +3102,7 @@
    },
    "amount_first_month": {
     "value": 33661.42,
-    "citation": "[Report1!C46] 33661.42",
+    "citation": "[Report1!C46:C46] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C46"
@@ -3110,7 +3110,7 @@
    },
    "amount_last_month": {
     "value": 31200.93,
-    "citation": "[Report1!N46] 31200.93",
+    "citation": "[Report1!N46:N46] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N46"
@@ -3200,7 +3200,7 @@
    },
    "amount_first_month": {
     "value": 153.54,
-    "citation": "[Report1!C48] 153.54",
+    "citation": "[Report1!C48:C48] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C48"
@@ -3208,7 +3208,7 @@
    },
    "amount_last_month": {
     "value": 4148.28,
-    "citation": "[Report1!N48] 4148.28",
+    "citation": "[Report1!N48:N48] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N48"
@@ -3298,7 +3298,7 @@
    },
    "amount_first_month": {
     "value": 153.54,
-    "citation": "[Report1!C49] 153.54",
+    "citation": "[Report1!C49:C49] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C49"
@@ -3306,7 +3306,7 @@
    },
    "amount_last_month": {
     "value": 4148.28,
-    "citation": "[Report1!N49] 4148.28",
+    "citation": "[Report1!N49:N49] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N49"
@@ -3396,7 +3396,7 @@
    },
    "amount_first_month": {
     "value": 694605.37,
-    "citation": "[Report1!C50] 694605.37",
+    "citation": "[Report1!C50:C50] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C50"
@@ -3404,7 +3404,7 @@
    },
    "amount_last_month": {
     "value": 734572.88,
-    "citation": "[Report1!N50] 734572.88",
+    "citation": "[Report1!N50:N50] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N50"
@@ -3494,7 +3494,7 @@
    },
    "amount_first_month": {
     "value": 21173.82,
-    "citation": "[Report1!C53] 21173.82",
+    "citation": "[Report1!C53:C53] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C53"
@@ -3502,7 +3502,7 @@
    },
    "amount_last_month": {
     "value": 20384.44,
-    "citation": "[Report1!N53] 20384.44",
+    "citation": "[Report1!N53:N53] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N53"
@@ -3592,7 +3592,7 @@
    },
    "amount_first_month": {
     "value": 6368.73,
-    "citation": "[Report1!C54] 6368.73",
+    "citation": "[Report1!C54:C54] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C54"
@@ -3600,7 +3600,7 @@
    },
    "amount_last_month": {
     "value": 1018.28,
-    "citation": "[Report1!N54] 1018.28",
+    "citation": "[Report1!N54:N54] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N54"
@@ -3690,7 +3690,7 @@
    },
    "amount_first_month": {
     "value": 5243.95,
-    "citation": "[Report1!C55] 5243.95",
+    "citation": "[Report1!C55:C55] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C55"
@@ -3698,7 +3698,7 @@
    },
    "amount_last_month": {
     "value": 5410.2,
-    "citation": "[Report1!N55] 5410.2",
+    "citation": "[Report1!N55:N55] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N55"
@@ -3788,7 +3788,7 @@
    },
    "amount_first_month": {
     "value": 32786.5,
-    "citation": "[Report1!C56] 32786.5",
+    "citation": "[Report1!C56:C56] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C56"
@@ -3796,7 +3796,7 @@
    },
    "amount_last_month": {
     "value": 26812.92,
-    "citation": "[Report1!N56] 26812.92",
+    "citation": "[Report1!N56:N56] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N56"
@@ -3886,7 +3886,7 @@
    },
    "amount_first_month": {
     "value": 1836.1,
-    "citation": "[Report1!C58] 1836.1",
+    "citation": "[Report1!C58:C58] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C58"
@@ -3894,7 +3894,7 @@
    },
    "amount_last_month": {
     "value": 360.35,
-    "citation": "[Report1!N58] 360.35",
+    "citation": "[Report1!N58:N58] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N58"
@@ -3984,7 +3984,7 @@
    },
    "amount_first_month": {
     "value": 3536.28,
-    "citation": "[Report1!C59] 3536.28",
+    "citation": "[Report1!C59:C59] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C59"
@@ -3992,7 +3992,7 @@
    },
    "amount_last_month": {
     "value": 3481.02,
-    "citation": "[Report1!N59] 3481.02",
+    "citation": "[Report1!N59:N59] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N59"
@@ -4082,7 +4082,7 @@
    },
    "amount_first_month": {
     "value": 500,
-    "citation": "[Report1!C60] 500",
+    "citation": "[Report1!C60:C60] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C60"
@@ -4090,7 +4090,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N60] 0",
+    "citation": "[Report1!N60:N60] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N60"
@@ -4180,7 +4180,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C61] 0",
+    "citation": "[Report1!C61:C61] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C61"
@@ -4188,7 +4188,7 @@
    },
    "amount_last_month": {
     "value": 3745.4,
-    "citation": "[Report1!N61] 3745.4",
+    "citation": "[Report1!N61:N61] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N61"
@@ -4278,7 +4278,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C62] 0",
+    "citation": "[Report1!C62:C62] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C62"
@@ -4286,7 +4286,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N62] 0",
+    "citation": "[Report1!N62:N62] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N62"
@@ -4376,7 +4376,7 @@
    },
    "amount_first_month": {
     "value": -521.27,
-    "citation": "[Report1!C63] -521.27",
+    "citation": "[Report1!C63:C63] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C63"
@@ -4384,7 +4384,7 @@
    },
    "amount_last_month": {
     "value": 2990.82,
-    "citation": "[Report1!N63] 2990.82",
+    "citation": "[Report1!N63:N63] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N63"
@@ -4474,7 +4474,7 @@
    },
    "amount_first_month": {
     "value": 1011.46,
-    "citation": "[Report1!C64] 1011.46",
+    "citation": "[Report1!C64:C64] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C64"
@@ -4482,7 +4482,7 @@
    },
    "amount_last_month": {
     "value": 2864.55,
-    "citation": "[Report1!N64] 2864.55",
+    "citation": "[Report1!N64:N64] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N64"
@@ -4572,7 +4572,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C65] 0",
+    "citation": "[Report1!C65:C65] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C65"
@@ -4580,7 +4580,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N65] 0",
+    "citation": "[Report1!N65:N65] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N65"
@@ -4670,7 +4670,7 @@
    },
    "amount_first_month": {
     "value": 1612.52,
-    "citation": "[Report1!C66] 1612.52",
+    "citation": "[Report1!C66:C66] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C66"
@@ -4678,7 +4678,7 @@
    },
    "amount_last_month": {
     "value": 1867.47,
-    "citation": "[Report1!N66] 1867.47",
+    "citation": "[Report1!N66:N66] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N66"
@@ -4768,7 +4768,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C67] 0",
+    "citation": "[Report1!C67:C67] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C67"
@@ -4776,7 +4776,7 @@
    },
    "amount_last_month": {
     "value": 2652.74,
-    "citation": "[Report1!N67] 2652.74",
+    "citation": "[Report1!N67:N67] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N67"
@@ -4866,7 +4866,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C68] 0",
+    "citation": "[Report1!C68:C68] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C68"
@@ -4874,7 +4874,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N68] 0",
+    "citation": "[Report1!N68:N68] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N68"
@@ -4964,7 +4964,7 @@
    },
    "amount_first_month": {
     "value": 133.57,
-    "citation": "[Report1!C69] 133.57",
+    "citation": "[Report1!C69:C69] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C69"
@@ -4972,7 +4972,7 @@
    },
    "amount_last_month": {
     "value": 292.55,
-    "citation": "[Report1!N69] 292.55",
+    "citation": "[Report1!N69:N69] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N69"
@@ -5062,7 +5062,7 @@
    },
    "amount_first_month": {
     "value": 53179.81,
-    "citation": "[Report1!C70] 53179.81",
+    "citation": "[Report1!C70:C70] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C70"
@@ -5070,7 +5070,7 @@
    },
    "amount_last_month": {
     "value": 54459.95,
-    "citation": "[Report1!N70] 54459.95",
+    "citation": "[Report1!N70:N70] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N70"
@@ -5160,7 +5160,7 @@
    },
    "amount_first_month": {
     "value": 931.37,
-    "citation": "[Report1!C71] 931.37",
+    "citation": "[Report1!C71:C71] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C71"
@@ -5168,7 +5168,7 @@
    },
    "amount_last_month": {
     "value": 163.05,
-    "citation": "[Report1!N71] 163.05",
+    "citation": "[Report1!N71:N71] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N71"
@@ -5258,7 +5258,7 @@
    },
    "amount_first_month": {
     "value": 1447.64,
-    "citation": "[Report1!C72] 1447.64",
+    "citation": "[Report1!C72:C72] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C72"
@@ -5266,7 +5266,7 @@
    },
    "amount_last_month": {
     "value": 929.49,
-    "citation": "[Report1!N72] 929.49",
+    "citation": "[Report1!N72:N72] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N72"
@@ -5356,7 +5356,7 @@
    },
    "amount_first_month": {
     "value": 728.08,
-    "citation": "[Report1!C73] 728.08",
+    "citation": "[Report1!C73:C73] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C73"
@@ -5364,7 +5364,7 @@
    },
    "amount_last_month": {
     "value": 652.82,
-    "citation": "[Report1!N73] 652.82",
+    "citation": "[Report1!N73:N73] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N73"
@@ -5454,7 +5454,7 @@
    },
    "amount_first_month": {
     "value": 363.38,
-    "citation": "[Report1!C74] 363.38",
+    "citation": "[Report1!C74:C74] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C74"
@@ -5462,7 +5462,7 @@
    },
    "amount_last_month": {
     "value": 2896.85,
-    "citation": "[Report1!N74] 2896.85",
+    "citation": "[Report1!N74:N74] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N74"
@@ -5552,7 +5552,7 @@
    },
    "amount_first_month": {
     "value": 7460.84,
-    "citation": "[Report1!C75] 7460.84",
+    "citation": "[Report1!C75:C75] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C75"
@@ -5560,7 +5560,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N75] 0",
+    "citation": "[Report1!N75:N75] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N75"
@@ -5650,7 +5650,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C76] 0",
+    "citation": "[Report1!C76:C76] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C76"
@@ -5658,7 +5658,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N76] 0",
+    "citation": "[Report1!N76:N76] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N76"
@@ -5748,7 +5748,7 @@
    },
    "amount_first_month": {
     "value": 8163.02,
-    "citation": "[Report1!C77] 8163.02",
+    "citation": "[Report1!C77:C77] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C77"
@@ -5756,7 +5756,7 @@
    },
    "amount_last_month": {
     "value": 1080.13,
-    "citation": "[Report1!N77] 1080.13",
+    "citation": "[Report1!N77:N77] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N77"
@@ -5846,7 +5846,7 @@
    },
    "amount_first_month": {
     "value": 2671.38,
-    "citation": "[Report1!C78] 2671.38",
+    "citation": "[Report1!C78:C78] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C78"
@@ -5854,7 +5854,7 @@
    },
    "amount_last_month": {
     "value": 2011.55,
-    "citation": "[Report1!N78] 2011.55",
+    "citation": "[Report1!N78:N78] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N78"
@@ -5944,7 +5944,7 @@
    },
    "amount_first_month": {
     "value": -179.94,
-    "citation": "[Report1!C79] -179.94",
+    "citation": "[Report1!C79:C79] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C79"
@@ -5952,7 +5952,7 @@
    },
    "amount_last_month": {
     "value": 804.68,
-    "citation": "[Report1!N79] 804.68",
+    "citation": "[Report1!N79:N79] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N79"
@@ -6042,7 +6042,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C80] 0",
+    "citation": "[Report1!C80:C80] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C80"
@@ -6050,7 +6050,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N80] 0",
+    "citation": "[Report1!N80:N80] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N80"
@@ -6140,7 +6140,7 @@
    },
    "amount_first_month": {
     "value": 82874.24,
-    "citation": "[Report1!C81] 82874.24",
+    "citation": "[Report1!C81:C81] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C81"
@@ -6148,7 +6148,7 @@
    },
    "amount_last_month": {
     "value": 81253.42,
-    "citation": "[Report1!N81] 81253.42",
+    "citation": "[Report1!N81:N81] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N81"
@@ -6238,7 +6238,7 @@
    },
    "amount_first_month": {
     "value": 9904.36,
-    "citation": "[Report1!C83] 9904.36",
+    "citation": "[Report1!C83:C83] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C83"
@@ -6246,7 +6246,7 @@
    },
    "amount_last_month": {
     "value": 6799.35,
-    "citation": "[Report1!N83] 6799.35",
+    "citation": "[Report1!N83:N83] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N83"
@@ -6336,7 +6336,7 @@
    },
    "amount_first_month": {
     "value": 1123.35,
-    "citation": "[Report1!C84] 1123.35",
+    "citation": "[Report1!C84:C84] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C84"
@@ -6344,7 +6344,7 @@
    },
    "amount_last_month": {
     "value": 810.8,
-    "citation": "[Report1!N84] 810.8",
+    "citation": "[Report1!N84:N84] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N84"
@@ -6434,7 +6434,7 @@
    },
    "amount_first_month": {
     "value": 15974.27,
-    "citation": "[Report1!C85] 15974.27",
+    "citation": "[Report1!C85:C85] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C85"
@@ -6442,7 +6442,7 @@
    },
    "amount_last_month": {
     "value": 18022.93,
-    "citation": "[Report1!N85] 18022.93",
+    "citation": "[Report1!N85:N85] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N85"
@@ -6532,7 +6532,7 @@
    },
    "amount_first_month": {
     "value": 372.03,
-    "citation": "[Report1!C86] 372.03",
+    "citation": "[Report1!C86:C86] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C86"
@@ -6540,7 +6540,7 @@
    },
    "amount_last_month": {
     "value": 28.26,
-    "citation": "[Report1!N86] 28.26",
+    "citation": "[Report1!N86:N86] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N86"
@@ -6630,7 +6630,7 @@
    },
    "amount_first_month": {
     "value": 20272.48,
-    "citation": "[Report1!C87] 20272.48",
+    "citation": "[Report1!C87:C87] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C87"
@@ -6638,7 +6638,7 @@
    },
    "amount_last_month": {
     "value": 8993.74,
-    "citation": "[Report1!N87] 8993.74",
+    "citation": "[Report1!N87:N87] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N87"
@@ -6728,7 +6728,7 @@
    },
    "amount_first_month": {
     "value": 1871.06,
-    "citation": "[Report1!C88] 1871.06",
+    "citation": "[Report1!C88:C88] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C88"
@@ -6736,7 +6736,7 @@
    },
    "amount_last_month": {
     "value": 2284.49,
-    "citation": "[Report1!N88] 2284.49",
+    "citation": "[Report1!N88:N88] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N88"
@@ -6826,7 +6826,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C89] 0",
+    "citation": "[Report1!C89:C89] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C89"
@@ -6834,7 +6834,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N89] 0",
+    "citation": "[Report1!N89:N89] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N89"
@@ -6924,7 +6924,7 @@
    },
    "amount_first_month": {
     "value": 49517.55,
-    "citation": "[Report1!C90] 49517.55",
+    "citation": "[Report1!C90:C90] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C90"
@@ -6932,7 +6932,7 @@
    },
    "amount_last_month": {
     "value": 36939.57,
-    "citation": "[Report1!N90] 36939.57",
+    "citation": "[Report1!N90:N90] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N90"
@@ -7022,7 +7022,7 @@
    },
    "amount_first_month": {
     "value": 30426.07,
-    "citation": "[Report1!C92] 30426.07",
+    "citation": "[Report1!C92:C92] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C92"
@@ -7030,7 +7030,7 @@
    },
    "amount_last_month": {
     "value": 35314.07,
-    "citation": "[Report1!N92] 35314.07",
+    "citation": "[Report1!N92:N92] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N92"
@@ -7120,7 +7120,7 @@
    },
    "amount_first_month": {
     "value": 1274.89,
-    "citation": "[Report1!C93] 1274.89",
+    "citation": "[Report1!C93:C93] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C93"
@@ -7128,7 +7128,7 @@
    },
    "amount_last_month": {
     "value": 1587.52,
-    "citation": "[Report1!N93] 1587.52",
+    "citation": "[Report1!N93:N93] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N93"
@@ -7218,7 +7218,7 @@
    },
    "amount_first_month": {
     "value": 1477.85,
-    "citation": "[Report1!C94] 1477.85",
+    "citation": "[Report1!C94:C94] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C94"
@@ -7226,7 +7226,7 @@
    },
    "amount_last_month": {
     "value": 1777.8,
-    "citation": "[Report1!N94] 1777.8",
+    "citation": "[Report1!N94:N94] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N94"
@@ -7316,7 +7316,7 @@
    },
    "amount_first_month": {
     "value": 24689.29,
-    "citation": "[Report1!C95] 24689.29",
+    "citation": "[Report1!C95:C95] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C95"
@@ -7324,7 +7324,7 @@
    },
    "amount_last_month": {
     "value": 5475.3,
-    "citation": "[Report1!N95] 5475.3",
+    "citation": "[Report1!N95:N95] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N95"
@@ -7414,7 +7414,7 @@
    },
    "amount_first_month": {
     "value": 99.5,
-    "citation": "[Report1!C96] 99.5",
+    "citation": "[Report1!C96:C96] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C96"
@@ -7422,7 +7422,7 @@
    },
    "amount_last_month": {
     "value": 3.91,
-    "citation": "[Report1!N96] 3.91",
+    "citation": "[Report1!N96:N96] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N96"
@@ -7512,7 +7512,7 @@
    },
    "amount_first_month": {
     "value": 2887.49,
-    "citation": "[Report1!C97] 2887.49",
+    "citation": "[Report1!C97:C97] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C97"
@@ -7520,7 +7520,7 @@
    },
    "amount_last_month": {
     "value": 1771.89,
-    "citation": "[Report1!N97] 1771.89",
+    "citation": "[Report1!N97:N97] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N97"
@@ -7610,7 +7610,7 @@
    },
    "amount_first_month": {
     "value": 235.88,
-    "citation": "[Report1!C98] 235.88",
+    "citation": "[Report1!C98:C98] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C98"
@@ -7618,7 +7618,7 @@
    },
    "amount_last_month": {
     "value": 432.38,
-    "citation": "[Report1!N98] 432.38",
+    "citation": "[Report1!N98:N98] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N98"
@@ -7708,7 +7708,7 @@
    },
    "amount_first_month": {
     "value": 454.76,
-    "citation": "[Report1!C99] 454.76",
+    "citation": "[Report1!C99:C99] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C99"
@@ -7716,7 +7716,7 @@
    },
    "amount_last_month": {
     "value": 605.19,
-    "citation": "[Report1!N99] 605.19",
+    "citation": "[Report1!N99:N99] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N99"
@@ -7806,7 +7806,7 @@
    },
    "amount_first_month": {
     "value": 28.13,
-    "citation": "[Report1!C100] 28.13",
+    "citation": "[Report1!C100:C100] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C100"
@@ -7814,7 +7814,7 @@
    },
    "amount_last_month": {
     "value": 29140.78,
-    "citation": "[Report1!N100] 29140.78",
+    "citation": "[Report1!N100:N100] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N100"
@@ -7904,7 +7904,7 @@
    },
    "amount_first_month": {
     "value": 1046.57,
-    "citation": "[Report1!C101] 1046.57",
+    "citation": "[Report1!C101:C101] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C101"
@@ -7912,7 +7912,7 @@
    },
    "amount_last_month": {
     "value": 3315.01,
-    "citation": "[Report1!N101] 3315.01",
+    "citation": "[Report1!N101:N101] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N101"
@@ -8002,7 +8002,7 @@
    },
    "amount_first_month": {
     "value": 827.73,
-    "citation": "[Report1!C102] 827.73",
+    "citation": "[Report1!C102:C102] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C102"
@@ -8010,7 +8010,7 @@
    },
    "amount_last_month": {
     "value": 2515.56,
-    "citation": "[Report1!N102] 2515.56",
+    "citation": "[Report1!N102:N102] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N102"
@@ -8100,7 +8100,7 @@
    },
    "amount_first_month": {
     "value": 326.62,
-    "citation": "[Report1!C103] 326.62",
+    "citation": "[Report1!C103:C103] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C103"
@@ -8108,7 +8108,7 @@
    },
    "amount_last_month": {
     "value": 427.25,
-    "citation": "[Report1!N103] 427.25",
+    "citation": "[Report1!N103:N103] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N103"
@@ -8198,7 +8198,7 @@
    },
    "amount_first_month": {
     "value": 13.03,
-    "citation": "[Report1!C104] 13.03",
+    "citation": "[Report1!C104:C104] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C104"
@@ -8206,7 +8206,7 @@
    },
    "amount_last_month": {
     "value": 735.97,
-    "citation": "[Report1!N104] 735.97",
+    "citation": "[Report1!N104:N104] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N104"
@@ -8296,7 +8296,7 @@
    },
    "amount_first_month": {
     "value": 234.07,
-    "citation": "[Report1!C105] 234.07",
+    "citation": "[Report1!C105:C105] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C105"
@@ -8304,7 +8304,7 @@
    },
    "amount_last_month": {
     "value": 245.08,
-    "citation": "[Report1!N105] 245.08",
+    "citation": "[Report1!N105:N105] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N105"
@@ -8394,7 +8394,7 @@
    },
    "amount_first_month": {
     "value": 338.84,
-    "citation": "[Report1!C106] 338.84",
+    "citation": "[Report1!C106:C106] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C106"
@@ -8402,7 +8402,7 @@
    },
    "amount_last_month": {
     "value": 707.34,
-    "citation": "[Report1!N106] 707.34",
+    "citation": "[Report1!N106:N106] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N106"
@@ -8492,7 +8492,7 @@
    },
    "amount_first_month": {
     "value": 9430.87,
-    "citation": "[Report1!C107] 9430.87",
+    "citation": "[Report1!C107:C107] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C107"
@@ -8500,7 +8500,7 @@
    },
    "amount_last_month": {
     "value": 11186.44,
-    "citation": "[Report1!N107] 11186.44",
+    "citation": "[Report1!N107:N107] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N107"
@@ -8590,7 +8590,7 @@
    },
    "amount_first_month": {
     "value": 3096.94,
-    "citation": "[Report1!C108] 3096.94",
+    "citation": "[Report1!C108:C108] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C108"
@@ -8598,7 +8598,7 @@
    },
    "amount_last_month": {
     "value": 5960.46,
-    "citation": "[Report1!N108] 5960.46",
+    "citation": "[Report1!N108:N108] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N108"
@@ -8688,7 +8688,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C109] 0",
+    "citation": "[Report1!C109:C109] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C109"
@@ -8696,7 +8696,7 @@
    },
    "amount_last_month": {
     "value": 361.57,
-    "citation": "[Report1!N109] 361.57",
+    "citation": "[Report1!N109:N109] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N109"
@@ -8786,7 +8786,7 @@
    },
    "amount_first_month": {
     "value": 7890.05,
-    "citation": "[Report1!C110] 7890.05",
+    "citation": "[Report1!C110:C110] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C110"
@@ -8794,7 +8794,7 @@
    },
    "amount_last_month": {
     "value": -2727.16,
-    "citation": "[Report1!N110] -2727.16",
+    "citation": "[Report1!N110:N110] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N110"
@@ -8884,7 +8884,7 @@
    },
    "amount_first_month": {
     "value": 10096.44,
-    "citation": "[Report1!C111] 10096.44",
+    "citation": "[Report1!C111:C111] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C111"
@@ -8892,7 +8892,7 @@
    },
    "amount_last_month": {
     "value": 10315.81,
-    "citation": "[Report1!N111] 10315.81",
+    "citation": "[Report1!N111:N111] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N111"
@@ -8982,7 +8982,7 @@
    },
    "amount_first_month": {
     "value": 920.46,
-    "citation": "[Report1!C112] 920.46",
+    "citation": "[Report1!C112:C112] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C112"
@@ -8990,7 +8990,7 @@
    },
    "amount_last_month": {
     "value": 6253.84,
-    "citation": "[Report1!N112] 6253.84",
+    "citation": "[Report1!N112:N112] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N112"
@@ -9080,7 +9080,7 @@
    },
    "amount_first_month": {
     "value": 95795.48,
-    "citation": "[Report1!C113] 95795.48",
+    "citation": "[Report1!C113:C113] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C113"
@@ -9088,7 +9088,7 @@
    },
    "amount_last_month": {
     "value": 115406.01,
-    "citation": "[Report1!N113] 115406.01",
+    "citation": "[Report1!N113:N113] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N113"
@@ -9178,7 +9178,7 @@
    },
    "amount_first_month": {
     "value": 3754,
-    "citation": "[Report1!C115] 3754",
+    "citation": "[Report1!C115:C115] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C115"
@@ -9186,7 +9186,7 @@
    },
    "amount_last_month": {
     "value": 3754,
-    "citation": "[Report1!N115] 3754",
+    "citation": "[Report1!N115:N115] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N115"
@@ -9276,7 +9276,7 @@
    },
    "amount_first_month": {
     "value": 858.89,
-    "citation": "[Report1!C116] 858.89",
+    "citation": "[Report1!C116:C116] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C116"
@@ -9284,7 +9284,7 @@
    },
    "amount_last_month": {
     "value": 662.24,
-    "citation": "[Report1!N116] 662.24",
+    "citation": "[Report1!N116:N116] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N116"
@@ -9374,7 +9374,7 @@
    },
    "amount_first_month": {
     "value": -615.97,
-    "citation": "[Report1!C117] -615.97",
+    "citation": "[Report1!C117:C117] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C117"
@@ -9382,7 +9382,7 @@
    },
    "amount_last_month": {
     "value": 386.39,
-    "citation": "[Report1!N117] 386.39",
+    "citation": "[Report1!N117:N117] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N117"
@@ -9472,7 +9472,7 @@
    },
    "amount_first_month": {
     "value": 3996.92,
-    "citation": "[Report1!C118] 3996.92",
+    "citation": "[Report1!C118:C118] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C118"
@@ -9480,7 +9480,7 @@
    },
    "amount_last_month": {
     "value": 4802.63,
-    "citation": "[Report1!N118] 4802.63",
+    "citation": "[Report1!N118:N118] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N118"
@@ -9570,7 +9570,7 @@
    },
    "amount_first_month": {
     "value": 20321.25,
-    "citation": "[Report1!C120] 20321.25",
+    "citation": "[Report1!C120:C120] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C120"
@@ -9578,7 +9578,7 @@
    },
    "amount_last_month": {
     "value": 22229.13,
-    "citation": "[Report1!N120] 22229.13",
+    "citation": "[Report1!N120:N120] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N120"
@@ -9668,7 +9668,7 @@
    },
    "amount_first_month": {
     "value": 20321.25,
-    "citation": "[Report1!C121] 20321.25",
+    "citation": "[Report1!C121:C121] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C121"
@@ -9676,7 +9676,7 @@
    },
    "amount_last_month": {
     "value": 22229.13,
-    "citation": "[Report1!N121] 22229.13",
+    "citation": "[Report1!N121:N121] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N121"
@@ -9766,7 +9766,7 @@
    },
    "amount_first_month": {
     "value": 285291.94,
-    "citation": "[Report1!C122] 285291.94",
+    "citation": "[Report1!C122:C122] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C122"
@@ -9774,7 +9774,7 @@
    },
    "amount_last_month": {
     "value": 287443.68,
-    "citation": "[Report1!N122] 287443.68",
+    "citation": "[Report1!N122:N122] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N122"
@@ -9864,7 +9864,7 @@
    },
    "amount_first_month": {
     "value": 285291.94,
-    "citation": "[Report1!C123] 285291.94",
+    "citation": "[Report1!C123:C123] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C123"
@@ -9872,7 +9872,7 @@
    },
    "amount_last_month": {
     "value": 287443.68,
-    "citation": "[Report1!N123] 287443.68",
+    "citation": "[Report1!N123:N123] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N123"
@@ -9962,7 +9962,7 @@
    },
    "amount_first_month": {
     "value": 409313.43,
-    "citation": "[Report1!C124] 409313.43",
+    "citation": "[Report1!C124:C124] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C124"
@@ -9970,7 +9970,7 @@
    },
    "amount_last_month": {
     "value": 447129.2,
-    "citation": "[Report1!N124] 447129.2",
+    "citation": "[Report1!N124:N124] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N124"
@@ -10060,7 +10060,7 @@
    },
    "amount_first_month": {
     "value": 89061.64,
-    "citation": "[Report1!C127] 89061.64",
+    "citation": "[Report1!C127:C127] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C127"
@@ -10068,7 +10068,7 @@
    },
    "amount_last_month": {
     "value": 90168.64,
-    "citation": "[Report1!N127] 90168.64",
+    "citation": "[Report1!N127:N127] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N127"
@@ -10158,7 +10158,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C128] 0",
+    "citation": "[Report1!C128:C128] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C128"
@@ -10166,7 +10166,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N128] 0",
+    "citation": "[Report1!N128:N128] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N128"
@@ -10256,7 +10256,7 @@
    },
    "amount_first_month": {
     "value": 89061.64,
-    "citation": "[Report1!C129] 89061.64",
+    "citation": "[Report1!C129:C129] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C129"
@@ -10264,7 +10264,7 @@
    },
    "amount_last_month": {
     "value": 90168.64,
-    "citation": "[Report1!N129] 90168.64",
+    "citation": "[Report1!N129:N129] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N129"
@@ -10354,7 +10354,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C131] 0",
+    "citation": "[Report1!C131:C131] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C131"
@@ -10362,7 +10362,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N131] 0",
+    "citation": "[Report1!N131:N131] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N131"
@@ -10452,7 +10452,7 @@
    },
    "amount_first_month": {
     "value": 0,
-    "citation": "[Report1!C132] 0",
+    "citation": "[Report1!C132:C132] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C132"
@@ -10460,7 +10460,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N132] 0",
+    "citation": "[Report1!N132:N132] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N132"
@@ -10550,7 +10550,7 @@
    },
    "amount_first_month": {
     "value": 89061.64,
-    "citation": "[Report1!C133] 89061.64",
+    "citation": "[Report1!C133:C133] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C133"
@@ -10558,7 +10558,7 @@
    },
    "amount_last_month": {
     "value": 90168.64,
-    "citation": "[Report1!N133] 90168.64",
+    "citation": "[Report1!N133:N133] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N133"
@@ -10648,7 +10648,7 @@
    },
    "amount_first_month": {
     "value": 320251.79,
-    "citation": "[Report1!C134] 320251.79",
+    "citation": "[Report1!C134:C134] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C134"
@@ -10656,7 +10656,7 @@
    },
    "amount_last_month": {
     "value": 356960.56,
-    "citation": "[Report1!N134] 356960.56",
+    "citation": "[Report1!N134:N134] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N134"
@@ -10746,7 +10746,7 @@
    },
    "amount_first_month": {
     "value": 235607.48,
-    "citation": "[Report1!C136] 235607.48",
+    "citation": "[Report1!C136:C136] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C136"
@@ -10754,7 +10754,7 @@
    },
    "amount_last_month": {
     "value": 213951.02,
-    "citation": "[Report1!N136] 213951.02",
+    "citation": "[Report1!N136:N136] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N136"
@@ -10844,7 +10844,7 @@
    },
    "amount_first_month": {
     "value": 235607.48,
-    "citation": "[Report1!C137] 235607.48",
+    "citation": "[Report1!C137:C137] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C137"
@@ -10852,7 +10852,7 @@
    },
    "amount_last_month": {
     "value": 213951.02,
-    "citation": "[Report1!N137] 213951.02",
+    "citation": "[Report1!N137:N137] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N137"
@@ -10942,7 +10942,7 @@
    },
    "amount_first_month": {
     "value": 84644.31,
-    "citation": "[Report1!C138] 84644.31",
+    "citation": "[Report1!C138:C138] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C138"
@@ -10950,7 +10950,7 @@
    },
    "amount_last_month": {
     "value": 143009.54,
-    "citation": "[Report1!N138] 143009.54",
+    "citation": "[Report1!N138:N138] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N138"
@@ -11040,7 +11040,7 @@
    },
    "amount_first_month": {
     "value": 7340.19,
-    "citation": "[Report1!C140] 7340.19",
+    "citation": "[Report1!C140:C140] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C140"
@@ -11048,7 +11048,7 @@
    },
    "amount_last_month": {
     "value": 7340.19,
-    "citation": "[Report1!N140] 7340.19",
+    "citation": "[Report1!N140:N140] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N140"
@@ -11138,7 +11138,7 @@
    },
    "amount_first_month": {
     "value": 7340.19,
-    "citation": "[Report1!C141] 7340.19",
+    "citation": "[Report1!C141:C141] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C141"
@@ -11146,7 +11146,7 @@
    },
    "amount_last_month": {
     "value": 7340.19,
-    "citation": "[Report1!N141] 7340.19",
+    "citation": "[Report1!N141:N141] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N141"
@@ -11236,7 +11236,7 @@
    },
    "amount_first_month": {
     "value": 36019.42,
-    "citation": "[Report1!C143] 36019.42",
+    "citation": "[Report1!C143:C143] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C143"
@@ -11244,7 +11244,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N143] 0",
+    "citation": "[Report1!N143:N143] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N143"
@@ -11334,7 +11334,7 @@
    },
    "amount_first_month": {
     "value": 36019.42,
-    "citation": "[Report1!C144] 36019.42",
+    "citation": "[Report1!C144:C144] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C144"
@@ -11342,7 +11342,7 @@
    },
    "amount_last_month": {
     "value": 0,
-    "citation": "[Report1!N144] 0",
+    "citation": "[Report1!N144:N144] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N144"
@@ -11432,7 +11432,7 @@
    },
    "amount_first_month": {
     "value": 41284.7,
-    "citation": "[Report1!C145] 41284.7",
+    "citation": "[Report1!C145:C145] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C145"
@@ -11440,7 +11440,7 @@
    },
    "amount_last_month": {
     "value": 135669.35,
-    "citation": "[Report1!N145] 135669.35",
+    "citation": "[Report1!N145:N145] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N145"
@@ -11530,7 +11530,7 @@
    },
    "amount_first_month": {
     "value": 23536.23,
-    "citation": "[Report1!C147] 23536.23",
+    "citation": "[Report1!C147:C147] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C147"
@@ -11538,7 +11538,7 @@
    },
    "amount_last_month": {
     "value": 28112.8,
-    "citation": "[Report1!N147] 28112.8",
+    "citation": "[Report1!N147:N147] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N147"
@@ -11628,7 +11628,7 @@
    },
    "amount_first_month": {
     "value": 23536.23,
-    "citation": "[Report1!C148] 23536.23",
+    "citation": "[Report1!C148:C148] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!C148"
@@ -11636,7 +11636,7 @@
    },
    "amount_last_month": {
     "value": 28112.8,
-    "citation": "[Report1!N148] 28112.8",
+    "citation": "[Report1!N148:N148] sum",
     "confidence": 0.9,
     "source_locations": [
      "Report1!N148"
@@ -11664,19 +11664,19 @@
   }
  ],
  "metadata": {
-  "model_calls": 1,
-  "tokens_in": 10055,
-  "tokens_out": 401,
-  "cost_usd": 0.000358,
-  "latency_ms": 6583,
+  "model_calls": 0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "latency_ms": 7889,
   "cache_hits": 3,
-  "cost_usd_uncached": 0.002915,
+  "cost_usd_uncached": 0.002572,
   "models": {
    "openai/gpt-6-luna": {
-    "calls": 1,
-    "tokens_in": 10055,
-    "tokens_out": 401,
-    "cost_usd": 0.000358,
+    "calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "cost_usd": 0.0,
     "cache_hits": 3
    }
   }

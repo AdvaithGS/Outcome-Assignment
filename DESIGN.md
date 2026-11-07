@@ -56,7 +56,7 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 | Table plan, repair, labels | gpt-6-luna, reasoning off | ~$0.001–0.003 per document |
 
 Per document (uncached): digital lease/OM ~$0.003–0.005, scanned 25-page lease ~$0.022, any table ~$0.002.
-**Development spend so far: $0.256 of the $10** (155 calls), almost all of it on experiments; every response is
+**Development spend so far: $0.259 of the $10** (158 calls), almost all of it on experiments; every response is
 cached, so re-scoring after a downstream change costs $0.
 
 ## What broke and how it was handled

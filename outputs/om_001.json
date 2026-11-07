@@ -230,20 +230,20 @@
   }
  ],
  "metadata": {
-  "model_calls": 1,
-  "tokens_in": 10634,
-  "tokens_out": 1255,
-  "cost_usd": 0.001957,
-  "latency_ms": 52071,
-  "cache_hits": 2,
+  "model_calls": 0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "latency_ms": 26341,
+  "cache_hits": 3,
   "cost_usd_uncached": 0.003371,
   "models": {
    "openai/gpt-6-luna": {
-    "calls": 1,
-    "tokens_in": 10634,
-    "tokens_out": 1255,
-    "cost_usd": 0.001957,
-    "cache_hits": 2
+    "calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "cost_usd": 0.0,
+    "cache_hits": 3
    }
   }
  },

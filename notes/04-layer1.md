@@ -204,3 +204,9 @@ onto following lines must be joined (the budget plan read only the first line of
 (boxscore 1.000, budget 0.999, rentroll 1.000, t12 0.998, om 0.931, lease_003 0.850, lease_001 0.800, lease_002 0.800).
 Table-step spend: $0.0074. Remaining gap: the single-entry documents (free text under the strict matcher,
 interpretation conventions).
+
+**Reproducibility check (replay mode):** the first full replay failed with a cache miss: the table-plan prompt had
+changed (partial-cell columns were added for the budget) after boxscore / t12 / rentroll ran, so their outputs came
+from the older prompt. Re-ran those three with the current prompt ($0.0029; all plans now pass on the first call:
+boxscore 1.000, t12 0.998, rentroll 0.998) and `run_samples` now reports a per-document error instead of stopping.
+A full replay of all 8 documents now succeeds at $0: mean **0.922**.

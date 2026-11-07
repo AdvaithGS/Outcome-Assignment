@@ -93,7 +93,12 @@ async def run(rows: list[dict], modes: list[str]) -> dict:
                          deadline=time.monotonic() + 1800, usage=UsageTracker())
         t0 = time.time()
         async with sem:
-            ex = await pipe.extract(path, schema, ctx)
+            try:
+                ex = await pipe.extract(path, schema, ctx)
+            except Exception as exc:  # noqa: BLE001 - report per document, keep going
+                report[r["document_id"]] = {"notes": [f"ERROR {type(exc).__name__}: {str(exc)[:200]}"],
+                                            "meta": ctx.usage.to_metadata(0)}
+                return
         latency = int((time.time() - t0) * 1000)
         (specs_dir / f"{r['schema_name']}.json").write_text(json.dumps(asdict(ex.spec), indent=1, default=str))
         report[r["document_id"]] = {"notes": ex.notes, "meta": ctx.usage.to_metadata(latency)}

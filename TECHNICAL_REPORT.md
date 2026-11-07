@@ -260,7 +260,8 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | Pipeline v1, run 1 (4 single-entry docs, incl. 46 vision pages) | 67 | 0.0487 | 0.49% |
 | Pipeline v1, run 2 (re-extraction after fixes) | 6 | 0.0135 | 0.13% |
 | Pipeline v1, table documents (stage 0 + plans + repairs + classify) | 11 | 0.0074 | 0.07% |
-| **Total to date** | **155** | **0.2557** | **2.56%** |
+| Table plans re-run after a prompt change (reproducibility) | 3 | 0.0029 | 0.03% |
+| **Total to date** | **158** | **0.2586** | **2.59%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_
