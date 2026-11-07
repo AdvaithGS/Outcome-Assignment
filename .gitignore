@@ -13,5 +13,6 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
-# Caches hold text extracted from the sample documents: never commit
+# Caches and dumps hold text extracted from the sample documents: never commit
 .cache/
+experiments/*/dumps/

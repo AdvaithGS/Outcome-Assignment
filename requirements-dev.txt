@@ -1,2 +1,6 @@
 -r requirements.txt
 pytest==9.2.0
+# E0 comparison baselines only (not used by the service unless they win)
+pymupdf4llm==2.1
+python-docx==1.2.0
+mammoth==1.13.0
