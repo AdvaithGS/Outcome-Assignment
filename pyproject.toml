@@ -8,3 +8,7 @@ requires-python = ">=3.11"
 testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-q"
+filterwarnings = [
+    "ignore:Using `httpx` with `starlette.testclient`:DeprecationWarning",
+    "ignore:Field name \"schema\":UserWarning",
+]

@@ -45,12 +45,13 @@ class FakeProvider:
 
 
 def make_client(tmp_path, provider: FakeProvider, *, mode=CacheMode.READ_WRITE, total_cap=None, run_cap=None,
-                run_id="test-run", api_key="test-key"):
+                run_id="test-run", api_key="test-key", max_attempts=1):
     ledger = SpendLedger(tmp_path / "spend.jsonl")
     cache = ResponseCache(tmp_path / "cache.sqlite") if mode is not CacheMode.OFF else None
     return LLMClient(base_url="https://gateway.test/api/v1", api_key=api_key, cache=cache, cache_mode=mode,
                      ledger=ledger, guard=BudgetGuard(ledger, total_cap_usd=total_cap, run_cap_usd=run_cap, run_id=run_id),
-                     run_id=run_id, http=httpx.AsyncClient(transport=httpx.MockTransport(provider.handler)))
+                     run_id=run_id, http=httpx.AsyncClient(transport=httpx.MockTransport(provider.handler)),
+                     max_attempts=max_attempts, base_backoff_s=0.01, max_backoff_s=0.05)
 
 
 def run(coro):
@@ -405,3 +406,49 @@ def test_ledger_ignores_half_written_last_line_until_complete(tmp_path):
     with open(path, "a") as f:
         f.write("}\n")
     assert led.total_usd() == pytest.approx(3.0)
+
+
+# ------------------------------------------------------------------ retries
+
+def test_retries_429_and_5xx_then_succeeds(tmp_path):
+    p = FakeProvider(queue=[(429, {"error": "slow down"}, {"Retry-After": "0"}), (502, {"error": "bad gateway"}, None),
+                            (200, {"error": {"message": "upstream"}}, None)])
+    usage = UsageTracker()
+
+    async def go():
+        c = make_client(tmp_path, p, max_attempts=6)
+        r = await c.chat(model=MODEL, messages=MSGS, stage="s", usage=usage)
+        await c.aclose()
+        return r
+
+    r = run(go())
+    assert r.content == "pong" and len(p.calls) == 4
+    assert [l["ok"] for l in ledger_lines(tmp_path)] == [False, False, False, True]
+    assert usage.to_metadata(0)["model_calls"] == 4          # retries count, as the contract asks
+
+
+def test_gives_up_after_max_attempts(tmp_path):
+    p = FakeProvider(queue=[(503, {"error": "down"}, None)] * 3)
+
+    async def go():
+        c = make_client(tmp_path, p, max_attempts=3)
+        with pytest.raises(LLMHTTPError):
+            await c.chat(model=MODEL, messages=MSGS, stage="s")
+        await c.aclose()
+
+    run(go())
+    assert len(p.calls) == 3
+
+
+def test_non_retryable_error_is_not_retried(tmp_path):
+    p = FakeProvider(queue=[(400, {"error": "bad request"}, None)])
+
+    async def go():
+        c = make_client(tmp_path, p, max_attempts=6)
+        with pytest.raises(LLMHTTPError) as ei:
+            await c.chat(model=MODEL, messages=MSGS, stage="s")
+        await c.aclose()
+        return ei.value
+
+    assert run(go()).retryable is False
+    assert len(p.calls) == 1

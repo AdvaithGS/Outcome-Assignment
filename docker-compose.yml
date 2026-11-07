@@ -1,0 +1,45 @@
+# docker compose up            → API on :8080 plus one worker process (WORKER_CONCURRENCY jobs at a time)
+# docker compose up --scale worker=3   → more throughput; all workers share the job queue on the data volume
+#
+# LLM_BASE_URL and LLM_API_KEY come from the shell environment (or a local .env file, which compose reads
+# for variable substitution). Nothing else from .env is passed in, so dev-only budget caps never reach a deployment.
+
+x-env: &env
+  LLM_BASE_URL: ${LLM_BASE_URL:-https://openrouter.ai/api/v1}
+  LLM_API_KEY: ${LLM_API_KEY:-}
+  LLM_CACHE_MODE: ${LLM_CACHE_MODE:-read_write}
+  LLM_REQUEST_USAGE: ${LLM_REQUEST_USAGE:-1}
+  PIPELINE: ${PIPELINE:-null}
+  WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-4}
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+
+services:
+  api:
+    build: .
+    image: outcome-extraction:local
+    environment: *env
+    ports:
+      - "8080:8080"
+    volumes:
+      - data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8080/health', timeout=3).status == 200 else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  worker:
+    image: outcome-extraction:local
+    command: ["python", "-m", "app.service.worker"]
+    environment: *env
+    volumes:
+      - data:/data
+    depends_on:
+      api:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  data:

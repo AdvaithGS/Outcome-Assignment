@@ -35,16 +35,16 @@ hallucinations, misses, $/doc, latency)._
 
 | ID | Question | Options considered | Chosen | Evidence |
 |---|---|---|---|---|
-| D3 | Job store | | | |
-| D4 | Queue and workers | | | |
-| D5 | Crash recovery | | | |
-| D6 | Idempotency | | | |
-| D7 | Backpressure | | | |
-| D8 | Multi-tenancy | | | |
-| D9 | Webhook | | | |
-| D10 | File storage and size limits | | | |
-| D11 | PARTIAL vs FAILED | | | |
-| D12 | Per-job deadline and degradation | | | |
+| D3 | Job store | In-memory; SQLite; Postgres; Redis | **SQLite (WAL) on the data volume** | No extra container; WAL handles several worker processes; survives restarts |
+| D4 | Queue and workers | In-process tasks; Redis queue; DB as queue | **The job table is the queue**; atomic claim; N concurrent jobs per worker process; separate `worker` compose service, scalable | Test: 8 threads × 40 jobs, every job claimed exactly once |
+| D5 | Crash recovery | None; restart from scratch; leases | **Leases + heartbeats + fencing**; expired RUNNING jobs re-claimed; poison jobs failed after `JOB_MAX_ATTEMPTS`; LLM/OCR caches make re-runs nearly free | Tests: crashed worker's job finished by another; stale worker cannot finish |
+| D6 | Idempotency | None; file hash; file + schema + org | **sha256(file) + canonical schema, per org**; a FAILED job may be resubmitted | Test: duplicate POST returns the same job |
+| D7 | Backpressure | Reject when busy; always queue | **Always queue**; 429 + Retry-After only above `QUEUE_LIMIT` (500) pending | Rejecting work would fail the completion gate |
+| D8 | Multi-tenancy | Skip; implement | **Implemented**: jobs scoped by `X-Organization-Id`; other org (or none) gets 404 | Test |
+| D9 | Webhook | Skip; best effort | **Best effort**, JobStatus body, 3 tries with backoff, after the terminal state is committed | — |
+| D10 | File storage and size limits | DB blobs; volume files | **Content-addressed files on the volume**; streamed with a 50 MB limit (413); type detected from content (PDF / DOCX / XLSX / CSV) | Tests: 413 leaves no partial file; legacy .doc → 400 |
+| D11 | PARTIAL vs FAILED | — | **FAILED** only for unreadable documents (with reason); pipeline errors are retried, then **PARTIAL** with valid null fields | A bug never loses a document; nulls cost nothing |
+| D12 | Per-job deadline and degradation | None; hard kill | **Internal deadline 20 min from submission** (queue included; minimum 30 s run) → PARTIAL with what exists | Test |
 
 **Experiments:** _TODO_
 **Results:** _TODO_
@@ -242,7 +242,7 @@ keep development spend inside $10. Affects Cost and Load/latency.
 
 | ID | Question | Options considered | Chosen | Evidence |
 |---|---|---|---|---|
-| D33 | Retries, backoff, rate limiting, fallback model | | | |
+| D33 | Retries, backoff, rate limiting, fallback model | — | **Inside the LLM client**: 429 / 5xx / timeouts / unusable 200 bodies retried up to 6 times, exponential backoff with full jitter, Retry-After honoured; per-process concurrency limit (`LLM_MAX_CONCURRENCY`) | Tests: 429 → 502 → bad body → success counts 4 calls; non-retryable 400 not retried |
 | D34 | Cost accounting and the `metadata` breakdown | | | |
 | D35 | Dev-time cache, spend ledger, budget caps | Custom vs LiteLLM/diskcache/HTTP record-replay; SQLite vs files vs Redis; prod cache off / per-job / shared | Custom content-addressed cache in SQLite (WAL) with off/read_write/replay/refresh modes and single-flight; append-only JSONL ledger kept apart from the cache; file-based artifact cache; $9 dev cap, none in prod | `notes/01-caching.md`; 30 unit tests |
 
@@ -278,8 +278,8 @@ failures diagnosable, and start cleanly with Docker. Affects Design/code and the
 | D37 | Generalisation to unseen field lists | | | |
 | D38 | Test suite scope | | | |
 | D39 | Load test | | | |
-| D40 | Logging and observability | | | |
-| D41 | Docker packaging | | | |
+| D40 | Logging and observability | Plain logs; structured | **JSON lines** with job_id, worker, stage, timings, cost, error; failure reason stored on the job and returned in `error` | — |
+| D41 | Docker packaging | — | python:3.14-slim + tesseract + OpenCV libs; RapidOCR models inside the wheel; compose services `api` + `worker` on one `data` volume; healthcheck; only `LLM_*` and service settings passed in | Not yet tested: Docker compose plugin / daemon not set up on the dev machine |
 
 **Experiments:** _TODO_
 **Results:** _TODO (test counts, load test p50/p95, crash and restart test outcome)._

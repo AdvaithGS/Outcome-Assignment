@@ -67,3 +67,28 @@ run(file, schema) -> result
    **claude-haiku-5.5** (best on full documents), or **gpt-6-luna with reasoning off** (cheapest, fastest)? Only the default; E2 decides for real.
 2. Layer 2 now (right after layer 1) or after E1b A/B/C?
 3. Docker on this machine: can you install it (needed for the gate test)?
+
+---
+
+## 5. Revision and implementation
+
+**Revision (user):** default model = the cheapest (gpt-6-luna, reasoning off); order = E1b follow-ups → layer 2 →
+layer 1 discussion. Layer 2 was built first with a **null pipeline** behind the pipeline interface, so layer 1
+plugs in without touching the service.
+
+**Built (layer 2):**
+- `app/pipeline/base.py`: pipeline interface (`run(path, schema, ctx) → rows`), `validate_schema`,
+  `build_result` (contract-valid by construction), `NullPipeline`, `DocumentError`.
+- `app/service/api.py`: FastAPI; POST /jobs streams the upload (50 MB limit), detects the type by content,
+  validates the schema, de-duplicates, queues; GET /jobs/{id} per tenant; GET /health with the git SHA.
+- `app/service/store.py`: SQLite job store and queue with atomic claims, leases, fencing, terminal immutability,
+  idempotency, poison-job protection.
+- `app/service/worker.py`: concurrent job slots, heartbeats, internal deadline, outcome policy, webhook.
+- `app/llm/client.py`: retry layer and concurrency limit.
+- `Dockerfile`, `docker-compose.yml` (api + worker on one data volume).
+
+**Check:**
+- 55 tests pass (17 new service tests, 3 new retry tests).
+- Real server (uvicorn, embedded worker): all 8 samples submitted concurrently, POST 134–240 ms, all SUCCESS,
+  all **VALID** in `tools/validate.py`. All-null baseline mean score **0.087**: the floor layer 1 must beat.
+- Docker not yet tested: the compose plugin and daemon need setting up on the dev machine.
