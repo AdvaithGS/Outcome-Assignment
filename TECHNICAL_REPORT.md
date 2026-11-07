@@ -253,7 +253,8 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | Live check (caching step) | 1 | 0.000004 | 0.00% |
 | E0 ingestion comparison | 0 | 0 | 0% |
 | E1a vision transcription (round 1 + reasoning-off test) | 18 | 0.0142 | 0.14% |
-| **Total to date** | **19** | **0.0142** | **0.14%** |
+| E1b model screen, round 1 | 38 | 0.0961 | 0.96% |
+| **Total to date** | **57** | **0.1102** | **1.10%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_

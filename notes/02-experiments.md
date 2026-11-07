@@ -423,3 +423,39 @@ are pipeline questions for E2, with the shortlisted models only.
   *ranking models*; E2 measures the pipeline loss.
 - Null discipline is easier with less text to be tempted by. E2 re-checks hallucinations at full context.
 - Field descriptions are used as given; rewriting is an E2 ablation.
+
+### 13.5 Revision: four fixes added before building (agreed)
+1. Cheap models also run on **full documents** (measures the oracle → full gap).
+2. Escalation judged against **production-available signals** (cross-model disagreement, null split, citation not in text), not the answer key.
+3. luna run **with and without** reasoning for extraction.
+4. **lease_003** oracle slices added back (only sample with renewal-option lists).
+
+## 14. E1b round 1 results ($0.0961, 38 calls incl. 3 rate-limit retries)
+
+| Arm | Penalised, oracle (4 docs) | Penalised, full (3 docs) | Same 3 docs excl. free text: oracle / full | Hallucinations | $/doc (list) oracle / full | s/doc | Hidden reasoning tokens |
+|---|---|---|---|---|---|---|---|
+| gpt-6-luna, reasoning off | 0.662 | 0.670 | 0.831 / 0.835 | 0 | 0.0018 / 0.0025 | ~12.5 | 0 |
+| gpt-6-luna | 0.678 | 0.651 | 0.835 / 0.812 | 1 | 0.0025 / 0.0033 | ~24 | ~1.4k/doc |
+| claude-haiku-5.5 | 0.685 | 0.743 | 0.859 / **0.906** | 0 | 0.0038 / 0.0048 | 16–21 | ~2k/doc |
+| deepseek-v3.2 | 0.691 | 0.739 | 0.847 / 0.900 | 1 (full) | 0.0031 / 0.0051 | **44–49** | 0 |
+| glm-5.3-flash | **0.718** | **0.743** | **0.882** / 0.882 | 0 | 0.0028 / 0.0038 (billed $0) | 13–15 | ~1k/doc |
+
+Per field kind: numbers 1.00 and should-be-null 1.00 for every model; dates, lists, booleans and computed 0.6–1.0;
+strings 0.43–0.78; **free text 0.00–0.25 under the strict matcher**.
+
+**Findings**
+1. **No long-context penalty for cheap models:** full documents score the same or better than oracle slices on the
+   same docs. The Locator's accuracy argument is weak at these document sizes (E2 decides).
+2. **Most non-free-text errors are shared by every model**: interpretation problems, not capability. premises given as
+   "Second Floor, West Section, Suite 214W" (field asks for the suite only); landlord entity or a building alias given
+   as property_name; "… submarket" suffix; extra columns in unit_types; total base rent net vs gross of free months;
+   rent commencement date before vs after abatement. These point at **description rewriting / programmatic hints**
+   (E2), not at stronger models.
+3. **Free text is mostly correct paraphrase** that the strict matcher fails (e.g. late fee "greater of $75.00 or 6% of
+   the unpaid rent"); a few are genuine errors (holdover "175%" dropped). Their scorer uses an LLM judge on free text,
+   so ours needs one to rank models on these fields.
+4. **Hallucination is near zero:** 19 should-be-null cells, all models correct; 2 invented values in 35 runs.
+5. **Escalation signal:** cross-model disagreement flags ~24% of cells and catches **91–93%** of the bad ones
+   (precision 0.56–0.69). Citation-not-in-text is weak (recall ≤ 0.41).
+6. **Reasoning:** luna with reasoning on is *not* better than off for extraction, and costs ~40% more and twice the time.
+7. **deepseek is the slowest** (~45 s/doc) without being more accurate.
