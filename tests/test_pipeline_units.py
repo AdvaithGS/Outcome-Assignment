@@ -239,3 +239,19 @@ def test_terse_field_detection():
         except FileNotFoundError:
             continue
         assert len(terse_fields(sch)) <= 2, name            # real field lists are (almost) never terse
+
+
+
+def test_garbage_and_line_level_signals():
+    from app.pipeline.ingest import page_needs_vision, uncertain_lines
+    clean = "\n".join(["The Tenant shall keep the Premises in good order and repair at its own cost."] * 20)
+    garbage = clean + "\n" + " ".join(["MART/N DFLACRO/X 1D#3\"03116 ~~x|y"] * 12)
+    assert page_needs_vision(garbage, 0.92, 0.01)[1].startswith("garbled")
+    body = [[l, 0] for l in clean.splitlines()]
+    # a stamp OCR reads differently on every page is recurring boilerplate; the garbled deposit line is not
+    pages = [body + [["8 1D#3 03122 Initial", 2]], body + [["14 D#3\" 83129 lnitial", 2]],
+             body + [["ID#3 03118 Initial", 2], ["SECURITY DEPOSIT: $ 2,400 swrsso OM_Telacroie", 3]]]
+    unsure = uncertain_lines(pages)
+    assert unsure[:2] == [None, None] and unsure[2].startswith("SECURITY DEPOSIT")
+    assert page_needs_vision(clean, 0.92, 0.01, unsure[2])[1].startswith("uncertain line")
+    assert page_needs_vision(clean, 0.92, 0.01, unsure[0]) == (False, "OCR adequate")

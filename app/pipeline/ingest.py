@@ -82,7 +82,52 @@ SELECT_NUMERIC_LINES = 0.15   # share of lines with 3+ numbers (tables, rent sch
 SELECT_FORM_LINES = 0.10      # share of "LABEL:" lines (summary / reference pages)
 
 
-def page_needs_vision(text: str, confidence: float | None, low_share: float | None) -> tuple[bool, str]:
+SELECT_GARBAGE_TOKENS = 0.05  # share of broken tokens ("MART/N", "1D#3\"03116"): Tesseract confidently wrong
+SELECT_SPECIAL_CHARS = 0.02   # share of unusual characters
+SELECT_LINE_LOW_WORDS = 2     # a line (not a stamp/footer) with this many words < 60 confidence and a digit
+_BROKEN = re.compile(r"[A-Za-z][^A-Za-z\s.,;:'\"()\-]+[A-Za-z]|[|~^`{}<>\\]")
+
+
+def _letters(text: str) -> str:
+    return re.sub(r"[^a-z]", "", text.lower())
+
+
+def uncertain_lines(pages_lines: list[list | None], *, min_low: int = SELECT_LINE_LOW_WORDS,
+                    min_other_pages: int = 2, similarity: float = 0.75) -> list[str | None]:
+    """Per page, the first line OCR was unsure of (min_low+ words below 60 confidence, a digit, a real word) that is not
+    a stamp, footer or header. Recurrence is fuzzy (letters only, similarity >= 0.75 on min_other_pages other pages)
+    because Tesseract reads the same stamp differently on each page ("1D#3 03122", "D#3\" 83129", "ID#3 03118")."""
+    from difflib import SequenceMatcher
+    pool = [[_letters(t) for t, _ in (lines or []) if re.search(r"\d", t)] for lines in pages_lines]
+    out: list[str | None] = []
+    for i, lines in enumerate(pages_lines):
+        found = None
+        for text, n_low in lines or []:
+            if n_low < min_low or not re.search(r"\d", text) or not re.search(r"[A-Za-z]{3,}", text):
+                continue
+            sm, hits = SequenceMatcher(None, b=_letters(text)), 0
+            for j, other in enumerate(pool):
+                if j == i:
+                    continue
+                for u in other:
+                    sm.set_seq1(u)
+                    if sm.real_quick_ratio() >= similarity and sm.quick_ratio() >= similarity and sm.ratio() >= similarity:
+                        hits += 1
+                        break
+                if hits >= min_other_pages:
+                    break
+            if hits < min_other_pages:
+                found = text
+                break
+        out.append(found)
+    return out
+
+
+def page_needs_vision(text: str, confidence: float | None, low_share: float | None,
+                      uncertain_line: str | None = None) -> tuple[bool, str]:
+    """Does local OCR need the vision model for this page? Page-level signals (confidence, low-confidence share, table,
+    form), a garbage check for confidently-wrong OCR, and a line-level check for local failures (a handwritten amount
+    or a garbled name on an otherwise clean page)."""
     lines = [l for l in text.splitlines() if l.strip()]
     n = max(1, len(lines))
     numeric = sum(1 for l in lines if len(re.findall(r"\d[\d,]*\.?\d*", l)) >= 3) / n
@@ -95,6 +140,16 @@ def page_needs_vision(text: str, confidence: float | None, low_share: float | No
         return True, f"table-like ({numeric:.0%} numeric lines)"
     if form >= SELECT_FORM_LINES:
         return True, f"form-like ({form:.0%} label lines)"
+    toks = text.split()
+    if toks:
+        broken = sum(1 for t in toks if _BROKEN.search(t)) / len(toks)
+        if broken >= SELECT_GARBAGE_TOKENS:
+            return True, f"garbled text ({broken:.0%} broken tokens)"
+    special = sum(1 for ch in text if not (ch.isalnum() or ch.isspace() or ch in ".,;:'\"()-$%&/#")) / max(1, len(text))
+    if special >= SELECT_SPECIAL_CHARS:
+        return True, f"garbled text ({special:.1%} unusual characters)"
+    if uncertain_line:
+        return True, f"uncertain line: {uncertain_line[:60]!r}"
     return False, "OCR adequate"
 
 
@@ -130,13 +185,26 @@ async def transcribe_pages(path: Path, indices: list[int], *, client: LLMClient 
     """Render the given 0-based pages and transcribe them (vision model; local OCR fallback). -> {index: (text, method)}"""
     sha = file_sha or await asyncio.to_thread(file_sha256, path)
 
+    selective = client is not None and getattr(cfg, "scanned_mode", "vision") == "selective"
+    ocr_first: dict[int, object] = {}
+    unsure: dict[int, str | None] = {}
+    if selective:
+        # OCR every page first: page-level and line-level signals, with stamps/footers recurring across pages ignored
+        async def ocr(i: int):
+            img = await asyncio.to_thread(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
+            return i, await asyncio.to_thread(run_ocr, "tesseract", img, cache=cache)
+        ocr_first = dict(await asyncio.gather(*(ocr(i) for i in indices)))
+        order = list(ocr_first)
+        unsure = dict(zip(order, uncertain_lines([ocr_first[i].lines for i in order])))
+
     async def one(i: int):
         img = await asyncio.to_thread(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
-        if client is not None and cfg.scanned_mode == "selective":
-            r = await asyncio.to_thread(run_ocr, "tesseract", img, cache=cache)
-            need, why = page_needs_vision(r.text, r.confidence, r.low_share)
+        if selective:
+            r = ocr_first[i]
+            need, why = page_needs_vision(r.text, r.confidence, r.low_share, unsure.get(i))
             if not need:
                 return i, r.text, "ocr:tesseract (selective)"
+            log.info("page sent to vision", extra={"job_id": job_id, "page": i + 1, "reason": why})
         if client is not None and cfg.scanned_mode in ("vision", "selective"):
             try:
                 text = await transcribe(_resize_png(img, getattr(cfg, "vision_long_side", LONG_SIDE)), client,

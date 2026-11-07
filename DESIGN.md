@@ -22,7 +22,8 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
   of layout mode); DOCX through our own XML parser (the sample uses no heading styles, so headings are detected by
   rule, giving ~240-token sections for citations); spreadsheets as grids with cell addresses.
 - **Scanned pages: local OCR first, vision only where it matters.** Tesseract reads every scanned page; pages with
-  weak OCR, many low-confidence words, tables or form layouts go to the vision model (gpt-6-luna, reasoning off,
+  weak OCR, many low-confidence words, garbled text, a single uncertain line (stamps and footers that recur across pages
+  ignored), tables or form layouts go to the vision model (gpt-6-luna, reasoning off,
   ~$0.0006/page) — about 15% of a lease's pages, and every page where OCR lost an answer value in the samples.
   A scanned lease costs ~$0.009 instead of ~$0.022 at the same accuracy. Local OCR
   (Tesseract, RapidOCR) could not read the handwritten correction to a security deposit or a garbled name; vision
@@ -65,7 +66,8 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
   switchable with `FREETEXT_MODE`, since the graders' judging of free text is not known exactly.
 - DOCX page numbers are not produced: paginating a DOCX needs LibreOffice, which would bloat the image and risk the
   60 s start-up gate. DOCX citations use section anchors and verbatim snippets instead.
-- Vision on every scanned page (simple, robust) rather than only on pages that need it; cheaper variants are untested.
+- Vision only on scanned pages that local OCR signals as hard (−60% scanned cost at the same accuracy on the samples);
+  a hard page that every signal misses is read by Tesseract alone. `SCANNED_MODE=vision` sends every page.
 - Caching is on in production: identical requests (same document + field list, or a worker restarting a job) cost nothing.
 
 ## Models used for what, and spend
@@ -77,7 +79,7 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 | Lease / OM extraction | gpt-6-luna, reasoning off (fallback: claude-haiku-5.5) | ~$0.003–0.005 per document |
 | Table plan, repair, labels | gpt-6-luna, reasoning off | ~$0.001–0.003 per document |
 
-Per document (uncached): digital lease/OM ~$0.003–0.005, scanned 25-page lease ~$0.022, any table ~$0.002.
+Per document (uncached): digital lease/OM ~$0.003–0.005, scanned 25-page lease ~$0.009 (all pages by vision ~$0.022), any table ~$0.002.
 **Development spend so far: $0.690 of the $10** (562 calls, incl. two Docker load tests), almost all of it on experiments; every response is
 cached, so re-scoring after a downstream change costs $0.
 
