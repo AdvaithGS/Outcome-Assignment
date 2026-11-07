@@ -288,10 +288,12 @@
     "kind": "freetext",
     "truth": "base year 1993",
     "pred": "1993 base year for direct expenses and taxes",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "base_year_expenses",
@@ -321,7 +323,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "parking_spaces",
@@ -418,10 +421,12 @@
     "kind": "freetext",
     "truth": "with the prior written consent of Landlord",
     "pred": "With prior written consent of Landlord",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "guarantor_name",
@@ -455,7 +460,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "holdover_rent",
@@ -465,7 +471,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -758,10 +765,12 @@
     "kind": "freetext",
     "truth": "base year 1993",
     "pred": "base year 1993 (direct expenses)",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "base_year_expenses",
@@ -791,7 +800,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "parking_spaces",
@@ -888,10 +898,12 @@
     "kind": "freetext",
     "truth": "with the prior written consent of Landlord",
     "pred": "only with prior written consent of Landlord; Landlord may recapture or terminate; 50% of excess rent or consideration payable to Landlord",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "guarantor_name",
@@ -925,17 +937,20 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "holdover_rent",
     "kind": "freetext",
     "truth": "150% of the amount of the Annual Rent for the last period prior to the date of such termination plus all Rent Adjustments as provided for in Article 41 prorated on a daily basis",
     "pred": "150% of the Annual Rent for the last period prior to termination, plus Rent Adjustments prorated daily",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    }
   ]
  },
@@ -993,7 +1008,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "premises",
@@ -1228,10 +1244,12 @@
     "kind": "freetext",
     "truth": "base year 1993",
     "pred": "base year 1993 for direct expenses and taxes",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "base_year_expenses",
@@ -1261,7 +1279,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "parking_spaces",
@@ -1358,10 +1377,12 @@
     "kind": "freetext",
     "truth": "with the prior written consent of Landlord",
     "pred": "With prior written landlord consent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "guarantor_name",
@@ -1395,7 +1416,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "holdover_rent",
@@ -1405,7 +1427,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -1698,10 +1721,12 @@
     "kind": "freetext",
     "truth": "base year 1993",
     "pred": "Base year 1993 for direct expenses and taxes",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "base_year_expenses",
@@ -1731,7 +1756,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "parking_spaces",
@@ -1828,10 +1854,12 @@
     "kind": "freetext",
     "truth": "with the prior written consent of Landlord",
     "pred": "With Landlord's prior written consent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "guarantor_name",
@@ -1865,7 +1893,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "holdover_rent",
@@ -1875,7 +1904,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -2128,10 +2158,12 @@
     "kind": "freetext",
     "truth": "fixed steps per schedule",
     "pred": "fixed annual steps per rent schedule",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "free_rent_months",
@@ -2171,7 +2203,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "base_year_expenses",
@@ -2201,7 +2234,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "parking_spaces",
@@ -2298,10 +2332,12 @@
     "kind": "freetext",
     "truth": "with the prior written consent of Landlord",
     "pred": "only with Landlord's prior written consent; Landlord may recapture the space or terminate the Lease and receives 50% of any excess consideration",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "guarantor_name",
@@ -2332,10 +2368,12 @@
     "kind": "freetext",
     "truth": "the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment",
     "pred": "greater of $75.00 or 6% of the unpaid rent or other payment",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
@@ -2345,7 +2383,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -2400,10 +2439,12 @@
     "kind": "freetext",
     "truth": "1850 Hollis Road, Fairmont Hills, Illinois 60517",
     "pred": "1850 HOLLIS ROAD. FAIRMONT HILLS, ILL 60517",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "premises",
@@ -2668,10 +2709,12 @@
     "kind": "freetext",
     "truth": "Furnished by Landlord during ordinary business hours; excess electricity separately metered and paid by Tenant as additional rent",
     "pred": "included in services for lighting and standard office use; excess usage metered and billed at utility rates as additional rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "parking_spaces",
@@ -2768,10 +2811,12 @@
     "kind": "freetext",
     "truth": "with the prior written consent of Landlord",
     "pred": "only with Landlord's prior written consent; Landlord may recapture or terminate; 50% of excess rent/consideration payable to Landlord",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "guarantor_name",
@@ -2802,10 +2847,12 @@
     "kind": "freetext",
     "truth": "the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment",
     "pred": "greater of $75.00 or 6% of the unpaid rent or other payment",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
@@ -2815,7 +2862,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -2873,7 +2921,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "premises",
@@ -3141,7 +3190,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "parking_spaces",
@@ -3241,7 +3291,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -3272,10 +3323,12 @@
     "kind": "freetext",
     "truth": "the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment",
     "pred": "greater of $75 or 6% of the unpaid amount",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
@@ -3285,7 +3338,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -3340,10 +3394,12 @@
     "kind": "freetext",
     "truth": "1850 Hollis Road, Fairmont Hills, Illinois 60517",
     "pred": "1850 Hollis Road, Fairmont Hills, IL 60517",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "premises",
@@ -3581,7 +3637,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "base_year_expenses",
@@ -3611,7 +3668,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "parking_spaces",
@@ -3708,10 +3766,12 @@
     "kind": "freetext",
     "truth": "with the prior written consent of Landlord",
     "pred": "With landlord's prior written consent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "guarantor_name",
@@ -3745,7 +3805,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "holdover_rent",
@@ -3755,7 +3816,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -4078,10 +4140,12 @@
     "kind": "freetext",
     "truth": "Furnished by Landlord during ordinary business hours; excess electricity separately metered and paid by Tenant as additional rent",
     "pred": "included in rent (landlord furnishes electricity for lighting, convenience outlets and other direct uses during business hours); excess usage separately metered and billed as additional rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "parking_spaces",
@@ -4178,10 +4242,12 @@
     "kind": "freetext",
     "truth": "with the prior written consent of Landlord",
     "pred": "with landlord's prior written consent; landlord may terminate the lease or recapture the sublet portion, and tenant pays landlord 50% of any rent or consideration received in excess of rent due",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "guarantor_name",
@@ -4212,20 +4278,24 @@
     "kind": "freetext",
     "truth": "the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment",
     "pred": "greater of $75.00 or 6% of the unpaid rent or other payment",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
     "kind": "freetext",
     "truth": "150% of the amount of the Annual Rent for the last period prior to the date of such termination plus all Rent Adjustments as provided for in Article 41 prorated on a daily basis",
     "pred": "150% of the Annual Rent for the last period prior to termination plus all Rent Adjustments prorated on a daily basis",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    }
   ]
  },
@@ -4283,7 +4353,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "premises",
@@ -4650,20 +4721,24 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge and interest at four (4%) percent in excess of the Corporate base rate",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
     "kind": "freetext",
     "truth": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
     "pred": "Double the Base Rent and any applicable Additional Rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    }
   ]
  },
@@ -4721,7 +4796,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "premises",
@@ -4761,7 +4837,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "lease_execution_date",
@@ -5088,20 +5165,24 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge plus interest at 4% per annum above the Corporate base rate",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
     "kind": "freetext",
     "truth": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
     "pred": "Double the Base Rent plus applicable Additional Rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    }
   ]
  },
@@ -5159,7 +5240,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "premises",
@@ -5199,7 +5281,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "lease_execution_date",
@@ -5526,10 +5609,12 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge plus interest at 4% over FIRST MERIDIAN corporate base rate",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
@@ -5539,7 +5624,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -5597,7 +5683,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "premises",
@@ -5964,10 +6051,12 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge plus interest at 4% per annum in excess of the First Meridian Corporate base rate",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
@@ -5977,7 +6066,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -6303,7 +6393,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "parking_spaces",
@@ -6403,7 +6494,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -6434,20 +6526,24 @@
     "kind": "freetext",
     "truth": "the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment",
     "pred": "greater of $75 or 6% of unpaid amount",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
     "kind": "freetext",
     "truth": "150% of the amount of the Annual Rent for the last period prior to the date of such termination plus all Rent Adjustments as provided for in Article 41 prorated on a daily basis",
     "pred": "150% of the last Annual Rent plus Rent Adjustments, prorated daily",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    }
   ]
  },
@@ -6505,7 +6601,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "premises",
@@ -6545,7 +6642,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "lease_execution_date",
@@ -6841,7 +6939,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -6872,20 +6971,24 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge and interest at 4% above the Corporate base rate",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
     "kind": "freetext",
     "truth": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
     "pred": "Double the Base Rent set forth in Paragraph 1, plus applicable Additional Rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    }
   ]
  },
@@ -6943,7 +7046,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "premises",
@@ -6983,7 +7087,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "lease_execution_date",
@@ -7279,7 +7384,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -7310,10 +7416,12 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge plus interest at 4% per annum in excess of FIRST MERIDIAN corporate base rate",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
@@ -7323,7 +7431,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -7381,7 +7490,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "premises",
@@ -7421,7 +7531,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "lease_execution_date",
@@ -7717,7 +7828,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -7748,20 +7860,24 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge plus interest at 4% above the Corporate base rate",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
     "kind": "freetext",
     "truth": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
     "pred": "Double the Base Rent and any applicable Additional Rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    }
   ]
  },
@@ -7819,7 +7935,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "premises",
@@ -8155,7 +8272,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -8186,10 +8304,12 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge plus interest at 4% above FIRST MERIDIAN Corporate base rate",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
@@ -8199,7 +8319,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -8583,7 +8704,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "premises",
@@ -8623,7 +8745,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "lease_execution_date",
@@ -8919,7 +9042,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -8950,20 +9074,24 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge plus interest at 4% in excess of the Corporate base rate announced by FIRST MERIDIAN",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
     "kind": "freetext",
     "truth": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
     "pred": "double the Base Rent set forth in Paragraph 1 plus any applicable Additional Rent (the Holdover Rate)",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    }
   ]
  },
@@ -10325,7 +10453,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "premises",
@@ -10561,7 +10690,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "parking_spaces",
@@ -10661,7 +10791,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -10692,10 +10823,12 @@
     "kind": "freetext",
     "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "pred": "$150.00 late charge and interest at 4% above Corporate base rate",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "holdover_rent",
@@ -10705,7 +10838,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    }
   ]
  },
@@ -12430,10 +12564,12 @@
     "kind": "freetext",
     "truth": "operation of law office or other general office purpose",
     "pred": "law office or other general office purpose",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "lease_execution_date",
@@ -12639,7 +12775,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": false
+    "cite_found": false,
+    "judged": false
    },
    {
     "field": "free_rent_months",
@@ -12676,10 +12813,12 @@
     "kind": "freetext",
     "truth": "base year 2011",
     "pred": "tenant pays proportionate share of taxes and operating expenses above the 2011 base year",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": false
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "base_year_expenses",
@@ -12706,10 +12845,12 @@
     "kind": "freetext",
     "truth": "Separately metered and billed by Landlord as Additional Rent",
     "pred": "Separately metered; tenant pays Landlord as Additional Rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "parking_spaces",
@@ -12804,10 +12945,12 @@
     "kind": "freetext",
     "truth": "Unamortized broker commissions and abated rent, undepreciated build-out costs (each amortized/depreciated over the original rental stream at 9% interest), plus an amount equal to five months of the then monthly Base Rent",
     "pred": "Unamortized broker commissions and abated rent plus undepreciated build-out costs, amortized/depreciated over the original rental stream at 9% interest, plus five months of then monthly Base Rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "right_to_sublet",
@@ -12817,7 +12960,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -12851,7 +12995,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "holdover_rent",
@@ -12861,7 +13006,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -12956,10 +13102,12 @@
     "kind": "freetext",
     "truth": "operation of law office or other general office purpose",
     "pred": "the operation of law office or other general office purpose",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "lease_execution_date",
@@ -13232,10 +13380,12 @@
     "kind": "freetext",
     "truth": "Separately metered and billed by Landlord as Additional Rent",
     "pred": "separately metered; billed by Landlord and paid by Tenant as Additional Rent (Electricity Usage Fee)",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "parking_spaces",
@@ -13330,10 +13480,12 @@
     "kind": "freetext",
     "truth": "Unamortized broker commissions and abated rent, undepreciated build-out costs (each amortized/depreciated over the original rental stream at 9% interest), plus an amount equal to five months of the then monthly Base Rent",
     "pred": "unamortized brokers' commissions and abated rent plus undepreciated build-out costs amortized over the original rental stream at 9% interest, plus five months of the then monthly Base Rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "right_to_sublet",
@@ -13343,7 +13495,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -13377,7 +13530,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "holdover_rent",
@@ -13387,7 +13541,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -13728,10 +13883,12 @@
     "kind": "freetext",
     "truth": "base year 2011",
     "pred": "Operating expenses and taxes over Base Year 2011",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "base_year_expenses",
@@ -13758,10 +13915,12 @@
     "kind": "freetext",
     "truth": "Separately metered and billed by Landlord as Additional Rent",
     "pred": "Separately metered and billed to Tenant as Additional Rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "parking_spaces",
@@ -13856,10 +14015,12 @@
     "kind": "freetext",
     "truth": "Unamortized broker commissions and abated rent, undepreciated build-out costs (each amortized/depreciated over the original rental stream at 9% interest), plus an amount equal to five months of the then monthly Base Rent",
     "pred": "Unamortized broker commissions and abated rent, plus undepreciated build-out costs (amortized/depreciated over the original rental stream at 9% interest), plus five months of then-current Base Rent",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "right_to_sublet",
@@ -13869,7 +14030,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -13903,7 +14065,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "holdover_rent",
@@ -13913,7 +14076,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -14214,10 +14378,12 @@
     "kind": "freetext",
     "truth": "fixed steps per schedule",
     "pred": "fixed annual steps per schedule",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "free_rent_months",
@@ -14254,10 +14420,12 @@
     "kind": "freetext",
     "truth": "base year 2011",
     "pred": "base year 2011 with pass-through of Tenant's Proportionate Share of Taxes and Operating Expenses over base year",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "base_year_expenses",
@@ -14284,10 +14452,12 @@
     "kind": "freetext",
     "truth": "Separately metered and billed by Landlord as Additional Rent",
     "pred": "separately metered, billed by Landlord and paid by Tenant as Additional Rent (Electricity Usage Fee)",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "parking_spaces",
@@ -14385,7 +14555,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "right_to_sublet",
@@ -14395,7 +14566,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -14429,7 +14601,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "holdover_rent",
@@ -14439,7 +14612,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    }
   ]
  },
@@ -14534,10 +14708,12 @@
     "kind": "freetext",
     "truth": "operation of law office or other general office purpose",
     "pred": "the operation of law office or other general office purpose",
-    "score": 0.0,
-    "penal": -1.0,
-    "outcome": "wrong",
-    "cite_found": true
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
    },
    {
     "field": "lease_execution_date",
@@ -14911,7 +15087,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "right_to_sublet",
@@ -14921,7 +15098,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "guarantor_name",
@@ -14955,7 +15133,8 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
-    "cite_found": true
+    "cite_found": true,
+    "judged": false
    },
    {
     "field": "holdover_rent",
@@ -14965,6 +15144,2562 @@
     "score": 0.0,
     "penal": -1.0,
     "outcome": "wrong",
+    "cite_found": false,
+    "judged": false
+   }
+  ]
+ },
+ "glm|om_001|full#s1": {
+  "arm": "glm",
+  "model": "z-ai/glm-5.3-flash",
+  "doc": "om_001",
+  "ctx": "full#s1",
+  "parsed": true,
+  "tokens_in": 10689,
+  "tokens_out": 1854,
+  "reasoning_tokens": 727,
+  "cost_billed": 0.0,
+  "cost_list": 0.00253035,
+  "latency_ms": 6035,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 7370,
+  "fields": [
+   {
+    "field": "property_name",
+    "kind": "freetext",
+    "truth": "Marlowe Park Modern Apartments",
+    "pred": "Marlowe Park Modern Apartments",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "address",
+    "kind": "freetext",
+    "truth": "7420 E 52nd Ave.",
+    "pred": "7420 E 52nd Ave.",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "city",
+    "kind": "string",
+    "truth": "Fairhaven",
+    "pred": "Fairhaven",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "state",
+    "kind": "string",
+    "truth": "CO",
+    "pred": "CO",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "zip_code",
+    "kind": "string",
+    "truth": "80271",
+    "pred": "80271",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "county",
+    "kind": "string",
+    "truth": "Harlan",
+    "pred": "Harlan",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "submarket",
+    "kind": "string",
+    "truth": "Fairhaven International Airport",
+    "pred": "Fairhaven International Airport submarket",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "broker_name",
+    "kind": "string",
+    "truth": "Ridgeline Capital Advisors",
+    "pred": "Ridgeline Capital Advisors",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "units",
+    "kind": "number",
+    "truth": 188,
+    "pred": 188,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "year_built",
+    "kind": "number",
+    "truth": 2022,
+    "pred": 2022,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "year_renovated",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "building_type",
+    "kind": "string",
+    "truth": "Garden",
+    "pred": "Garden",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "number_of_buildings",
+    "kind": "computed",
+    "truth": 13,
+    "pred": 13,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "stories",
+    "kind": "string",
+    "truth": "2 & 3",
+    "pred": "2 & 3",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rentable_sf",
+    "kind": "number",
+    "truth": 190142.0,
+    "pred": 190142,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "average_unit_sf",
+    "kind": "computed",
+    "truth": 1011.0,
+    "pred": 1011,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "site_acres",
+    "kind": "number",
+    "truth": 9.52,
+    "pred": 9.52,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "parking_spaces",
+    "kind": "number",
+    "truth": 266,
+    "pred": 266,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "parking_ratio",
+    "kind": "number",
+    "truth": 1.41,
+    "pred": 1.41,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "asking_price",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "price_per_unit",
+    "kind": "computed",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "asking_cap_rate",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "occupancy_pct",
+    "kind": "number",
+    "truth": 71.0,
+    "pred": 71,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "average_in_place_rent",
+    "kind": "number",
+    "truth": 2228.0,
+    "pred": 2228,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "market_rent",
+    "kind": "number",
+    "truth": 2260.0,
+    "pred": 2260,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "market_rent_psf",
+    "kind": "number",
+    "truth": 2.23,
+    "pred": 2.23,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "unit_types",
+    "kind": "list",
+    "truth": [
+     "Aspen",
+     "Birch",
+     "Cedar w/ Attached Garage",
+     "Dogwood w/ Attached Garage (2)",
+     "Elm",
+     "Fir w/ Attached Garage",
+     "Hazel w/ Attached Garage",
+     "Ironwood"
+    ],
+    "pred": [
+     "Aspen Standard",
+     "Birch Standard",
+     "Cedar w/ Attached Garage",
+     "Dogwood w/ Attached Garage (2)",
+     "Elm Standard",
+     "Fir w/ Attached Garage",
+     "Hazel w/ Attached Garage",
+     "Ironwood Standard"
+    ],
+    "score": 0.5,
+    "penal": 0.5,
+    "outcome": "partial",
+    "cite_found": true
+   },
+   {
+    "field": "noi_t12",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "noi_proforma",
+    "kind": "number",
+    "truth": 3521352.0,
+    "pred": 3521352,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   }
+  ]
+ },
+ "glm|lease_002|full#s1": {
+  "arm": "glm",
+  "model": "z-ai/glm-5.3-flash",
+  "doc": "lease_002",
+  "ctx": "full#s1",
+  "parsed": true,
+  "tokens_in": 17767,
+  "tokens_out": 2994,
+  "reasoning_tokens": 1378,
+  "cost_billed": 0.0,
+  "cost_list": 0.00416205,
+  "latency_ms": 9623,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 18967,
+  "fields": [
+   {
+    "field": "tenant_name",
+    "kind": "freetext",
+    "truth": "KESTREL ANALYTICS USA LLC",
+    "pred": "KESTREL ANALYTICS USA LLC",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "landlord_legal_name",
+    "kind": "freetext",
+    "truth": "850 N. HARLOW AVENUE LLC",
+    "pred": "850 N. HARLOW AVENUE LLC",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "property_name",
+    "kind": "string",
+    "truth": "Harlow Office Building",
+    "pred": "Harlow Office Building",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "building_address",
+    "kind": "freetext",
+    "truth": "ONE HARLOW PLACE, 850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "pred": "850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true,
+    "judged": false
+   },
+   {
+    "field": "premises",
+    "kind": "string",
+    "truth": "Suite 310",
+    "pred": "Suite 310",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rentable_square_footage",
+    "kind": "number",
+    "truth": 1842.0,
+    "pred": 1842,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "pro_rata_share",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "permitted_use",
+    "kind": "freetext",
+    "truth": "general office purposes",
+    "pred": "general office purposes and no other purpose",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true,
+    "judged": false
+   },
+   {
+    "field": "lease_execution_date",
+    "kind": "date",
+    "truth": "2025-08-21",
+    "pred": "2025-08-21",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "lease_commencement_date",
+    "kind": "date",
+    "truth": "2025-10-01",
+    "pred": "2025-10-01",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_commencement_date",
+    "kind": "date",
+    "truth": "2026-01-01",
+    "pred": "2025-10-01",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "lease_expiration_date",
+    "kind": "date",
+    "truth": "2027-04-30",
+    "pred": "2027-04-30",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "lease_term_months",
+    "kind": "computed",
+    "truth": 19,
+    "pred": 19,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_start_dates",
+    "kind": "list",
+    "truth": [
+     "2025-10-01"
+    ],
+    "pred": [
+     "2025-10-01"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_end_dates",
+    "kind": "list",
+    "truth": [
+     "2027-04-30"
+    ],
+    "pred": [
+     "2027-04-30"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_monthly_rent",
+    "kind": "list",
+    "truth": [
+     2845.0
+    ],
+    "pred": [
+     2845.0
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_annual_rent_per_rsf",
+    "kind": "computed",
+    "truth": [
+     18.53
+    ],
+    "pred": [
+     18.53
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "total_base_rent",
+    "kind": "computed",
+    "truth": 54055.0,
+    "pred": 45520,
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": false
+   },
+   {
+    "field": "base_rent_escalation",
+    "kind": "freetext",
+    "truth": "none",
+    "pred": "none",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "free_rent_months",
+    "kind": "number",
+    "truth": 3.0,
+    "pred": 3,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "security_deposit_amount",
+    "kind": "number",
+    "truth": 2850.0,
+    "pred": 2850.0,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "letter_of_credit_required",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "expense_structure",
+    "kind": "freetext",
+    "truth": "",
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "base_year_expenses",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "base_year_taxes",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "electricity_provision",
+    "kind": "freetext",
+    "truth": "Separately metered and billed directly to Tenant by Commonwealth Edison",
+    "pred": "separately metered and billed directly to Tenant by Commonwealth Edison",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "parking_spaces",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "parking_monthly_charge",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "ti_allowance_total",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_option_exists",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_options_count",
+    "kind": "number",
+    "truth": 0,
+    "pred": 0,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_term_months",
+    "kind": "null",
+    "truth": null,
+    "pred": [],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_notice_months",
+    "kind": "null",
+    "truth": null,
+    "pred": [],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "early_termination_right",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "termination_fee_description",
+    "kind": "freetext",
+    "truth": "",
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "right_to_sublet",
+    "kind": "freetext",
+    "truth": "With prior written consent of Landlord, not unreasonably withheld",
+    "pred": "with Landlord's prior written consent, not to be unreasonably withheld if the proposed sublessee has a financial condition comparable to or better than Tenant's",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "guarantor_name",
+    "kind": "string",
+    "truth": "",
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "broker_names",
+    "kind": "list",
+    "truth": [
+     "PINNACLE REALTY"
+    ],
+    "pred": [
+     "PINNACLE REALTY"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "late_fee",
+    "kind": "freetext",
+    "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
+    "pred": "$150.00 late charge plus interest at 4% per annum in excess of the Corporate base rate announced by FIRST MERIDIAN",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "holdover_rent",
+    "kind": "freetext",
+    "truth": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
+    "pred": "double the Base Rent set forth in Paragraph 1 plus any applicable Additional Rent (the Holdover Rate)",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
+   }
+  ]
+ },
+ "haiku|om_001|full#s1": {
+  "arm": "haiku",
+  "model": "anthropic/claude-haiku-5.5",
+  "doc": "om_001",
+  "ctx": "full#s1",
+  "parsed": true,
+  "tokens_in": 15797,
+  "tokens_out": 2837,
+  "reasoning_tokens": 912,
+  "cost_billed": 0.0029982,
+  "cost_list": 0.0029981999999999995,
+  "latency_ms": 10850,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 7370,
+  "fields": [
+   {
+    "field": "property_name",
+    "kind": "freetext",
+    "truth": "Marlowe Park Modern Apartments",
+    "pred": "Marlowe Park Modern Apartments",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "address",
+    "kind": "freetext",
+    "truth": "7420 E 52nd Ave.",
+    "pred": "7420 E 52nd Ave.",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "city",
+    "kind": "string",
+    "truth": "Fairhaven",
+    "pred": "Fairhaven",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "state",
+    "kind": "string",
+    "truth": "CO",
+    "pred": "CO",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "zip_code",
+    "kind": "string",
+    "truth": "80271",
+    "pred": "80271",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "county",
+    "kind": "string",
+    "truth": "Harlan",
+    "pred": "Harlan",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "submarket",
+    "kind": "string",
+    "truth": "Fairhaven International Airport",
+    "pred": "Fairhaven International Airport submarket",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "broker_name",
+    "kind": "string",
+    "truth": "Ridgeline Capital Advisors",
+    "pred": "Ridgeline Capital Advisors",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "units",
+    "kind": "number",
+    "truth": 188,
+    "pred": 188,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "year_built",
+    "kind": "number",
+    "truth": 2022,
+    "pred": 2022,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "year_renovated",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "building_type",
+    "kind": "string",
+    "truth": "Garden",
+    "pred": "Garden",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "number_of_buildings",
+    "kind": "computed",
+    "truth": 13,
+    "pred": 13,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "stories",
+    "kind": "string",
+    "truth": "2 & 3",
+    "pred": "2 & 3",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rentable_sf",
+    "kind": "number",
+    "truth": 190142.0,
+    "pred": 190142,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "average_unit_sf",
+    "kind": "computed",
+    "truth": 1011.0,
+    "pred": 1011,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "site_acres",
+    "kind": "number",
+    "truth": 9.52,
+    "pred": 9.52,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "parking_spaces",
+    "kind": "number",
+    "truth": 266,
+    "pred": 266,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "parking_ratio",
+    "kind": "number",
+    "truth": 1.41,
+    "pred": 1.41,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "asking_price",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "price_per_unit",
+    "kind": "computed",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "asking_cap_rate",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "occupancy_pct",
+    "kind": "number",
+    "truth": 71.0,
+    "pred": 71,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "average_in_place_rent",
+    "kind": "number",
+    "truth": 2228.0,
+    "pred": 2228,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "market_rent",
+    "kind": "number",
+    "truth": 2260.0,
+    "pred": 2260,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "market_rent_psf",
+    "kind": "number",
+    "truth": 2.23,
+    "pred": 2.23,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "unit_types",
+    "kind": "list",
+    "truth": [
+     "Aspen",
+     "Birch",
+     "Cedar w/ Attached Garage",
+     "Dogwood w/ Attached Garage (2)",
+     "Elm",
+     "Fir w/ Attached Garage",
+     "Hazel w/ Attached Garage",
+     "Ironwood"
+    ],
+    "pred": [
+     "Aspen",
+     "Birch",
+     "Cedar w/ Attached Garage",
+     "Dogwood w/ Attached Garage (2)",
+     "Elm",
+     "Fir w/ Attached Garage",
+     "Hazel w/ Attached Garage",
+     "Ironwood"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "noi_t12",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "noi_proforma",
+    "kind": "number",
+    "truth": 3521352.0,
+    "pred": 3521352,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   }
+  ]
+ },
+ "haiku|lease_002|full#s1": {
+  "arm": "haiku",
+  "model": "anthropic/claude-haiku-5.5",
+  "doc": "lease_002",
+  "ctx": "full#s1",
+  "parsed": true,
+  "tokens_in": 28243,
+  "tokens_out": 4360,
+  "reasoning_tokens": 1905,
+  "cost_billed": 0.0050043,
+  "cost_list": 0.0050043,
+  "latency_ms": 17505,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 18967,
+  "fields": [
+   {
+    "field": "tenant_name",
+    "kind": "freetext",
+    "truth": "KESTREL ANALYTICS USA LLC",
+    "pred": "KESTREL ANALYTICS USA LLC",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "landlord_legal_name",
+    "kind": "freetext",
+    "truth": "850 N. HARLOW AVENUE LLC",
+    "pred": "850 N. HARLOW AVENUE LLC",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "property_name",
+    "kind": "string",
+    "truth": "Harlow Office Building",
+    "pred": "ONE HARLOW PLACE",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": false
+   },
+   {
+    "field": "building_address",
+    "kind": "freetext",
+    "truth": "ONE HARLOW PLACE, 850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "pred": "850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true,
+    "judged": false
+   },
+   {
+    "field": "premises",
+    "kind": "string",
+    "truth": "Suite 310",
+    "pred": "Suite 310",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rentable_square_footage",
+    "kind": "number",
+    "truth": 1842.0,
+    "pred": 1842,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "pro_rata_share",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "permitted_use",
+    "kind": "freetext",
+    "truth": "general office purposes",
+    "pred": "general office purposes and no other purpose",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true,
+    "judged": false
+   },
+   {
+    "field": "lease_execution_date",
+    "kind": "date",
+    "truth": "2025-08-21",
+    "pred": "2025-08-21",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "lease_commencement_date",
+    "kind": "date",
+    "truth": "2025-10-01",
+    "pred": "2025-10-01",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_commencement_date",
+    "kind": "date",
+    "truth": "2026-01-01",
+    "pred": "2026-01-01",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "lease_expiration_date",
+    "kind": "date",
+    "truth": "2027-04-30",
+    "pred": "2027-04-30",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "lease_term_months",
+    "kind": "computed",
+    "truth": 19,
+    "pred": 19,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_start_dates",
+    "kind": "list",
+    "truth": [
+     "2025-10-01"
+    ],
+    "pred": [
+     "2025-10-01"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_end_dates",
+    "kind": "list",
+    "truth": [
+     "2027-04-30"
+    ],
+    "pred": [
+     "2027-04-30"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_monthly_rent",
+    "kind": "list",
+    "truth": [
+     2845.0
+    ],
+    "pred": [
+     2845
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_annual_rent_per_rsf",
+    "kind": "computed",
+    "truth": [
+     18.53
+    ],
+    "pred": [
+     18.53
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "total_base_rent",
+    "kind": "computed",
+    "truth": 54055.0,
+    "pred": 45520,
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": false
+   },
+   {
+    "field": "base_rent_escalation",
+    "kind": "freetext",
+    "truth": "none",
+    "pred": "none",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "free_rent_months",
+    "kind": "number",
+    "truth": 3.0,
+    "pred": 3,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "security_deposit_amount",
+    "kind": "number",
+    "truth": 2850.0,
+    "pred": 2850,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "letter_of_credit_required",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "expense_structure",
+    "kind": "freetext",
+    "truth": "",
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "base_year_expenses",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "base_year_taxes",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "electricity_provision",
+    "kind": "freetext",
+    "truth": "Separately metered and billed directly to Tenant by Commonwealth Edison",
+    "pred": "separately metered and billed directly to Tenant by Commonwealth Edison",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "parking_spaces",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "parking_monthly_charge",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "ti_allowance_total",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_option_exists",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_options_count",
+    "kind": "number",
+    "truth": 0,
+    "pred": 0,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_term_months",
+    "kind": "null",
+    "truth": null,
+    "pred": [],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_notice_months",
+    "kind": "null",
+    "truth": null,
+    "pred": [],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "early_termination_right",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "termination_fee_description",
+    "kind": "freetext",
+    "truth": "",
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "right_to_sublet",
+    "kind": "freetext",
+    "truth": "With prior written consent of Landlord, not unreasonably withheld",
+    "pred": "with Landlord's prior written consent, not unreasonably withheld, subject to Landlord's recapture option",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "guarantor_name",
+    "kind": "string",
+    "truth": "",
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "broker_names",
+    "kind": "list",
+    "truth": [
+     "PINNACLE REALTY"
+    ],
+    "pred": [
+     "PINNACLE REALTY"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "late_fee",
+    "kind": "freetext",
+    "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
+    "pred": "$150.00 late charge plus interest at 4% per annum above FIRST MERIDIAN corporate base rate",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": false
+   },
+   {
+    "field": "holdover_rent",
+    "kind": "freetext",
+    "truth": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
+    "pred": "double the Base Rent set forth in Paragraph 1 (Holdover Rate)",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   }
+  ]
+ },
+ "luna-off|om_001|full#s1": {
+  "arm": "luna-off",
+  "model": "openai/gpt-6-luna",
+  "doc": "om_001",
+  "ctx": "full#s1",
+  "parsed": true,
+  "tokens_in": 10083,
+  "tokens_out": 1296,
+  "reasoning_tokens": 0,
+  "cost_billed": 0.0019083,
+  "cost_list": 0.0016562999999999999,
+  "latency_ms": 10320,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 7370,
+  "fields": [
+   {
+    "field": "property_name",
+    "kind": "freetext",
+    "truth": "Marlowe Park Modern Apartments",
+    "pred": "Marlowe Park Modern Apartments",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "address",
+    "kind": "freetext",
+    "truth": "7420 E 52nd Ave.",
+    "pred": "7420 E 52nd Ave.",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "city",
+    "kind": "string",
+    "truth": "Fairhaven",
+    "pred": "Fairhaven",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "state",
+    "kind": "string",
+    "truth": "CO",
+    "pred": "CO",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "zip_code",
+    "kind": "string",
+    "truth": "80271",
+    "pred": "80271",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "county",
+    "kind": "string",
+    "truth": "Harlan",
+    "pred": "Harlan",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "submarket",
+    "kind": "string",
+    "truth": "Fairhaven International Airport",
+    "pred": "Fairhaven International Airport submarket",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "broker_name",
+    "kind": "string",
+    "truth": "Ridgeline Capital Advisors",
+    "pred": "Ridgeline Capital Advisors",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "units",
+    "kind": "number",
+    "truth": 188,
+    "pred": 188,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "year_built",
+    "kind": "number",
+    "truth": 2022,
+    "pred": 2022,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "year_renovated",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "building_type",
+    "kind": "string",
+    "truth": "Garden",
+    "pred": "Garden",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "number_of_buildings",
+    "kind": "computed",
+    "truth": 13,
+    "pred": 13,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "stories",
+    "kind": "string",
+    "truth": "2 & 3",
+    "pred": "2 & 3",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rentable_sf",
+    "kind": "number",
+    "truth": 190142.0,
+    "pred": 190142,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "average_unit_sf",
+    "kind": "computed",
+    "truth": 1011.0,
+    "pred": 1011,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "site_acres",
+    "kind": "number",
+    "truth": 9.52,
+    "pred": 9.52,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "parking_spaces",
+    "kind": "number",
+    "truth": 266,
+    "pred": 266,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "parking_ratio",
+    "kind": "number",
+    "truth": 1.41,
+    "pred": 1.41,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "asking_price",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "price_per_unit",
+    "kind": "computed",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "asking_cap_rate",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "occupancy_pct",
+    "kind": "number",
+    "truth": 71.0,
+    "pred": 71,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "average_in_place_rent",
+    "kind": "number",
+    "truth": 2228.0,
+    "pred": 2228,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "market_rent",
+    "kind": "number",
+    "truth": 2260.0,
+    "pred": 2260,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "market_rent_psf",
+    "kind": "number",
+    "truth": 2.23,
+    "pred": 2.23,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "unit_types",
+    "kind": "list",
+    "truth": [
+     "Aspen",
+     "Birch",
+     "Cedar w/ Attached Garage",
+     "Dogwood w/ Attached Garage (2)",
+     "Elm",
+     "Fir w/ Attached Garage",
+     "Hazel w/ Attached Garage",
+     "Ironwood"
+    ],
+    "pred": [
+     "Aspen",
+     "Birch",
+     "Cedar w/ Attached Garage",
+     "Dogwood w/ Attached Garage (2)",
+     "Elm",
+     "Fir w/ Attached Garage",
+     "Hazel w/ Attached Garage",
+     "Ironwood"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "noi_t12",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "noi_proforma",
+    "kind": "number",
+    "truth": 3521352.0,
+    "pred": 3521352,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   }
+  ]
+ },
+ "luna-off|lease_002|full#s1": {
+  "arm": "luna-off",
+  "model": "openai/gpt-6-luna",
+  "doc": "lease_002",
+  "ctx": "full#s1",
+  "parsed": true,
+  "tokens_in": 17566,
+  "tokens_out": 1702,
+  "reasoning_tokens": 0,
+  "cost_billed": 0.003046675,
+  "cost_list": 0.0026076,
+  "latency_ms": 16576,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 18967,
+  "fields": [
+   {
+    "field": "tenant_name",
+    "kind": "freetext",
+    "truth": "KESTREL ANALYTICS USA LLC",
+    "pred": "KESTREL ANALYTICS USA LLC",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "landlord_legal_name",
+    "kind": "freetext",
+    "truth": "850 N. HARLOW AVENUE LLC",
+    "pred": "850 N. HARLOW AVENUE LLC",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "property_name",
+    "kind": "string",
+    "truth": "Harlow Office Building",
+    "pred": "ONE HARLOW PLACE",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "building_address",
+    "kind": "freetext",
+    "truth": "ONE HARLOW PLACE, 850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "pred": "850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true,
+    "judged": false
+   },
+   {
+    "field": "premises",
+    "kind": "string",
+    "truth": "Suite 310",
+    "pred": "Suite 310",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rentable_square_footage",
+    "kind": "number",
+    "truth": 1842.0,
+    "pred": 1842,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "pro_rata_share",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "permitted_use",
+    "kind": "freetext",
+    "truth": "general office purposes",
+    "pred": "general office purposes",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "lease_execution_date",
+    "kind": "date",
+    "truth": "2025-08-21",
+    "pred": "2025-08-21",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "lease_commencement_date",
+    "kind": "date",
+    "truth": "2025-10-01",
+    "pred": "2025-10-01",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_commencement_date",
+    "kind": "date",
+    "truth": "2026-01-01",
+    "pred": "2026-01-01",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "lease_expiration_date",
+    "kind": "date",
+    "truth": "2027-04-30",
+    "pred": "2027-04-30",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "lease_term_months",
+    "kind": "computed",
+    "truth": 19,
+    "pred": 19,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_start_dates",
+    "kind": "list",
+    "truth": [
+     "2025-10-01"
+    ],
+    "pred": [
+     "2025-10-01"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_end_dates",
+    "kind": "list",
+    "truth": [
+     "2027-04-30"
+    ],
+    "pred": [
+     "2027-04-30"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_monthly_rent",
+    "kind": "list",
+    "truth": [
+     2845.0
+    ],
+    "pred": [
+     2845
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_annual_rent_per_rsf",
+    "kind": "computed",
+    "truth": [
+     18.53
+    ],
+    "pred": [
+     18.53
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "total_base_rent",
+    "kind": "computed",
+    "truth": 54055.0,
+    "pred": 45520,
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": false
+   },
+   {
+    "field": "base_rent_escalation",
+    "kind": "freetext",
+    "truth": "none",
+    "pred": "none",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "free_rent_months",
+    "kind": "number",
+    "truth": 3.0,
+    "pred": 3,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "security_deposit_amount",
+    "kind": "number",
+    "truth": 2850.0,
+    "pred": 2850,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "letter_of_credit_required",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "expense_structure",
+    "kind": "freetext",
+    "truth": "",
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "base_year_expenses",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "base_year_taxes",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "electricity_provision",
+    "kind": "freetext",
+    "truth": "Separately metered and billed directly to Tenant by Commonwealth Edison",
+    "pred": "Separately metered and billed directly to Tenant by Commonwealth Edison",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "parking_spaces",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "parking_monthly_charge",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "ti_allowance_total",
+    "kind": "null",
+    "truth": null,
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_option_exists",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_options_count",
+    "kind": "number",
+    "truth": 0,
+    "pred": 0,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_term_months",
+    "kind": "null",
+    "truth": null,
+    "pred": [],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "renewal_notice_months",
+    "kind": "null",
+    "truth": null,
+    "pred": [],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "early_termination_right",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "termination_fee_description",
+    "kind": "freetext",
+    "truth": "",
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "right_to_sublet",
+    "kind": "freetext",
+    "truth": "With prior written consent of Landlord, not unreasonably withheld",
+    "pred": "With Landlord's prior written consent, not unreasonably withheld, subject to Landlord's cancellation option in specified cases",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "guarantor_name",
+    "kind": "string",
+    "truth": "",
+    "pred": null,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "broker_names",
+    "kind": "list",
+    "truth": [
+     "PINNACLE REALTY"
+    ],
+    "pred": [
+     "PINNACLE REALTY"
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "late_fee",
+    "kind": "freetext",
+    "truth": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
+    "pred": "$150.00 late charge and interest at 4% above the Corporate base rate",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true,
+    "judged": true,
+    "outcome_strict": "wrong"
+   },
+   {
+    "field": "holdover_rent",
+    "kind": "freetext",
+    "truth": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
+    "pred": "Double the Base Rent and applicable Additional Rent",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   }
+  ]
+ },
+ "gemini-flash|om_001|oracle-r2:luna-off": {
+  "arm": "gemini-flash",
+  "model": "google/gemini-3.8-flash",
+  "doc": "om_001",
+  "ctx": "oracle-r2:luna-off",
+  "parsed": true,
+  "tokens_in": 1542,
+  "tokens_out": 430,
+  "reasoning_tokens": 376,
+  "cost_billed": 0.002769,
+  "cost_list": 0.0030459000000000003,
+  "latency_ms": 4619,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 1151,
+  "fields": [
+   {
+    "field": "submarket",
+    "kind": "string",
+    "truth": "Fairhaven International Airport",
+    "pred": "Fairhaven International Airport",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   }
+  ]
+ },
+ "gemini-flash|lease_001|oracle-r2:luna-off": {
+  "arm": "gemini-flash",
+  "model": "google/gemini-3.8-flash",
+  "doc": "lease_001",
+  "ctx": "oracle-r2:luna-off",
+  "parsed": true,
+  "tokens_in": 6694,
+  "tokens_out": 4031,
+  "reasoning_tokens": 3151,
+  "cost_billed": 0.02013675,
+  "cost_list": 0.022150425,
+  "latency_ms": 24422,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 6315,
+  "fields": [
+   {
+    "field": "property_name",
+    "kind": "string",
+    "truth": "Hollis Office Plaza",
+    "pred": "TRENT MA-II HOLLIS OFFICE PLAZA, INC.",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "premises",
+    "kind": "string",
+    "truth": "Suite 214W",
+    "pred": "Second Floor, West Section, Suite 214W",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "rent_schedule_annual_rent_per_rsf",
+    "kind": "computed",
+    "truth": [
+     12.25,
+     12.62,
+     13.0,
+     13.39,
+     13.79
+    ],
+    "pred": [
+     12.25,
+     12.62,
+     13,
+     13.39,
+     13.79
+    ],
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "electricity_provision",
+    "kind": "freetext",
+    "truth": "Furnished by Landlord during ordinary business hours; excess electricity separately metered and paid by Tenant as additional rent",
+    "pred": "Furnished by Landlord during ordinary business hours; excess usage metered and billed to Tenant as additional rent",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "early_termination_right",
+    "kind": "bool",
+    "truth": false,
+    "pred": false,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "late_fee",
+    "kind": "freetext",
+    "truth": "the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment",
+    "pred": "the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "holdover_rent",
+    "kind": "freetext",
+    "truth": "150% of the amount of the Annual Rent for the last period prior to the date of such termination plus all Rent Adjustments as provided for in Article 41 prorated on a daily basis",
+    "pred": "150% of the amount of the Annual Rent for the last period prior to the date of such termination plus all Rent Adjustments as provided for in Article 41 prorated on a daily basis",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   }
+  ]
+ },
+ "gemini-flash|lease_002|oracle-r2:luna-off": {
+  "arm": "gemini-flash",
+  "model": "google/gemini-3.8-flash",
+  "doc": "lease_002",
+  "ctx": "oracle-r2:luna-off",
+  "parsed": true,
+  "tokens_in": 1452,
+  "tokens_out": 4226,
+  "reasoning_tokens": 4017,
+  "cost_billed": 0.0169365,
+  "cost_list": 0.018630149999999998,
+  "latency_ms": 24710,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 801,
+  "fields": [
+   {
+    "field": "property_name",
+    "kind": "string",
+    "truth": "Harlow Office Building",
+    "pred": "Harlow Office Building",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": true
+   },
+   {
+    "field": "building_address",
+    "kind": "freetext",
+    "truth": "ONE HARLOW PLACE, 850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "pred": "850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "rent_commencement_date",
+    "kind": "date",
+    "truth": "2026-01-01",
+    "pred": "2025-10-01",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "total_base_rent",
+    "kind": "computed",
+    "truth": 54055.0,
+    "pred": null,
+    "score": 0.0,
+    "penal": 0.0,
+    "outcome": "miss",
+    "cite_found": false
+   }
+  ]
+ },
+ "gemini-flash|lease_003|oracle-r2:luna-off": {
+  "arm": "gemini-flash",
+  "model": "google/gemini-3.8-flash",
+  "doc": "lease_003",
+  "ctx": "oracle-r2:luna-off",
+  "parsed": true,
+  "tokens_in": 7589,
+  "tokens_out": 4338,
+  "reasoning_tokens": 4024,
+  "cost_billed": 0.02195925,
+  "cost_list": 0.024155175,
+  "latency_ms": 25226,
+  "finish": "stop",
+  "cached": false,
+  "context_tokens": 7561,
+  "fields": [
+   {
+    "field": "total_base_rent",
+    "kind": "computed",
+    "truth": 1675438.0,
+    "pred": 1675438,
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "base_rent_escalation",
+    "kind": "freetext",
+    "truth": "fixed steps per schedule",
+    "pred": "fixed steps per schedule",
+    "score": 1.0,
+    "penal": 1.0,
+    "outcome": "correct",
+    "cite_found": false
+   },
+   {
+    "field": "right_to_sublet",
+    "kind": "freetext",
+    "truth": "With prior written consent of Landlord, which consent shall not be unreasonably withheld (permitted to sublease up to 40% to attorneys or other associated professionals without prior consent)",
+    "pred": "with prior written consent of Landlord, not unreasonably withheld",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "late_fee",
+    "kind": "freetext",
+    "truth": "$300.00 late charge and interest until paid at the annual rate of two (2%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
+    "pred": "$300.00",
+    "score": 0.0,
+    "penal": -1.0,
+    "outcome": "wrong",
+    "cite_found": true
+   },
+   {
+    "field": "holdover_rent",
+    "kind": "freetext",
+    "truth": "175% of the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
+    "pred": null,
+    "score": 0.0,
+    "penal": 0.0,
+    "outcome": "miss",
     "cite_found": false
    }
   ]

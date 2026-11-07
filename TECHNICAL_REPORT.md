@@ -254,7 +254,10 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | E0 ingestion comparison | 0 | 0 | 0% |
 | E1a vision transcription (round 1 + reasoning-off test) | 18 | 0.0142 | 0.14% |
 | E1b model screen, round 1 | 38 | 0.0961 | 0.96% |
-| **Total to date** | **57** | **0.1102** | **1.10%** |
+| E1b free-text judge | 4 | 0.0011 | 0.01% |
+| E1b noise check | 6 | 0.0130 | 0.13% |
+| E1b round 2a (gemini-flash on failures) | 4 | 0.0618 | 0.62% |
+| **Total to date** | **71** | **0.1863** | **1.86%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_

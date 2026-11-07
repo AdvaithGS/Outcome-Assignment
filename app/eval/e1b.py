@@ -250,7 +250,9 @@ def plan_round2(results: dict, base: str, arms: list[str]) -> list[dict]:
         rec = results.get(f"{base}|{doc_id}|oracle")
         if not rec or not rec.get("fields"):
             continue
-        failed = [f["field"] for f in rec["fields"] if f["outcome"] != "correct"]
+        # genuine failures only: free text counts only if the judge also says it is wrong
+        failed = [f["field"] for f in rec["fields"]
+                  if f["outcome"] != "correct" and (f["kind"] != "freetext" or f.get("judged") is False)]
         if failed:
             for arm in arms:
                 jobs.append({"arm": arm, "doc": doc_id, "ctx": f"oracle-r2:{base}", "fields": failed})
@@ -279,7 +281,10 @@ def estimate(jobs: list[dict], cache_docs: dict) -> float:
     for j in jobs:
         msgs, _, _, fields = materialise(j, cache_docs)
         tin = sum(len(m["content"]) for m in msgs) // 4
-        tout = 45 * len(fields) + (1200 if j["arm"] in ("luna", "haiku", "luna-high", "sonnet", "sol", "gemini-pro") else 0)
+        # hidden reasoning tokens per call, measured in E1b (gemini-flash ~4k, haiku ~2k, luna ~1.4k, glm ~1k)
+        reasoning = {"gemini-flash": 4000, "haiku": 2000, "luna": 1500, "glm": 1100, "luna-high": 4000,
+                     "sonnet": 3000, "sol": 3000, "gemini-pro": 4000}.get(j["arm"], 0)
+        tout = 45 * len(fields) + reasoning
         total += estimate_cost(ARMS[j["arm"]][0], tin, tout) or 0.0
     return total
 
@@ -293,28 +298,31 @@ async def execute(jobs: list[dict], results: dict, cache_docs: dict) -> None:
         msgs, text, schema, fields = materialise(j, cache_docs)
         truth = json.loads((SAMPLE / "sample-data-output-validated" / f"{j['doc']}.json").read_text())["entries"][0]
         usage = UsageTracker()
-        key = f"{j['arm']}|{j['doc']}|{j['ctx']}"
+        si = j.get("sample_index", 0)
+        ctx_label = j["ctx"] + (f"#s{si}" if si else "")
+        key = f"{j['arm']}|{j['doc']}|{ctx_label}"
         async with sem:
             for attempt in range(4):
                 try:
                     r = await client.chat(model=model, messages=msgs, stage="e1b_extract", doc_id=j["doc"], usage=usage,
-                                          temperature=0, max_tokens=8000, response_format={"type": "json_object"}, **extra)
+                                          sample_index=si, temperature=0, max_tokens=8000,
+                                          response_format={"type": "json_object"}, **extra)
                     break
                 except LLMHTTPError as exc:
                     if exc.retryable and attempt < 3:
                         await asyncio.sleep(exc.retry_after or 2 ** (attempt + 1))
                         continue
-                    results[key] = {"arm": j["arm"], "doc": j["doc"], "ctx": j["ctx"], "error": str(exc)[:300]}
+                    results[key] = {"arm": j["arm"], "doc": j["doc"], "ctx": ctx_label, "error": str(exc)[:300]}
                     return
                 except Exception as exc:  # noqa: BLE001
-                    results[key] = {"arm": j["arm"], "doc": j["doc"], "ctx": j["ctx"], "error": f"{type(exc).__name__}: {str(exc)[:300]}"}
+                    results[key] = {"arm": j["arm"], "doc": j["doc"], "ctx": ctx_label, "error": f"{type(exc).__name__}: {str(exc)[:300]}"}
                     return
         pred = parse(r.content)
         (OUT / "dumps").mkdir(parents=True, exist_ok=True)
         (OUT / "dumps" / f"{key.replace('|', '__').replace(':', '_')}.json").write_text(r.content or "")
         tin, tout = r.usage.get("prompt_tokens", 0), r.usage.get("completion_tokens", 0)
         results[key] = {
-            "arm": j["arm"], "model": model, "doc": j["doc"], "ctx": j["ctx"], "parsed": pred is not None,
+            "arm": j["arm"], "model": model, "doc": j["doc"], "ctx": ctx_label, "parsed": pred is not None,
             "tokens_in": tin, "tokens_out": tout,
             "reasoning_tokens": (r.usage.get("completion_tokens_details") or {}).get("reasoning_tokens"),
             "cost_billed": r.cost_usd, "cost_list": estimate_cost(model, tin, tout), "latency_ms": r.latency_ms,
@@ -371,6 +379,27 @@ def report(results: dict) -> None:
         print(f"ERROR {r['arm']} {r['doc']} {r['ctx']}: {r['error'][:160]}")
 
     signals(results)
+    noise(results)
+
+
+def noise(results: dict) -> None:
+    """Noise check: how many cells change between sample 0 and a repeat (#s1) of the same arm/doc/context?"""
+    rows = []
+    for key, rec in results.items():
+        if "#s" not in rec.get("ctx", "") or "fields" not in rec:
+            continue
+        base = results.get(f"{rec['arm']}|{rec['doc']}|{rec['ctx'].split('#')[0]}")
+        if not base or "fields" not in base:
+            continue
+        a = {f["field"]: f for f in base["fields"]}
+        changed = [f["field"] for f in rec["fields"] if json.dumps(f["pred"]) != json.dumps(a[f["field"]]["pred"])]
+        flips = [f["field"] for f in rec["fields"] if (f["outcome"] == "correct") != (a[f["field"]]["outcome"] == "correct")]
+        d = sum(f["penal"] for f in rec["fields"]) - sum(a[k]["penal"] for k in a)
+        rows.append((rec["arm"], rec["doc"], len(changed), len(flips), d / len(rec["fields"]), flips))
+    if rows:
+        print("\n== noise check (repeat vs first run, same prompt)")
+        for arm, doc, ch, fl, d, flips in sorted(rows):
+            print(f"  {arm:10s} {doc:10s} values changed={ch:2d} correctness flips={fl:2d} penal delta={d:+.3f} {flips[:6]}")
 
 
 def signals(results: dict) -> None:
@@ -414,6 +443,65 @@ def signals(results: dict) -> None:
         print(f"{target:10s} bad={len(bad):3d}/{len(rows):3d}  " + " | ".join(line))
 
 
+# ------------------------------------------------------------------------------- free-text judge
+
+JUDGE_ARM = "luna-off"
+JUDGE_PROMPT = """You grade extracted values from commercial real estate documents against a reference answer.
+For each item, decide whether the PREDICTION states the same facts as the REFERENCE: the same amounts, percentages,
+dates, parties, conditions and limits. Wording, abbreviation, order and extra harmless detail do not matter.
+It is NOT equivalent if it omits or changes a number, percentage, condition or party that the reference states,
+or adds a different condition. Return one JSON object mapping each item id to true or false."""
+
+
+def judge_pairs(results: dict) -> list[tuple[str, str, str]]:
+    """Distinct (field, truth, pred) free-text pairs not already exact matches."""
+    pairs = {}
+    for rec in results.values():
+        for f in rec.get("fields", []):
+            if f["kind"] == "freetext" and f["outcome"] in ("wrong", "partial") and f["pred"] not in (None, "", []):
+                key = (f["field"], json.dumps(f["truth"]), json.dumps(f["pred"]))
+                pairs[key] = key
+    return sorted(pairs)
+
+
+async def run_judge(results: dict, verdicts: dict, batch: int = 30) -> None:
+    todo = [p for p in judge_pairs(results) if "|".join(p) not in verdicts]
+    if not todo:
+        return
+    client = LLMClient.from_env()
+    model, extra = ARMS[JUDGE_ARM]
+    try:
+        for i in range(0, len(todo), batch):
+            chunk = todo[i:i + batch]
+            items = "\n".join(f'{j}. field={fld}\n   REFERENCE: {json.loads(t)}\n   PREDICTION: {json.loads(p)}'
+                              for j, (fld, t, p) in enumerate(chunk))
+            msgs = [{"role": "system", "content": JUDGE_PROMPT}, {"role": "user", "content": items}]
+            r = await client.chat(model=model, messages=msgs, stage="e1b_judge", temperature=0, max_tokens=2000,
+                                  response_format={"type": "json_object"}, **extra)
+            got = parse(r.content) or {}
+            for j, p in enumerate(chunk):
+                v = got.get(str(j))
+                if isinstance(v, bool):
+                    verdicts["|".join(p)] = v
+    finally:
+        await client.aclose()
+
+
+def apply_judge(results: dict, verdicts: dict) -> None:
+    """Re-score judged free-text cells: equivalent → correct (score 1, penal 1)."""
+    for rec in results.values():
+        for f in rec.get("fields", []):
+            if f["kind"] != "freetext" or f["pred"] in (None, "", []):
+                continue
+            v = verdicts.get("|".join((f["field"], json.dumps(f["truth"]), json.dumps(f["pred"]))))
+            if v is None:
+                continue
+            f["judged"] = v
+            if v and f["outcome"] in ("wrong", "partial"):
+                f["outcome_strict"] = f["outcome"]
+                f["outcome"], f["score"], f["penal"] = "correct", 1.0, 1.0
+
+
 # ------------------------------------------------------------------------------- main
 
 def main() -> int:
@@ -424,18 +512,41 @@ def main() -> int:
     ap.add_argument("--base", default="luna-off")
     ap.add_argument("--arms", nargs="*")
     ap.add_argument("--report", action="store_true")
+    ap.add_argument("--judge", action="store_true", help="LLM-judge free-text cells (deduplicated pairs)")
+    ap.add_argument("--repeat", action="store_true", help="noise check: sample_index=1 rerun of --arms on --docs, full context")
+    ap.add_argument("--docs", nargs="*")
     ap.add_argument("--cap", type=float, default=0.15, help="run budget cap in USD")
     args = ap.parse_args()
 
     res_path = OUT / "results.json"
     OUT.mkdir(parents=True, exist_ok=True)
     results = json.loads(res_path.read_text()) if res_path.exists() else {}
+    verdict_path = OUT / "judge_verdicts.json"
+    verdicts = json.loads(verdict_path.read_text()) if verdict_path.exists() else {}
     if args.report:
+        apply_judge(results, verdicts)
+        report(results)
+        return 0
+    if args.judge:
+        n = len([p for p in judge_pairs(results) if "|".join(p) not in verdicts])
+        print(f"{n} distinct free-text pairs to judge (~{max(1, -(-n // 30))} calls)")
+        if not args.go:
+            print("dry run: add --go to spend")
+            return 0
+        os.environ.setdefault("LLM_RUN_ID", "e1b-judge")
+        asyncio.run(run_judge(results, verdicts))
+        verdict_path.write_text(json.dumps(verdicts, indent=1, sort_keys=True))
+        apply_judge(results, verdicts)
         report(results)
         return 0
 
     cache_docs: dict = {}
-    if args.round2:
+    if args.repeat:
+        jobs = [{"arm": a, "doc": d, "ctx": "full", "fields": None, "sample_index": 1}
+                for a in (args.arms or []) for d in (args.docs or [])]
+        os.environ.setdefault("LLM_RUN_ID", "e1b-repeat")
+    elif args.round2:
+        apply_judge(results, verdicts)
         jobs = plan_round2(results, args.base, args.arms or ["gemini-flash"])
         os.environ.setdefault("LLM_RUN_ID", f"e1b-r2-{'-'.join(args.arms or ['gemini-flash'])}")
     else:

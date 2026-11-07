@@ -459,3 +459,38 @@ strings 0.43–0.78; **free text 0.00–0.25 under the strict matcher**.
    (precision 0.56–0.69). Citation-not-in-text is weak (recall ≤ 0.41).
 6. **Reasoning:** luna with reasoning on is *not* better than off for extraction, and costs ~40% more and twice the time.
 7. **deepseek is the slowest** (~45 s/doc) without being more accurate.
+
+## 15. E1b follow-ups (A judge, B noise, C round 2)
+
+**A. Free-text judge ($0.0011, 4 calls):** 106 distinct (truth, prediction) pairs judged by gpt-6-luna (reasoning off);
+50 judged equivalent. Spot check: correctly strict on dropped numbers ("175%", "2%"), but noisy both ways (accepted a
+sublet answer that adds recapture terms; rejected one of two near-identical "150% of the Annual Rent" paraphrases).
+Good enough for ranking models, not for exact scores. Bias: a cheap model partly judging its own outputs.
+
+**Re-scored (penalised, α = 1, free text judged):**
+
+| Arm | Oracle (4 docs) | Full (3 docs) | $/doc list, full | s/doc |
+|---|---|---|---|---|
+| glm-5.3-flash | **0.812** | **0.853** | 0.0038 (billed $0) | 13 |
+| claude-haiku-5.5 | 0.779 | 0.835 | 0.0048 | 17 |
+| deepseek-v3.2 | 0.732 | 0.794 | 0.0051 | 44 |
+| gpt-6-luna, reasoning off | 0.769 | 0.743 | **0.0025** | 13 |
+| gpt-6-luna | 0.772 | 0.725 | 0.0033 | 24 |
+
+**B. Noise check ($0.0130, 6 calls):** same prompt repeated at temperature 0 on lease_002 and om_001: 0–4 values change
+per document and 0–1 fields flip correctness; about **±0.02–0.03** on a 3-document average. glm vs haiku is a tie;
+luna (reasoning off) is ~0.1 lower, beyond noise.
+
+**C. Round 2a, gemini-3.8-flash on luna-off's genuine failures ($0.0618, 4 calls; estimate was $0.018 because
+gemini-flash spent 3–4k hidden reasoning tokens per call, now included in the estimator):** fixed 8 of 17 failing
+fields (computed $/RSF list, early termination, late fee, holdover, total base rent, escalation, submarket, one
+property name); did **not** fix the shared interpretation errors (premises "Second Floor, West Section, Suite 214W",
+lease_001 property name, rent commencement date, building address). Two wrong values became nulls (better under α = 1).
+**Round 2b (strong models) skipped:** the remaining failures are interpretation conventions, the job of description
+rewriting in E2, and it would exceed the quoted E1b range.
+
+**E1b total: $0.1720** (round 1 $0.0961 + judge $0.0011 + noise $0.0130 + round 2a $0.0618).
+
+**Takeaways for later decisions:** glm and haiku lead on full documents (tie within noise); the cheapest default
+(luna, reasoning off) is ~0.1 behind; escalation by cross-model disagreement catches >90% of errors; the biggest
+remaining lever is field-description rewriting, not model strength.
