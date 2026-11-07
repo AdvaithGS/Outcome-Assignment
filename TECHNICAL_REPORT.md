@@ -73,17 +73,84 @@ accurately and cheaply, keeping page and cell locations for citations. Affects A
 | Doc | Format | Representation used | Issues seen | Fix |
 |---|---|---|---|---|
 | boxscore_001 | CSV | | | |
-| budget_001 | PDF (text) | | | |
-| lease_001 | PDF (scanned) | | | |
-| lease_002 | DOCX | | | |
-| lease_003 | PDF (scanned) | | | |
-| om_001 | PDF (text) | | | |
+| budget_001 | PDF (text) | pdfplumber (proposed) | Table document: heading sections are meaningless, citations are row snippets | Table branch (later) |
+| lease_001 | PDF (scanned, 1993) | Local OCR + vision on the pages that matter (proposed) | Handwritten correction (deposit $2,400 struck → 2150), pre-printed "19__" years filled by hand, garbled guarantor name | Vision model reads all three (E1a) |
+| lease_002 | DOCX | Own XML parser + image OCR | No heading styles; run-in headings ("17. HOLDING OVER. Tenant…"); TOC repeats headings; no Word tables; no pagination; 3 images (signature page with handwritten date, floor plan, logo); Word stores one image twice | Heuristic + run-in heading detection, TOC mode, numbered anchors, tabs → " \| ", image dedupe |
+| lease_003 | PDF (scanned, clean) | Local OCR | None material: every printed answer value captured | — |
+| om_001 | PDF (text) | pdfplumber (proposed) | One image-only page; ~110 tiny heading sections | Per-page scan detection; pages as Locator unit |
 | t12_001 | XLSX | | | |
 | rentroll_001 | XLSX | | | |
 
-**Experiments:** _TODO (e.g. OCR quality and cost per page vs a vision model on the scanned leases)._
-**Results:** _TODO_
-**Open issues:** _TODO_
+**Experiments**
+
+- **E0 (free, no LLM):** every applicable ingestion option on the PDF and DOCX samples. Metrics: *captured* =
+  share of non-computed answer values present in the extracted text in any common format (an upper bound on
+  extraction accuracy); *right page* = found on a page the answer cites; citations located; tokens; CPU time;
+  anchor slice sizes. Digital docs were also rendered and OCR'd to give scans with a known answer key.
+- **E1a (targeted, $0.0142):** 4 images where local OCR failed or that act as a control (lease_001 p2, p25, p18;
+  lease_002 signature image) × the 4 cheapest vision models, scored on the answer values cited on each page plus
+  handwriting checks. Local OCR scored on the same images as a free baseline. A second, more expensive round was
+  planned but not needed.
+
+**Results: E0, digital PDFs**
+
+| Reader | OM captured | Budget captured | OM tokens | OM citations located | Right page |
+|---|---|---|---|---|---|
+| pdfplumber | 100% | 99.8% | 7.4k | 95% | 100% |
+| PyMuPDF | 100% | 99.1% | 7.5k | 95% | 100% |
+| pdftotext (plain) | 100% | 99.8% | 7.8k | 86% | 84% |
+| pdftotext (layout) | 100% | 99.8% | 14.2k | 91% | 100% |
+| pymupdf4llm | 100% | 94.0% | 8.4k | 95% | 100% |
+
+**Results: E0, scanned PDFs**
+
+| Engine | lease_001 verbatim / incl. near-matches | lease_003 verbatim / incl. near-matches | Citations located (lease_001 / lease_003) | CPU s/page (under contention) | Wall time, 25 pages |
+|---|---|---|---|---|---|
+| RapidOCR @200 dpi | 85.0% / 97.5% | 88.5% / 98.4% | 72% / 100% | ~27–31 | ~227 s |
+| Tesseract @200 dpi | 82.5% / 97.5% | 85.3% / 96.7% | 62% / 97% | ~9 | ~27 s |
+| Tesseract @300 dpi | 80.0% / 95.0% | 85.3% / 96.7% | 59% / 97% | ~11–12 | ~33 s |
+| Tesseract psm 6 @300 | 80.0% / 95.0% | 85.3% / 96.7% | 66% / 97% | ~10 | ~28 s |
+
+Rendered (clean) scans of om_001 and budget_001: every engine 99.6–100%. The remaining lease misses are values
+the lease implies but never prints, plus the handwritten deposit, which no local engine reads.
+
+**Results: E0, DOCX (lease_002)**
+
+| Reader | Captured verbatim / incl. near-matches | Sections | Median slice | Citations located | Images transcribed |
+|---|---|---|---|---|---|
+| Own XML parser + RapidOCR | 82.6% / 91.3% | 49 | 244 tokens | 100% | 2 (handwritten date read) |
+| Own XML parser + Tesseract | 82.6% / 91.3% | 49 | 244 tokens | 100% | 2 (handwritten date garbled) |
+| python-docx / mammoth | 82.6% / 91.3% | 21 (mostly fixed chunks) | 1,043 tokens | 100% | none |
+
+The two lease_002 misses are inferred values (a rent start date following free rent; a renewal count of 0).
+
+**Results: E0, coordinates for the Locator**
+
+| Document | Heading sections | Median slice | Verdict |
+|---|---|---|---|
+| lease_002 (DOCX) | 48 | ~240 tokens | Sections work |
+| om_001 (PDF) | 70–110 | 20–50 tokens | Too fine: use pages (~350 tokens each) |
+| lease_001 (OCR) | 69–120 | 26–187 tokens | Too fine and engine-dependent: use pages (~1,000 tokens each) |
+
+**Results: E1a, vision transcription of hard pages**
+
+| Model | Handwritten deposit (`~~2,400~~ [handwritten: 2150]`) | Guarantor name | Rent table (control) | DOCX handwritten date | $ per page (list) | Latency | Notes |
+|---|---|---|---|---|---|---|---|
+| Local RapidOCR | ✗ | ✗ | ✓ | ✓ | 0 | 3–5 s CPU | |
+| Local Tesseract | ✗ | ✗ | partial | ✗ | 0 | ~1 s CPU | |
+| z-ai/glm-5.3-flash | ✓ | ✓ | ✓ | ✓ | ~0.0003–0.0007 | 3–6 s | Billed $0 on our key; looped to the 3,000-token cap once |
+| openai/gpt-6-luna | ✓ | ✓ | ✓ | ✓ | 0.0011; 0.0006 with reasoning off (still ✓) | 13–18 s; 7 s reasoning off | 950–1,300 hidden reasoning tokens/page by default |
+| anthropic/claude-haiku-5.5 | ✓ | ✓ | ✓ | ✓ | 0.0006–0.0011 | 6–9 s | With reasoning off, wrongly marked the year as struck ("19 ~~93~~") |
+| qwen/qwen3-vl-235b | ✗ ambiguous (`$ 2,400– 2150M`) | ✓ | ✓ | ✓ | 0.0007–0.0020 | 11–19 s | Loses the strike-through |
+
+A page image costs about 1.5–2.4k input tokens at 1,500 px on the long side. No model invented content on the control table.
+
+**Proposed (pending decision):** pdfplumber for digital PDF text; per-page scan detection; local OCR (RapidOCR,
+Tesseract as the fast fallback) plus a vision model where answers live; own XML parser for DOCX; pages as the
+Locator unit for PDFs, sections for DOCX; vision shortlist luna (reasoning off) / glm (with a length cap) / haiku.
+
+**Open issues:** OCR CPU cost under 10 concurrent jobs (RapidOCR ~3× Tesseract); glm's runaway output needs a
+cap and a fallback; whether to transcribe every scanned page or send only Locator-picked page images (E3).
 
 ---
 
@@ -181,9 +248,12 @@ keep development spend inside $10. Affects Cost and Load/latency.
 
 **Spend summary**
 
-| Phase | $ spent | Share of $10 |
-|---|---|---|
-| | | |
+| Phase | Calls | $ spent | Share of $10 |
+|---|---|---|---|
+| Live check (caching step) | 1 | 0.000004 | 0.00% |
+| E0 ingestion comparison | 0 | 0 | 0% |
+| E1a vision transcription (round 1 + reasoning-off test) | 18 | 0.0142 | 0.14% |
+| **Total to date** | **19** | **0.0142** | **0.14%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_
