@@ -380,3 +380,46 @@ Revised early phases for this scope:
 - **Round 2 (gemini-3.8-flash) skipped:** every achievable checkpoint was solved by a round-1 model.
 - **Cost:** round 1 $0.0128 (16 calls) + reasoning-off test $0.0014 (2 calls) + smoke $0.000004 = **$0.0141**.
 - Re-scoring after the matcher fix ran in `replay` mode: $0.
+
+---
+
+## 13. E1b: targeted model screen for extraction (IDEATION)
+
+### 13.1 The questions E1b must answer (and nothing else)
+1. Given the **right text**, which cheap model extracts each **field kind** correctly: plain strings, numbers,
+   dates, lists (the aligned rent schedule), booleans, computed fields, and **nulls** (hallucination)?
+2. Where the cheap models fail, does a **stronger model, or the same model with reasoning on**, fix it, and at what $?
+3. Real $ per document per model, including hidden reasoning tokens; unusable-output rate.
+
+**Out of scope on purpose:** locating, long-context degradation, whole-document vs Locator pipelines. Those
+are pipeline questions for E2, with the shortlisted models only.
+
+### 13.2 Cost levers (same approach as E1a)
+
+| Lever | Effect |
+|---|---|
+| **Oracle context.** Feed only the pages/sections the answers cite, plus 2 fixed non-cited distractor slices per doc. Isolates extraction skill (the shared core of pipelines A, B, C) | Input 75k → ~29k tokens across 4 docs (measured) |
+| **3 documents, not 4.** lease_002 (digital DOCX, 8 nulls: null discipline), lease_001 (OCR noise; pages 2 and 25 use the cached E1a vision transcripts, mirroring the proposed pipeline), om_001 (different schema). **Drop lease_003:** same schema, clean OCR, and the most expensive (14k oracle tokens) for the least new information | ~29k → ~15k input + ~5k prompt and distractors ≈ **20k per model** |
+| **Field-kind coverage is still complete:** 38 strings, 22 numbers, 8 dates, 6 computed, 11 lists, 6 booleans, **18 nulls** | — |
+| **Staged by price.** Round 1: cheap models on everything. Round 2: only the **fields that failed**, with only their slices: gemini-flash first, strong models only on what gemini-flash still fails | Strong models see ~10k tokens, not 75k |
+| **Reasoning off by default** where E1a showed it is safe (luna); haiku on default. "Same cheap model + reasoning low" becomes an escalation option in round 2 | Avoids paying for hidden reasoning tokens up front |
+| **Compact output:** value + short citation per field; confidence comes later from the trust layer | ~35 output tokens per field |
+| **Official scorer:** `tools/validate.py` cell matching, plus outcome classes (correct / miss / wrong / hallucination), penalised accuracy with α = 1, per field kind | — |
+| **Cache + run cap + dry-run estimate** before each round; re-scoring always in replay mode ($0) | — |
+| **Variance check** on the best cheap model only: one repeat with `sample_index = 1` | Sets the noise band δ cheaply |
+
+### 13.3 Estimated cost
+
+| Round | Models | Est. $ |
+|---|---|---|
+| 1 | gpt-6-luna (reasoning off), claude-haiku-5.5, deepseek-v3.2, glm-5.3-flash | ≈ $0.02 |
+| Variance | best cheap model, 1 repeat | ≈ $0.004 |
+| 2a | gemini-3.8-flash on failed fields only | ≈ $0.01 |
+| 2b | sonnet / gpt-6.1-sol / gemini-pro (and cheap + reasoning low) on fields 2a still fails | ≈ $0.03–0.12 |
+| **Total** | | **≈ $0.06–0.16** (was ≈ $0.6) |
+
+### 13.4 Known limits of the oracle design
+- It overstates accuracy relative to a real pipeline (the right text is always present). That is fine for
+  *ranking models*; E2 measures the pipeline loss.
+- Null discipline is easier with less text to be tempted by. E2 re-checks hallucinations at full context.
+- Field descriptions are used as given; rewriting is an E2 ablation.
