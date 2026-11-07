@@ -276,7 +276,7 @@
   "t12_001": {
    "valid": true,
    "errors": [],
-   "score": 0.9969,
+   "score": 0.9985,
    "per_field": {
     "property_name": 1.0,
     "period_start": 1.0,
@@ -284,7 +284,7 @@
     "gl_code": 1.0,
     "line_item": 1.0,
     "section": 1.0,
-    "category": 0.966,
+    "category": 0.983,
     "amount_total": 1.0,
     "amount_first_month": 1.0,
     "amount_last_month": 1.0,

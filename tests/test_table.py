@@ -198,3 +198,24 @@ def test_grid_from_docx_tables_and_paragraphs(tmp_path):
             "checks": []}
     out = T.finalise(T.execute(plan, g, spec), plan, spec)
     assert [(r["unit"]["value"], r["rent"]["value"]) for r in out] == [("101", 1400), ("102", 1550)]
+
+
+def test_plan_over_several_sheets_with_per_sheet_constant():
+    a, b = Sheet("Bldg A"), Sheet("Bldg B")
+    for sh, bldg, units in ((a, "Building A", [("A-101", 1000), ("A-102", 1100)]), (b, "Building B", [("B-201", 1200)])):
+        sh.cells[(1, 1)] = bldg
+        sh.cells[(2, 1)], sh.cells[(2, 2)] = "Unit", "Rent"
+        for i, (u, rent) in enumerate(units, start=3):
+            sh.cells[(i, 1)], sh.cells[(i, 2)] = u, rent
+    grid = Grid(source="t", kind="xlsx", sheets=[_index_rows(a), _index_rows(b)])
+    schema = {"name": "rr", "fields": {"unit": {"name": "Unit", "description": "Unit", "primary": True},
+                                       "rent": {"name": "Rent", "description": "Rent as a number"},
+                                       "bldg": {"name": "Building", "description": "Building name"}}}
+    spec = heuristic_spec(schema)
+    plan = {"sheets": "all", "record_start": {"column": "A", "pattern": r"[AB]-\d{3}"}, "columns": {"unit": "A", "rent": "B"},
+            "constants": {"bldg": {"value": "Building A", "cell": "A1", "per_sheet": True}}, "checks": []}
+    assert T.validate_plan(plan, grid, spec) == []
+    rows = T.finalise(T.execute(plan, grid, spec), plan, spec)
+    assert [(r["unit"]["value"], r["rent"]["value"], r["bldg"]["value"]) for r in rows] == [
+        ("A-101", 1000, "Building A"), ("A-102", 1100, "Building A"), ("B-201", 1200, "Building B")]
+    assert rows[2]["unit"]["source_locations"] == ["Bldg B!A3"]

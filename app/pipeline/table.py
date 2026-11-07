@@ -29,7 +29,8 @@ shown with its column letter and row number; long sheets are shown as head, even
 list of fields. Code will execute your plan on the full grid, so describe RULES that hold for every data row, not
 just the rows you can see. Return ONE JSON object with these keys (omit keys you do not need):
 
-  "sheet": the sheet holding the table
+  "sheet": the sheet holding the table; when the SAME table layout continues over several sheets use instead
+        "sheets": ["Sheet A", "Sheet B"] or "sheets": "all" (code applies the plan to each sheet and joins the rows)
   "record_start": {"column": "A", "pattern": "<regex the cell must FULLY match>"}  - every row whose cell matches starts
         one output row (one record). Make the pattern specific to real data rows (e.g. "\\\\d{3}-\\\\d{3}" for unit ids
         like 100-101, "\\\\d{3}-\\\\d{3}" for GL codes like 510-500) so headers, totals and summary rows do not match.
@@ -53,7 +54,8 @@ just the rows you can see. Return ONE JSON object with these keys (omit keys you
           Section title rows often have an EMPTY code/key column, so do not require the key column in header_row.
   "constants": {"<field>": {"value": <value>, "cell": "A2", "confidence": 0.0-1.0}}   - one value for the whole
         document (e.g. property name, report date), with the cell it comes from; give the value already in the
-        field's format (dates as YYYY-MM-DD, numbers as numbers)
+        field's format (dates as YYYY-MM-DD, numbers as numbers). With several sheets, add "per_sheet": true when
+        the value differs per sheet and sits in the same cell of each (code then reads that cell on every sheet)
   "classify": {"<field>": {"options": ["...", "..."], "inputs": ["<other field>", ...]}}   - for a field whose value
         is a label the document does not print per row; code asks for one label per distinct input combination
   "value_maps": {"<field>": {"<cell text>": "<output value>"}}   - exact remaps of printed values
@@ -146,10 +148,21 @@ def _cols(spec_cols: list[str]) -> list[int]:
     return [col_index(x) for x in spec_cols]
 
 
+def plan_sheets(plan: dict, grid: Grid) -> list[str]:
+    """Sheet names a plan applies to ("sheets": [...] / "all", or the single "sheet")."""
+    sh = plan.get("sheets")
+    if sh == "all":
+        return [s.name for s in grid.sheets]
+    if isinstance(sh, list) and sh:
+        return [grid.sheet(x).name for x in sh]
+    return [grid.sheet(plan.get("sheet")).name]
+
+
 def validate_plan(plan: dict, grid: Grid, spec: SchemaSpec) -> list[str]:
     errs = []
     try:
-        sheet = grid.sheet(plan.get("sheet"))
+        names = plan_sheets(plan, grid)
+        sheet = grid.sheet(names[0])
     except KeyError as exc:
         return [str(exc)]
     rs = plan.get("record_start")
@@ -195,7 +208,24 @@ def validate_plan(plan: dict, grid: Grid, spec: SchemaSpec) -> list[str]:
 
 def execute(plan: dict, grid: Grid, spec: SchemaSpec, diag: dict | None = None) -> list[dict]:
     """Run a plan on the full grid → list of rows: field → {value, citation, source_locations} (raw values).
-    `diag` (optional) receives {"continued_columns": {col: share of records whose later lines use that column}}."""
+    Multi-sheet plans run on each sheet in turn and the rows are joined. `diag` (optional) receives
+    {"continued_columns": {col: share of records whose later lines use that column}, "ambiguous_value_fields": {...}}."""
+    names = plan_sheets(plan, grid)
+    if len(names) > 1:
+        out = []
+        for name in names:
+            d: dict = {}
+            out += _execute_sheet({**plan, "sheet": name}, grid, spec, d, multi=True)
+            if diag is not None:
+                for k, v in d.items():
+                    acc = diag.setdefault(k, {})
+                    for kk, vv in v.items():
+                        acc[kk] = max(acc.get(kk, 0), vv)
+        return out
+    return _execute_sheet({**plan, "sheet": names[0]}, grid, spec, diag)
+
+
+def _execute_sheet(plan: dict, grid: Grid, spec: SchemaSpec, diag: dict | None = None, multi: bool = False) -> list[dict]:
     sheet = grid.sheet(plan.get("sheet"))
     rows = sheet.nonempty_rows()
     lo = plan.get("first_data_row") or 1
@@ -335,6 +365,12 @@ def execute(plan: dict, grid: Grid, spec: SchemaSpec, diag: dict | None = None) 
         for k, cst in (plan.get("constants") or {}).items():
             ref = cst.get("cell") or ""
             fr = {"value": cst.get("value"), "citation": "", "source_locations": [], "confidence": cst.get("confidence")}
+            if multi and cst.get("per_sheet") and ref:
+                try:
+                    _, cr, cc = split_ref(ref)
+                    fr["value"] = sheet.get(cr, cc)             # read this sheet's own cell (normalised later)
+                except ValueError:
+                    pass
             if ref:
                 try:
                     _, cr, cc = split_ref(ref)

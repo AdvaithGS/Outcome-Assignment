@@ -270,7 +270,8 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | Pointer mode on samples + E5 re-runs (incl. a capped 31-call fallback) + judge | 44 | 0.0578 | 0.58% |
 | Hybrid pointer mode + haiku final table repair + judge | 5 | 0.0156 | 0.16% |
 | Scanned table PDFs (3 iterations on a scanned budget) | 29 | 0.0198 | 0.20% |
-| **Total to date** | **324** | **0.4862** | **4.86%** |
+| Multi-sheet tables + re-run of sample table plans | 8 | 0.0057 | 0.06% |
+| **Total to date** | **332** | **0.4919** | **4.92%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_

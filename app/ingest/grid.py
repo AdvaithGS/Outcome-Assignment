@@ -160,11 +160,20 @@ def fmt(v, limit: int = 60) -> str:
     return s if len(s) <= limit else s[: limit - 1] + "…"
 
 
-def preview(grid: Grid, *, head: int = 45, tail: int = 20, samples: int = 15, max_cells: int = 24) -> str:
-    """Fixed-size view of every sheet: first and last non-empty rows plus evenly spaced samples in between, each cell
-    with its address. Long cells are truncated. Size does not grow with the sheet's length."""
+def preview(grid: Grid, *, head: int = 45, tail: int = 20, samples: int = 15, max_cells: int = 24,
+            full_sheets: int = 3, brief_rows: int = 6) -> str:
+    """Fixed-size view: first and last non-empty rows plus evenly spaced samples in between, each cell with its
+    address; long cells truncated. The first `full_sheets` sheets are shown this way, further sheets only by name,
+    size and first rows, so the preview does not grow with the number of sheets either."""
     out = []
-    for s in grid.sheets:
+    for n, s in enumerate(grid.sheets):
+        if n >= full_sheets:
+            rows = s.nonempty_rows()
+            out.append(f"### Sheet {s.name!r}: rows 1–{s.max_row}, columns A–{col_letter(max(1, s.max_col))}, "
+                       f"{len(rows)} non-empty rows (first rows only)")
+            for r in rows[:brief_rows]:
+                out.append(f"  row {r}: " + " | ".join(f"{col_letter(c)}={fmt(v)}" for c, v in sorted(s.row(r).items())[:max_cells]))
+            continue
         rows = s.nonempty_rows()
         out.append(f"### Sheet {s.name!r}: rows 1–{s.max_row}, columns A–{col_letter(max(1, s.max_col))}, "
                    f"{len(rows)} non-empty rows")

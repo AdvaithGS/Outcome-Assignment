@@ -1422,7 +1422,7 @@
     ]
    },
    "category": {
-    "value": "Revenue",
+    "value": "Other",
     "citation": "",
     "confidence": 0.8
    },
@@ -9948,7 +9948,7 @@
     ]
    },
    "category": {
-    "value": "Revenue",
+    "value": "Other",
     "citation": "",
     "confidence": 0.8
    },
@@ -10634,7 +10634,7 @@
     ]
    },
    "category": {
-    "value": "Revenue",
+    "value": "Other",
     "citation": "",
     "confidence": 0.8
    },
@@ -10928,7 +10928,7 @@
     ]
    },
    "category": {
-    "value": "Revenue",
+    "value": "Other",
     "citation": "",
     "confidence": 0.8
    },
@@ -11668,16 +11668,16 @@
   "tokens_in": 0,
   "tokens_out": 0,
   "cost_usd": 0.0,
-  "latency_ms": 7139,
-  "cache_hits": 3,
-  "cost_usd_uncached": 0.002567,
+  "latency_ms": 7623,
+  "cache_hits": 4,
+  "cost_usd_uncached": 0.002764,
   "models": {
    "openai/gpt-6-luna": {
     "calls": 0,
     "tokens_in": 0,
     "tokens_out": 0,
     "cost_usd": 0.0,
-    "cache_hits": 3
+    "cache_hits": 4
    }
   }
  },

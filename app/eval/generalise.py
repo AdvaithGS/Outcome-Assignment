@@ -86,6 +86,27 @@ def image_only_pdf(name: str, dpi: int = 200) -> Path:
     return out
 
 
+def rentroll_two_sheets() -> Path:
+    """The rent roll split across two sheets by building (header block repeated on each)."""
+    import openpyxl
+    DERIVED.mkdir(parents=True, exist_ok=True)
+    out = DERIVED / "rentroll_001_two_sheets.xlsx"
+    if not out.exists():
+        src = openpyxl.load_workbook(SAMPLE / "sample-data-documents" / "rentroll_001.xlsx", data_only=True).worksheets[0]
+        rows = [[c.value for c in row] for row in src.iter_rows()]
+        split = next(i for i, r in enumerate(rows) if i >= 7 and isinstance(r[0], str) and r[0].startswith("200-"))
+        wb = openpyxl.Workbook()
+        a = wb.active
+        a.title = "Bldg 100"
+        b = wb.create_sheet("Bldg 200")
+        for r in rows[:7] + rows[7:split]:
+            a.append(r)
+        for r in rows[:7] + rows[split:]:
+            b.append(r)
+        wb.save(out)
+    return out
+
+
 def variants() -> list[dict]:
     d = SAMPLE / "sample-data-documents"
     return [
@@ -99,6 +120,8 @@ def variants() -> list[dict]:
          "schema": identity(load("rent_roll_units"))},
         {"name": "t12 terse+renamed", "doc": "t12_001", "file": d / "t12_001.xlsx", "type": "xlsx",
          "schema": terse_renamed(load("operating_statement_lines"))},
+        {"name": "rentroll split across two sheets", "doc": "rentroll_001", "file": "two_sheets", "type": "xlsx",
+         "schema": identity(load("rent_roll_units"))},
         {"name": "budget scanned (image-only PDF)", "doc": "budget_001", "file": "scan:budget_001", "type": "pdf",
          "schema": identity(load("budget_variance"))},
     ]
@@ -125,6 +148,8 @@ async def run_all(only: str | None = None) -> list[dict]:
             path = v["file"] or rentroll_csv()
             if isinstance(path, str) and path.startswith("scan:"):
                 path = image_only_pdf(path.split(":", 1)[1])
+            elif path == "two_sheets":
+                path = rentroll_two_sheets()
             schema, mapping = v["schema"]
             ctx = JobContext(job_id=f"e5-{v['doc']}", org="", file_name=Path(path).name, file_type=v["type"],
                              deadline=time.monotonic() + 1800, usage=UsageTracker())
