@@ -61,7 +61,11 @@ def _num_pattern(x: float) -> re.Pattern:
         forms |= {f"{x:.2f}", f"{x:,.2f}", format(x, "g"), f"{x:,}"}
         if round(x, 1) == x:
             forms.add(f"{x:.1f}")
-    alts = "|".join(sorted((re.escape(f) for f in forms), key=len, reverse=True))
+    # OCR often reads a thousands comma as a full stop ("$ 2.050"); accept either
+    # trailing zeros allowed on decimals ("9.520 acres" is 9.52)
+    zeros = "0*" if not x.is_integer() else ""
+    alts = "|".join(sorted((re.escape(f).replace(",", "[.,]") + (zeros if "." in f else "") for f in forms),
+                           key=len, reverse=True))
     return re.compile(rf"(?<![\d.,])(?:{alts})(?!\d|[.,]\d)")
 
 
@@ -69,9 +73,9 @@ def _date_pattern(d: date) -> re.Pattern:
     m, ma, day, y, yy = MONTHS[d.month - 1], MONTHS[d.month - 1][:3], d.day, d.year, f"{d.year % 100:02d}"
     ordn = rf"(?:{day}(?:st|nd|rd|th)?|{WORD_ORD[day - 1]})"
     yr = rf"(?:{y}|'?{yy})"
-    alts = [
-        rf"{m}\s+{ordn},?\s+{y}", rf"{ma}\.?\s+{ordn},?\s+{y}",
-        rf"(?:the\s+)?{ordn}\s+(?:day\s+of\s+)?{m},?\s+{y}", rf"{ordn}\s+(?:day\s+of\s+)?{ma}\.?,?\s+{y}",
+    alts = [  # "[,.]?" because OCR often reads the comma after the day as a full stop
+        rf"{m}\s+{ordn}[,.]?\s+{y}", rf"{ma}\.?\s+{ordn}[,.]?\s+{y}",
+        rf"(?:the\s+)?{ordn}\s+(?:day\s+of\s+)?{m}[,.]?\s+{y}", rf"{ordn}\s+(?:day\s+of\s+)?{ma}\.?[,.]?\s+{y}",
         rf"0?{d.month}\s?/\s?0?{day}\s?/\s?{yr}", rf"0?{d.month}-0?{day}-{yr}", rf"{y}-{d.month:02d}-{day:02d}",
         rf"0?{d.month}\.0?{day}\.{yr}",
     ]

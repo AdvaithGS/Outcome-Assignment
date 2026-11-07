@@ -61,4 +61,7 @@ def test_value_matching_variants():
     assert not _num_pattern(215).search(text)
     assert len(list(_date_pattern(date(2025, 8, 21)).finditer(text))) == 2
     assert _date_pattern(date(1994, 1, 1)).search(normalise("commencing on the first day of January, 1994"))
+    ocr = normalise("05/01/95 - 04/30/96 $ 24.600 $ 2.050 12 | LEASE REFERENCE DATE: March 5. 1993")
+    assert _num_pattern(2050).search(ocr) and _num_pattern(24600).search(ocr)
+    assert _date_pattern(date(1993, 3, 5)).search(ocr)
     assert classify("2025-08-21") == "date" and classify("2025-08") == "month" and classify(3.5) == "number"
