@@ -159,7 +159,7 @@ class LLMClient:
         return cls(base_url=env.get("LLM_BASE_URL"), api_key=env.get("LLM_API_KEY"), cache=cache,
                    cache_mode=mode, ledger=ledger, guard=guard, run_id=run_id, http=http, extra_body=extra,
                    max_attempts=int(env.get("LLM_MAX_ATTEMPTS", "6")), timeout_s=float(env.get("LLM_TIMEOUT_S", "90")),
-                   max_concurrency=int(env.get("LLM_MAX_CONCURRENCY", "8")))
+                   max_concurrency=int(env.get("LLM_MAX_CONCURRENCY", "24")))
 
     async def aclose(self) -> None:
         if self._owns_http:

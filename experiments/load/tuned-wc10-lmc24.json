@@ -1,0 +1,438 @@
+{
+ "tag": "tuned-wc10-lmc24",
+ "jobs": 16,
+ "inflight": 10,
+ "wall_s": 99.2,
+ "statuses": {
+  "SUCCESS": 16
+ },
+ "valid": 16,
+ "duplicate_job_ids": 0,
+ "isolation_ok": true,
+ "post_ms_max": 447,
+ "latency_p50_s": 49.5,
+ "latency_p95_s": 82.6,
+ "latency_max_s": 98.7,
+ "cost_usd_total": 0.0535,
+ "mean_score": 0.934,
+ "by_doc": {
+  "boxscore_001": {
+   "latency_s": [
+    16.2,
+    16.3
+   ],
+   "cost_usd": [
+    0.001083,
+    0.0
+   ],
+   "score": [
+    1.0,
+    1.0
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "budget_001": {
+   "latency_s": [
+    16.1,
+    16.2
+   ],
+   "cost_usd": [
+    0.000447,
+    0.000646
+   ],
+   "score": [
+    0.9987,
+    0.9987
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "lease_001": {
+   "latency_s": [
+    82.6,
+    66.7
+   ],
+   "cost_usd": [
+    0.0,
+    0.016077
+   ],
+   "score": [
+    0.875,
+    0.875
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "lease_002": {
+   "latency_s": [
+    42.5,
+    60.5
+   ],
+   "cost_usd": [
+    0.0,
+    0.004732
+   ],
+   "score": [
+    0.875,
+    0.875
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "lease_003": {
+   "latency_s": [
+    98.7,
+    82.5
+   ],
+   "cost_usd": [
+    0.0,
+    0.016969
+   ],
+   "score": [
+    0.825,
+    0.825
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "om_001": {
+   "latency_s": [
+    46.8,
+    56.4
+   ],
+   "cost_usd": [
+    0.002881,
+    0.00299
+   ],
+   "score": [
+    0.8966,
+    1.0
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "rentroll_001": {
+   "latency_s": [
+    16.4,
+    52.3
+   ],
+   "cost_usd": [
+    0.001293,
+    0.001802
+   ],
+   "score": [
+    1.0,
+    1.0
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "t12_001": {
+   "latency_s": [
+    16.2,
+    52.2
+   ],
+   "cost_usd": [
+    0.002263,
+    0.002308
+   ],
+   "score": [
+    0.9985,
+    0.9091
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  }
+ },
+ "jobs_detail": [
+  {
+   "i": 0,
+   "doc": "boxscore_001",
+   "org": "load-tuned-wc10-lmc24-0",
+   "post_status": 202,
+   "post_ms": 60,
+   "job_id": "37d81736d32840308234a8c780ab4970",
+   "status": "SUCCESS",
+   "latency_s": 16.2,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.001083,
+   "model_calls": 2,
+   "server_latency_ms": 14414,
+   "score": 1.0,
+   "isolation_ok": true
+  },
+  {
+   "i": 1,
+   "doc": "budget_001",
+   "org": "load-tuned-wc10-lmc24-1",
+   "post_status": 202,
+   "post_ms": 45,
+   "job_id": "e0bfb9e791894a0abaca6f45bf2a65b0",
+   "status": "SUCCESS",
+   "latency_s": 16.1,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.000447,
+   "model_calls": 1,
+   "server_latency_ms": 14601,
+   "score": 0.9987,
+   "isolation_ok": true
+  },
+  {
+   "i": 2,
+   "doc": "lease_001",
+   "org": "load-tuned-wc10-lmc24-2",
+   "post_status": 202,
+   "post_ms": 85,
+   "job_id": "494220b99f504265b2c193712b39a388",
+   "status": "SUCCESS",
+   "latency_s": 82.6,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.0,
+   "model_calls": 0,
+   "server_latency_ms": 81004,
+   "score": 0.875,
+   "isolation_ok": true
+  },
+  {
+   "i": 3,
+   "doc": "lease_002",
+   "org": "load-tuned-wc10-lmc24-3",
+   "post_status": 202,
+   "post_ms": 68,
+   "job_id": "ab35e783996d47279f7efa02468c1dda",
+   "status": "SUCCESS",
+   "latency_s": 60.5,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.004732,
+   "model_calls": 2,
+   "server_latency_ms": 58546,
+   "score": 0.875,
+   "isolation_ok": true
+  },
+  {
+   "i": 4,
+   "doc": "lease_003",
+   "org": "load-tuned-wc10-lmc24-4",
+   "post_status": 202,
+   "post_ms": 145,
+   "job_id": "3a8dd902ae0042e9b3fc0f97839a0acc",
+   "status": "SUCCESS",
+   "latency_s": 98.7,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.0,
+   "model_calls": 0,
+   "server_latency_ms": 97616,
+   "score": 0.825,
+   "isolation_ok": true
+  },
+  {
+   "i": 5,
+   "doc": "om_001",
+   "org": "load-tuned-wc10-lmc24-5",
+   "post_status": 202,
+   "post_ms": 80,
+   "job_id": "ae3a21ef973e4e80b4b80ec30146ee69",
+   "status": "SUCCESS",
+   "latency_s": 46.8,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.002881,
+   "model_calls": 3,
+   "server_latency_ms": 45259,
+   "score": 0.8966,
+   "isolation_ok": true
+  },
+  {
+   "i": 6,
+   "doc": "t12_001",
+   "org": "load-tuned-wc10-lmc24-6",
+   "post_status": 202,
+   "post_ms": 59,
+   "job_id": "2a7c67345f5345b48b215b2f4213c086",
+   "status": "SUCCESS",
+   "latency_s": 16.2,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.002263,
+   "model_calls": 3,
+   "server_latency_ms": 15860,
+   "score": 0.9985,
+   "isolation_ok": true
+  },
+  {
+   "i": 7,
+   "doc": "rentroll_001",
+   "org": "load-tuned-wc10-lmc24-7",
+   "post_status": 202,
+   "post_ms": 61,
+   "job_id": "e4a8910609a143f2859b099c8f2107a7",
+   "status": "SUCCESS",
+   "latency_s": 16.4,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.001293,
+   "model_calls": 2,
+   "server_latency_ms": 14595,
+   "score": 1.0,
+   "isolation_ok": true
+  },
+  {
+   "i": 8,
+   "doc": "boxscore_001",
+   "org": "load-tuned-wc10-lmc24-8",
+   "post_status": 202,
+   "post_ms": 60,
+   "job_id": "caf6b99a6b954a7bb77de9ce0ff8f634",
+   "status": "SUCCESS",
+   "latency_s": 16.3,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.0,
+   "model_calls": 0,
+   "server_latency_ms": 14414,
+   "score": 1.0,
+   "isolation_ok": true
+  },
+  {
+   "i": 9,
+   "doc": "budget_001",
+   "org": "load-tuned-wc10-lmc24-9",
+   "post_status": 202,
+   "post_ms": 60,
+   "job_id": "025fb13d8cbc475f86bc2be4b2ca7083",
+   "status": "SUCCESS",
+   "latency_s": 16.2,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.000646,
+   "model_calls": 1,
+   "server_latency_ms": 14596,
+   "score": 0.9987,
+   "isolation_ok": true
+  },
+  {
+   "i": 10,
+   "doc": "lease_001",
+   "org": "load-tuned-wc10-lmc24-10",
+   "post_status": 202,
+   "post_ms": 447,
+   "job_id": "961d6d56bde64472ae1ccca1e57ddb11",
+   "status": "SUCCESS",
+   "latency_s": 66.7,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.016077,
+   "model_calls": 27,
+   "server_latency_ms": 64690,
+   "score": 0.875,
+   "isolation_ok": true
+  },
+  {
+   "i": 11,
+   "doc": "lease_002",
+   "org": "load-tuned-wc10-lmc24-11",
+   "post_status": 202,
+   "post_ms": 347,
+   "job_id": "11cffe71b97f46be9d6fee428b430462",
+   "status": "SUCCESS",
+   "latency_s": 42.5,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.0,
+   "model_calls": 0,
+   "server_latency_ms": 42224,
+   "score": 0.875,
+   "isolation_ok": true
+  },
+  {
+   "i": 12,
+   "doc": "lease_003",
+   "org": "load-tuned-wc10-lmc24-12",
+   "post_status": 202,
+   "post_ms": 81,
+   "job_id": "f758d351bd1c4d8ebfb4f4a1c45f08aa",
+   "status": "SUCCESS",
+   "latency_s": 82.5,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.016969,
+   "model_calls": 22,
+   "server_latency_ms": 81008,
+   "score": 0.825,
+   "isolation_ok": true
+  },
+  {
+   "i": 13,
+   "doc": "om_001",
+   "org": "load-tuned-wc10-lmc24-13",
+   "post_status": 202,
+   "post_ms": 25,
+   "job_id": "0c0184fe7bae4118bf154e6d3ce46534",
+   "status": "SUCCESS",
+   "latency_s": 56.4,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.00299,
+   "model_calls": 3,
+   "server_latency_ms": 54653,
+   "score": 1.0,
+   "isolation_ok": true
+  },
+  {
+   "i": 14,
+   "doc": "t12_001",
+   "org": "load-tuned-wc10-lmc24-14",
+   "post_status": 202,
+   "post_ms": 14,
+   "job_id": "02e99ae5bb274553b6f5fb80c38aa9ce",
+   "status": "SUCCESS",
+   "latency_s": 52.2,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.002308,
+   "model_calls": 3,
+   "server_latency_ms": 51206,
+   "score": 0.9091,
+   "isolation_ok": true
+  },
+  {
+   "i": 15,
+   "doc": "rentroll_001",
+   "org": "load-tuned-wc10-lmc24-15",
+   "post_status": 202,
+   "post_ms": 12,
+   "job_id": "5e314334e25142b7a6c0c51db558024a",
+   "status": "SUCCESS",
+   "latency_s": 52.3,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.001802,
+   "model_calls": 3,
+   "server_latency_ms": 51578,
+   "score": 1.0,
+   "isolation_ok": true
+  }
+ ]
+}

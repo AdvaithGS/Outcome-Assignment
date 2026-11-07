@@ -53,7 +53,7 @@ class Settings:
             heartbeat_s=float(e.get("JOB_HEARTBEAT_S", "20")),
             job_deadline_s=float(e.get("JOB_DEADLINE_S", str(20 * 60))),
             max_attempts=int(e.get("JOB_MAX_ATTEMPTS", "3")),
-            worker_concurrency=int(e.get("WORKER_CONCURRENCY", "4")),
+            worker_concurrency=int(e.get("WORKER_CONCURRENCY", "10")),   # load test: 4 → 10 cut p50 129 s → 50 s
             queue_limit=int(e.get("QUEUE_LIMIT", "500")),
             poll_s=float(e.get("WORKER_POLL_S", "0.5")),
             pipeline=e.get("PIPELINE", "v1"),     # the dataclass default stays "null" so tests never call a model
