@@ -418,13 +418,15 @@ value**: E1b showed it is a weak error signal (precision 0.06–0.24).
 | Live check | 1 | 0.000004 |
 | E0 ingestion comparison | 0 | 0 |
 | E1a vision transcription | 18 | 0.0142 |
-| E1b model screen (round 1, judge, noise, round 2a) | 52 | 0.1720 |
+| E1b model screen (round 1, judge, noise, round 2a) | 52 | 0.1719 |
 | Pipeline v1, single-entry runs | 73 | 0.0622 |
-| Pipeline v1, tables (+ reproducibility re-run) | 14 | 0.0103 |
-| Docker end-to-end check | 2 | 0.0013 |
-| E2 free text, hints, model choice, E5 generalisation | 51 | 0.1086 |
-| Improvement rounds (table checks, pointer modes, scanned tables, multi-sheet) | 112 | 0.1233 |
+| Pipeline v1, tables (+ reproducibility re-run) | 14 | 0.0102 |
+| E2 free text, hints, model choice, E5 generalisation | 53 | 0.1082 |
+| Improvement rounds (table checks, pointer modes, scanned tables, multi-sheet) | 119 | 0.1239 |
+| Docker end-to-end check (recorded in the container's own ledger) | 2 | 0.0013 |
 | **Total** | **332** | **0.4919** |
+
+Computed from `ledger/spend.jsonl` by run id (every call maps to a phase).
 
 ## Appendix B: configuration reference
 
