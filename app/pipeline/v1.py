@@ -41,7 +41,8 @@ class V1Config:
     fallback_extra: dict = field(default_factory=dict)
     vision_model: str = LUNA_OFF[0]
     vision_extra: dict = field(default_factory=lambda: dict(LUNA_OFF[1]))
-    scanned_mode: str = "vision"          # vision | ocr
+    scanned_mode: str = "selective"       # selective (OCR first, vision for flagged pages; ideas 2) | vision | ocr
+    vision_long_side: int = 1500          # image size sent to the vision model (px, long side)
     fallback_ocr: str = "tesseract"
     docx_image_ocr: str = "rapidocr"
     pdf_text_engine: str = "pdfplumber"
@@ -64,6 +65,7 @@ class V1Config:
         c.vision_model = e.get("VISION_MODEL", c.vision_model)
         c.vision_extra = _extra(e.get("VISION_EXTRA"), c.vision_extra)
         c.scanned_mode = e.get("SCANNED_MODE", c.scanned_mode)
+        c.vision_long_side = int(e.get("VISION_LONG_SIDE", c.vision_long_side))
         c.computed_mode = e.get("COMPUTED_MODE", c.computed_mode)
         c.table_model = e.get("TABLE_MODEL", c.table_model)
         c.freetext_mode = e.get("FREETEXT_MODE", c.freetext_mode)

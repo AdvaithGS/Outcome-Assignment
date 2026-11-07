@@ -20,7 +20,7 @@ from dataclasses import asdict, dataclass
 from app.artifacts import ArtifactCache
 from app.hashing import sha256_hex
 
-OCR_VERSION = 1
+OCR_VERSION = 2   # v2: also returns page-quality statistics (low-confidence share)
 
 
 @dataclass
@@ -29,9 +29,10 @@ class OcrResult:
     confidence: float | None
     seconds: float
     engine: str
+    low_share: float | None = None        # share of words recognised with confidence < 50 (Tesseract)
 
 
-def _tesseract(image: bytes, psm: int) -> tuple[str, float | None]:
+def _tesseract(image: bytes, psm: int, stats: dict | None = None) -> tuple[str, float | None]:
     env = {**os.environ, "OMP_THREAD_LIMIT": "1"}   # pages run in parallel; one thread each
     out = subprocess.run(["tesseract", "stdin", "stdout", "--psm", str(psm), "-l", "eng", "tsv"],
                          input=image, capture_output=True, env=env, timeout=300, check=True).stdout.decode("utf-8", "replace")
@@ -60,6 +61,8 @@ def _tesseract(image: bytes, psm: int) -> tuple[str, float | None]:
         text.append(" ".join(lines[key]))
         prev = key
     conf = (sum(c * n for c, n in confs) / sum(n for _, n in confs) / 100.0) if confs else None
+    if stats is not None:
+        stats["low_share"] = (sum(1 for c, _ in confs if c < 50) / len(confs)) if confs else 1.0
     return "\n".join(text), conf
 
 
@@ -113,7 +116,7 @@ def _rapidocr(image: bytes) -> tuple[str, float | None]:
 
 
 ENGINES = {
-    "tesseract": lambda img: _tesseract(img, 3),
+    "tesseract": lambda img, stats=None: _tesseract(img, 3, stats),
     "tesseract_psm6": lambda img: _tesseract(img, 6),
     "rapidocr": _rapidocr,
 }
@@ -125,8 +128,10 @@ def run_ocr(engine: str, image: bytes, *, cache: ArtifactCache | None = None, ca
 
     def compute() -> dict:
         t0 = time.perf_counter()
-        text, conf = fn(image)
-        return asdict(OcrResult(text=text, confidence=conf, seconds=round(time.perf_counter() - t0, 3), engine=engine))
+        stats: dict = {}
+        text, conf = fn(image, stats) if engine == "tesseract" else fn(image)
+        return asdict(OcrResult(text=text, confidence=conf, seconds=round(time.perf_counter() - t0, 3), engine=engine,
+                                low_share=stats.get("low_share")))
 
     if cache is None:
         return OcrResult(**compute())

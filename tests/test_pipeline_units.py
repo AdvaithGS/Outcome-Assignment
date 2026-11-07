@@ -209,3 +209,15 @@ def test_pointer_mode_reads_spreadsheet_cells():
     out = postprocess(spec, raw, doc, "H", "pointer")
     assert out["name"]["value"] == "Willow Creek" and out["name"]["source_locations"] == ["Summary!B1"]
     assert out["units"]["value"] == 325 and out["units"]["citation"] == "[Summary!B2] 325"
+
+
+def test_page_selection_for_vision():
+    from app.pipeline.ingest import page_needs_vision
+    prose = "\n".join(["The Tenant shall keep the Premises in good order and repair at its own cost."] * 20)
+    assert page_needs_vision(prose, 0.92, 0.01) == (False, "OCR adequate")
+    assert page_needs_vision(prose, 0.71, 0.01)[0]                                   # poor scan
+    assert page_needs_vision(prose, 0.92, 0.08)[0]                                   # many low-confidence words
+    table = "\n".join(["05/01/93 - 04/30/94 $ 23,184 $ 1,932 12"] * 5 + ["Rent schedule follows."] * 5)
+    assert page_needs_vision(table, 0.92, 0.01)[1].startswith("table-like")
+    form = "\n".join(["SECURITY DEPOSIT: $2,400", "TERM OF LEASE: Five years"] + ["general text line"] * 8)
+    assert page_needs_vision(form, 0.92, 0.01)[1].startswith("form-like")

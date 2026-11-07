@@ -271,7 +271,9 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | Hybrid pointer mode + haiku final table repair + judge | 5 | 0.0156 | 0.16% |
 | Scanned table PDFs (3 iterations on a scanned budget) | 29 | 0.0198 | 0.20% |
 | Multi-sheet tables + re-run of sample table plans | 8 | 0.0057 | 0.06% |
-| **Total to date** | **332** | **0.4919** | **4.92%** |
+| Load tests in Docker (2 configurations × 16 jobs, cache off) | 206 | 0.1587 | 1.59% |
+| Selective vision + resolution test + judge | 8 | 0.0124 | 0.12% |
+| **Total to date** | **546** | **0.6630** | **6.63%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_

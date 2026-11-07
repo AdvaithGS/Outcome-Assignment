@@ -67,7 +67,7 @@
   "lease_001": {
    "valid": true,
    "errors": [],
-   "score": 0.9,
+   "score": 0.85,
    "per_field": {
     "tenant_name": 1.0,
     "landlord_legal_name": 1.0,
@@ -91,7 +91,7 @@
     "free_rent_months": 1.0,
     "security_deposit_amount": 1.0,
     "letter_of_credit_required": 1.0,
-    "expense_structure": 1.0,
+    "expense_structure": 0.0,
     "base_year_expenses": 1.0,
     "base_year_taxes": 1.0,
     "electricity_provision": 0.0,
@@ -102,7 +102,7 @@
     "renewal_options_count": 1.0,
     "renewal_term_months": 1.0,
     "renewal_notice_months": 1.0,
-    "early_termination_right": 1.0,
+    "early_termination_right": 0.0,
     "termination_fee_description": 1.0,
     "right_to_sublet": 0.0,
     "guarantor_name": 1.0,
@@ -177,7 +177,7 @@
   "lease_003": {
    "valid": true,
    "errors": [],
-   "score": 0.825,
+   "score": 0.85,
    "per_field": {
     "tenant_name": 1.0,
     "landlord_legal_name": 1.0,
@@ -186,7 +186,7 @@
     "premises": 1.0,
     "rentable_square_footage": 1.0,
     "pro_rata_share": 1.0,
-    "permitted_use": 0.0,
+    "permitted_use": 1.0,
     "lease_execution_date": 1.0,
     "lease_commencement_date": 1.0,
     "rent_commencement_date": 1.0,

@@ -35,13 +35,13 @@ python tools/validate.py outputs/ --schema-dir sample/schemas --truth-dir sample
 |---|---|---|---|---|
 | boxscore_001 | 1.000 | 0 | 0 | 10/10 |
 | budget_001 | 0.999 | 0 | 0 | 55/55 |
-| lease_001 | 0.900 | 0 | 0 | 1/1 |
+| lease_001 | 0.850 | 0 | 0 | 1/1 |
 | lease_002 | 0.825 | 0 | 0 | 1/1 |
-| lease_003 | 0.825 | 0 | 0 | 1/1 |
+| lease_003 | 0.850 | 0 | 0 | 1/1 |
 | om_001 | 0.966 | 0 | 0 | 1/1 |
-| rentroll_001 | 0.998 | 0 | 0 | 325/325 |
-| t12_001 | 0.998 | 0 | 0 | 119/119 |
-| **Mean** | **0.939** | | | |
+| rentroll_001 | 1.000 | 0 | 0 | 325/325 |
+| t12_001 | 0.999 | 0 | 0 | 119/119 |
+| **Mean** | **0.936** | | | |
 
 All 8 outputs are VALID. Regenerate them with `python -m app.eval.run_samples --go`;
 `LLM_CACHE_MODE=replay` reproduces them from cached responses at $0 (and fails loudly if a prompt changed).
@@ -50,5 +50,5 @@ All 8 outputs are VALID. Regenerate them with `python -m app.eval.run_samples --
 
 ```bash
 pip install -r requirements-dev.txt
-pytest          # 93 tests: service guarantees, retries/timeouts, cache, ingestion, formulas, table plans
+pytest          # 102 tests: service guarantees, retries/timeouts, cache, ingestion, formulas, table plans
 ```

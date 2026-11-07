@@ -10,6 +10,7 @@ from __future__ import annotations
 import asyncio
 import io
 import logging
+import re
 import time
 from base64 import b64encode
 from pathlib import Path
@@ -72,11 +73,35 @@ async def transcribe_table_pages(path: Path, n_pages: int, **kw) -> dict[int, tu
 LONG_SIDE = 1500
 RENDER_DPI = 200
 
+# Selective vision (SCANNED_MODE=selective): a scanned page is sent to the vision model only when local OCR looks
+# unreliable or the page is table/form-like. Thresholds from the per-page study on both scanned leases: they flag every
+# page where OCR lost an answer value (handwritten correction, garbled name, rent table) and ~15% of pages overall.
+SELECT_MIN_CONF = 0.88        # Tesseract mean word confidence below this
+SELECT_LOW_SHARE = 0.05       # share of words with confidence < 50 at or above this
+SELECT_NUMERIC_LINES = 0.15   # share of lines with 3+ numbers (tables, rent schedules)
+SELECT_FORM_LINES = 0.10      # share of "LABEL:" lines (summary / reference pages)
 
-def _resize_png(data: bytes) -> bytes:
+
+def page_needs_vision(text: str, confidence: float | None, low_share: float | None) -> tuple[bool, str]:
+    lines = [l for l in text.splitlines() if l.strip()]
+    n = max(1, len(lines))
+    numeric = sum(1 for l in lines if len(re.findall(r"\d[\d,]*\.?\d*", l)) >= 3) / n
+    form = sum(1 for l in lines if re.match(r"^[A-Z][A-Z '’&/()-]{2,40}:", l.strip())) / n
+    if confidence is None or confidence < SELECT_MIN_CONF:
+        return True, f"low OCR confidence ({confidence})"
+    if (low_share or 0) >= SELECT_LOW_SHARE:
+        return True, f"{low_share:.0%} low-confidence words"
+    if numeric >= SELECT_NUMERIC_LINES:
+        return True, f"table-like ({numeric:.0%} numeric lines)"
+    if form >= SELECT_FORM_LINES:
+        return True, f"form-like ({form:.0%} label lines)"
+    return False, "OCR adequate"
+
+
+def _resize_png(data: bytes, long_side: int = LONG_SIDE) -> bytes:
     from PIL import Image
     im = Image.open(io.BytesIO(data)).convert("L")
-    scale = LONG_SIDE / max(im.size)
+    scale = long_side / max(im.size)
     if scale < 1:
         im = im.resize((round(im.width * scale), round(im.height * scale)), Image.LANCZOS)
     buf = io.BytesIO()
@@ -107,9 +132,15 @@ async def transcribe_pages(path: Path, indices: list[int], *, client: LLMClient 
 
     async def one(i: int):
         img = await asyncio.to_thread(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
-        if client is not None and cfg.scanned_mode == "vision":
+        if client is not None and cfg.scanned_mode == "selective":
+            r = await asyncio.to_thread(run_ocr, "tesseract", img, cache=cache)
+            need, why = page_needs_vision(r.text, r.confidence, r.low_share)
+            if not need:
+                return i, r.text, "ocr:tesseract (selective)"
+        if client is not None and cfg.scanned_mode in ("vision", "selective"):
             try:
-                text = await transcribe(_resize_png(img), client, model=cfg.vision_model, extra=cfg.vision_extra,
+                text = await transcribe(_resize_png(img, getattr(cfg, "vision_long_side", LONG_SIDE)), client,
+                                        model=cfg.vision_model, extra=cfg.vision_extra,
                                         usage=usage, job_id=job_id, doc_id=doc_id, deadline=deadline, prompt=prompt)
                 return i, text, f"vision:{cfg.vision_model}"
             except Exception as exc:  # noqa: BLE001 - fall back to local OCR for this page

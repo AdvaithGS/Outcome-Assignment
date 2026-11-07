@@ -1,6 +1,6 @@
 # Design
 
-Written for a colleague who has to run this on Monday. Status: **work in progress** (sample mean **0.939** on
+Written for a colleague who has to run this on Monday. Status: **work in progress** (sample mean **0.936** on
 `tools/validate.py`, no hallucinations; `docker compose up` verified end to end on the dev machine). The long-form record, with every
 experiment and table, is `TECHNICAL_REPORT.md`; the working notes are in `notes/`.
 
@@ -21,7 +21,10 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 - **Ingestion is local and per type.** PDF text via pdfplumber (99–100% of answer values captured, half the tokens
   of layout mode); DOCX through our own XML parser (the sample uses no heading styles, so headings are detected by
   rule, giving ~240-token sections for citations); spreadsheets as grids with cell addresses.
-- **Scanned pages are transcribed by a vision model** (gpt-6-luna, reasoning off, ~$0.0006/page). Local OCR
+- **Scanned pages: local OCR first, vision only where it matters.** Tesseract reads every scanned page; pages with
+  weak OCR, many low-confidence words, tables or form layouts go to the vision model (gpt-6-luna, reasoning off,
+  ~$0.0006/page) — about 15% of a lease's pages, and every page where OCR lost an answer value in the samples.
+  A scanned lease costs ~$0.009 instead of ~$0.022 at the same accuracy. Local OCR
   (Tesseract, RapidOCR) could not read the handwritten correction to a security deposit or a garbled name; vision
   could, and was faster than RapidOCR. Tesseract stays as the per-page fallback.
 - **Field lists are analysed once per schema**: types, "value when absent" (0 / false / []), groups, rewritten
@@ -73,7 +76,7 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 | Table plan, repair, labels | gpt-6-luna, reasoning off | ~$0.001–0.003 per document |
 
 Per document (uncached): digital lease/OM ~$0.003–0.005, scanned 25-page lease ~$0.022, any table ~$0.002.
-**Development spend so far: $0.492 of the $10** (332 calls), almost all of it on experiments; every response is
+**Development spend so far: $0.663 of the $10** (546 calls, incl. two Docker load tests), almost all of it on experiments; every response is
 cached, so re-scoring after a downstream change costs $0.
 
 ## What broke and how it was handled
@@ -94,7 +97,9 @@ cached, so re-scoring after a downstream change costs $0.
 
 ## Running it in production (ops notes)
 
-- `docker compose up` starts `api` (port 8080) and one `worker`; more throughput: `WORKER_CONCURRENCY=8` or
+- `docker compose up` starts `api` (port 8080) and one `worker` taking 10 jobs at a time with up to 24 concurrent
+  model calls (load test at 10 in flight: p50 50 s, p95 83 s, 16/16 SUCCESS); more throughput: raise
+  `WORKER_CONCURRENCY` or
   `docker compose up --scale worker=3` (all workers share the queue on the `data` volume).
 - Logs are JSON lines on stdout: `docker compose logs worker | grep <job_id>` shows a job's stages, cost and error.
   A FAILED job's reason is also returned in its `error` field.
