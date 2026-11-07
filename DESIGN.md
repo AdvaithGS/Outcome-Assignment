@@ -1,7 +1,7 @@
 # Design
 
-Written for a colleague who has to run this on Monday. Status: **work in progress** (sample mean **0.922** on
-`tools/validate.py`; Docker setup written but not yet verified on a clean machine). The long-form record, with every
+Written for a colleague who has to run this on Monday. Status: **work in progress** (sample mean **0.939** on
+`tools/validate.py`, no hallucinations; `docker compose up` verified end to end on the dev machine). The long-form record, with every
 experiment and table, is `TECHNICAL_REPORT.md`; the working notes are in `notes/`.
 
 ## Overview
@@ -29,6 +29,10 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 - **Leases and OMs: the whole document in one call.** Cheap models scored the same on full documents as on
   hand-picked relevant passages, so a Locator stage did not pay for itself at these sizes; it is reserved for very
   long documents.
+- **Free-text fields are answered concisely, in the document's words, keeping every fact**, and the extraction prompt
+  carries a few generic real-estate rules (identifier only; a property name is not the owner's company; rights count
+  only for the named party; "none" for no-change terms). Together with the stage-0 descriptions these closed the gap
+  between the cheapest model and the stronger ones (E2: luna 0.879, glm 0.873, haiku 0.873 strict).
 - **Computed fields are calculated in code** from extracted operands; a figure the document prints wins. The model's
   own arithmetic was wrong in 4 of the lease computed cells; the formulas were right in all of them.
 - **Tables: the LLM writes an extraction plan, code executes it** (the plan format is the user's design). Cost is
@@ -39,8 +43,10 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 
 ## Tradeoffs taken
 
-- Cheapest model by default (gpt-6-luna, reasoning off). glm-5.3-flash and claude-haiku-5.5 scored ~0.1 higher on
-  leases in E1b at +$0.001–0.002/doc; the switch is a pending decision (one env var).
+- Cheapest model by default (gpt-6-luna, reasoning off): with the final prompt, glm-5.3-flash and claude-haiku-5.5
+  were no better (E2), while costing 35–70% more per document.
+- Free-text style: concise answers (best under strict scoring) rather than verbatim quotes (best under an LLM judge);
+  switchable with `FREETEXT_MODE`, since the graders' judging of free text is not known exactly.
 - DOCX page numbers are not produced: paginating a DOCX needs LibreOffice, which would bloat the image and risk the
   60 s start-up gate. DOCX citations use section anchors and verbatim snippets instead.
 - Vision on every scanned page (simple, robust) rather than only on pages that need it; cheaper variants are untested.
@@ -56,7 +62,7 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 | Table plan, repair, labels | gpt-6-luna, reasoning off | ~$0.001–0.003 per document |
 
 Per document (uncached): digital lease/OM ~$0.003–0.005, scanned 25-page lease ~$0.022, any table ~$0.002.
-**Development spend so far: $0.259 of the $10** (158 calls), almost all of it on experiments; every response is
+**Development spend so far: $0.368 of the $10** (213 calls), almost all of it on experiments; every response is
 cached, so re-scoring after a downstream change costs $0.
 
 ## What broke and how it was handled
@@ -68,6 +74,8 @@ cached, so re-scoring after a downstream change costs $0.
 - **Bad table plans** (columns declared "missing", wrapped text read only on its first line): generic checks now
   detect both and trigger one repair call.
 - **Page headers in rebuilt PDF tables** looked like section titles: lines repeated on 3+ pages are removed.
+- **glm-5.3-flash rejects `reasoning: off`** (400, "Reasoning is mandatory"): every call fell back to the fallback
+  model, which kept jobs succeeding; model settings are now checked per model in experiments.
 - **The rent roll lists 5 units twice** (main list and a later "future residents" section): repeated primary keys
   are merged.
 
@@ -83,12 +91,16 @@ cached, so re-scoring after a downstream change costs $0.
 ## Issues found in the sample answers
 
 - No clear errors found so far. One scoring artefact: lease_002's `base_rent_escalation` answer is "none", which the
-  validator normalises to null, so any longer phrasing ("none; fixed monthly rent") counts as a hallucination.
+  validator normalises to null, so any longer phrasing ("none; fixed monthly rent") counts as a hallucination; the
+  extraction prompt now answers exactly "none" for no-change terms.
 
 ## With another week
 
-- Description rewriting with generic domain hints for the interpretation errors that every model shares
-  (premises with floor text, landlord entity as property name, rent commencement after free rent).
+- Unseen field lists with terse descriptions: stage 0 should infer standard definitions from field names (e.g. a
+  "category" with the usual labels, "months with activity" as a count). E5: such lists fail safe (nulls) but lose
+  0.2–0.3 of their score.
+- Rent commencement after free rent: a rule for it fixed that field but leaked into the rent schedule; needs a
+  field-scoped hint rather than a global one.
 - Escalation: run a second cheap model and send only disagreeing fields to a stronger one (disagreement caught
   >90% of errors in E1b).
 - Generalisation tests on renamed and paraphrased field lists; a load test at 10 jobs in flight with the real pipeline.

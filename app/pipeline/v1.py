@@ -44,7 +44,8 @@ class V1Config:
     docx_image_ocr: str = "rapidocr"
     pdf_text_engine: str = "pdfplumber"
     computed_mode: str = "H"              # M | C | H
-    freetext_mode: str = "describe"       # describe | verbatim | concise (E2)
+    freetext_mode: str = "concise"        # concise | verbatim | describe (E2-freetext; concise = safer under strict scoring)
+    hints: bool = True                    # generic CRE extraction rules (E2-hints, v3 adopted)
     table_model: str = LUNA_OFF[0]
     table_extra: dict = field(default_factory=lambda: dict(LUNA_OFF[1]))
 
@@ -63,6 +64,7 @@ class V1Config:
         c.computed_mode = e.get("COMPUTED_MODE", c.computed_mode)
         c.table_model = e.get("TABLE_MODEL", c.table_model)
         c.freetext_mode = e.get("FREETEXT_MODE", c.freetext_mode)
+        c.hints = e.get("HINTS", "on" if c.hints else "off") == "on"
         c.table_extra = _extra(e.get("TABLE_EXTRA"), c.table_extra)
         return c
 
@@ -105,7 +107,7 @@ class PipelineV1:
             raw, notes = await extract(spec, doc, self.client, model=self.cfg.extract_model, extra=self.cfg.extract_extra,
                                        fallback_model=self.cfg.fallback_model, fallback_extra=self.cfg.fallback_extra,
                                        usage=ctx.usage, job_id=ctx.job_id, doc_id=ctx.file_name, deadline=deadline,
-                                   freetext_mode=self.cfg.freetext_mode)
+                                   freetext_mode=self.cfg.freetext_mode, hints=self.cfg.hints)
             return Extraction(spec, doc, raw, notes)
         ctx.set_stage("PARSING")
         doc = await ingest(path, ctx.file_type, client=self.client, cfg=self.cfg, cache=self.cache, usage=ctx.usage,
@@ -114,7 +116,7 @@ class PipelineV1:
         raw, notes = await extract(spec, doc, self.client, model=self.cfg.extract_model, extra=self.cfg.extract_extra,
                                    fallback_model=self.cfg.fallback_model, fallback_extra=self.cfg.fallback_extra,
                                    usage=ctx.usage, job_id=ctx.job_id, doc_id=ctx.file_name, deadline=deadline,
-                                   freetext_mode=self.cfg.freetext_mode)
+                                   freetext_mode=self.cfg.freetext_mode, hints=self.cfg.hints)
         return Extraction(spec, doc, raw, notes)
 
     async def _extract_table(self, path: Path, spec: SchemaSpec, ctx: JobContext, deadline: float) -> Extraction:

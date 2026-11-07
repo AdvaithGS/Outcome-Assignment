@@ -50,8 +50,8 @@
     ]
    },
    "submarket": {
-    "value": "airport submarket",
-    "citation": "[Section 049: FINANCIAL ANALYSIS] Property is located in Harlan County in the Fairhaven International Airport submarket.",
+    "value": "Fairhaven International Airport",
+    "citation": "[Section 049: FINANCIAL ANALYSIS] [13] Property is located in Harlan County in the Fairhaven International Airport submarket.",
     "confidence": 0.9,
     "page_numbers": [
      18
@@ -208,7 +208,7 @@
      "Hazel w/ Attached Garage",
      "Ironwood"
     ],
-    "citation": "[Section 017: PROPERTY OVERVIEW] Floorplan Type Bed / Bath Sq. Ft. Units Aspen Standard",
+    "citation": "[Section 017: PROPERTY OVERVIEW] Floorplan Type Bed / Bath Sq. Ft. Units Aspen Standard 1 / 1",
     "confidence": 0.9,
     "page_numbers": [
      6
@@ -221,7 +221,7 @@
    },
    "noi_proforma": {
     "value": 3521352,
-    "citation": "[Section 038: FINANCIAL ANALYSIS] Net Operating Income $3,521,352 $18,731",
+    "citation": "[Page 14] Net Operating Income $3,521,352 $18,731",
     "confidence": 0.9,
     "page_numbers": [
      14
@@ -234,9 +234,9 @@
   "tokens_in": 0,
   "tokens_out": 0,
   "cost_usd": 0.0,
-  "latency_ms": 26341,
+  "latency_ms": 19118,
   "cache_hits": 3,
-  "cost_usd_uncached": 0.003371,
+  "cost_usd_uncached": 0.003407,
   "models": {
    "openai/gpt-6-luna": {
     "calls": 0,

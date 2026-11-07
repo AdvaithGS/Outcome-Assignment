@@ -54,7 +54,23 @@ FREETEXT_RULES = {
 }
 
 
-def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "describe") -> list[dict]:
+# Generic commercial-real-estate extraction rules (E2-hints). Each targets an error type that every model made in
+# E1b/E2; none names a document. Switched by HINTS=on|off.
+HINTS = """
+General rules for these documents:
+- Identifier fields (suite, unit, floor, code, number): give only the identifier itself (e.g. "Suite 214W"), not the
+  words around it (floor or section descriptions).
+- A property or building name is the name the document uses for the building or property (it may look like an
+  address, e.g. "250 South Harbor"); do not substitute the owner's or landlord's company name for it.
+- An address is the full address as written, including a building name when it is part of the address line.
+- A right or option (renewal, early termination, expansion) counts only if the document grants it to the party the
+  field names; rights of the other party, or rights arising only from casualty, condemnation or default, do not count.
+- For a phrase field describing a term (escalation, expense structure, fees), when the document provides for no
+  such term or no change, answer exactly "none". Any value the document does not state is JSON null, never the word "None".
+"""
+
+
+def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "describe", hints: bool = False) -> list[dict]:
     lines = []
     for f in spec.fields.values():
         t = f.type + (f" of {f.item_type}" if f.type == "list" and f.item_type else "")
@@ -67,17 +83,18 @@ def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "descri
                         + "\n".join(f'- "{k}": {v}' for k, v in helpers.items()))
     user = (f"Document type: {spec.description or spec.name}\n\nFields:\n" + "\n".join(lines) + helper_block
             + f"\n\nDocument text:\n<<<\n{doc_text}\n>>>")
-    return [{"role": "system", "content": SYSTEM + FREETEXT_RULES.get(freetext_mode, "")},
+    return [{"role": "system", "content": SYSTEM + FREETEXT_RULES.get(freetext_mode, "") + (HINTS if hints else "")},
             {"role": "user", "content": user}]
 
 
 async def extract(spec: SchemaSpec, doc: Document, client: LLMClient, *, model: str, extra: dict,
                   fallback_model: str | None, fallback_extra: dict | None, usage: UsageTracker | None,
                   job_id: str | None = None, doc_id: str | None = None,
-                  deadline: float | None = None, freetext_mode: str = "describe") -> tuple[dict | None, list[str]]:
+                  deadline: float | None = None, freetext_mode: str = "describe",
+                  hints: bool = False) -> tuple[dict | None, list[str]]:
     """-> (raw JSON object or None, notes)."""
     notes: list[str] = []
-    msgs = build_messages(spec, doc.markdown, freetext_mode)
+    msgs = build_messages(spec, doc.markdown, freetext_mode, hints)
     attempts = [(model, extra, msgs)]
     for i, (m, ex, ms) in enumerate(attempts):
         try:

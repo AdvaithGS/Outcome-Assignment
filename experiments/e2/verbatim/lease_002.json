@@ -1,0 +1,235 @@
+{
+ "entries": [
+  {
+   "tenant_name": {
+    "value": "KESTREL ANALYTICS USA LLC",
+    "citation": "[Section 003: KESTREL ANALYTICS USA LLC]",
+    "confidence": 0.65
+   },
+   "landlord_legal_name": {
+    "value": "850 N. HARLOW AVENUE LLC",
+    "citation": "[Section 002: 850 N. HARLOW AVENUE LLC]",
+    "confidence": 0.65
+   },
+   "property_name": {
+    "value": "ONE HARLOW PLACE",
+    "citation": "[Section 001: OFFICE BUILDING LEASE] Harlow Office Building 850 North Harlow Avenue Naperville, Illinois 60540",
+    "confidence": 0.9
+   },
+   "building_address": {
+    "value": "850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "citation": "[Section 001: OFFICE BUILDING LEASE] Harlow Office Building 850 North Harlow Avenue Naperville, Illinois 60540",
+    "confidence": 0.9
+   },
+   "premises": {
+    "value": "Suite 310",
+    "citation": "[Section 001: OFFICE BUILDING LEASE] ... known as Suite 310",
+    "confidence": 0.9
+   },
+   "rentable_square_footage": {
+    "value": 1842,
+    "citation": "[Section 001: OFFICE BUILDING LEASE] ... comprised of approximately 1,842 rentable square feet",
+    "confidence": 0.9
+   },
+   "pro_rata_share": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "permitted_use": {
+    "value": "Tenant shall use and occupy the Premises for general office purposes and no other purpose.",
+    "citation": "[Section 008: 3. OCCUPANCY.] Tenant shall use and occupy the Premises for general office purposes and no other purpose.",
+    "confidence": 0.9
+   },
+   "lease_execution_date": {
+    "value": "2025-08-21",
+    "citation": "[Section 001: OFFICE BUILDING LEASE] THIS LEASE is made as of the 21st day of August, 2025",
+    "confidence": 0.9
+   },
+   "lease_commencement_date": {
+    "value": "2025-10-01",
+    "citation": "[Section 001: OFFICE BUILDING LEASE] commencing on the 1st day of October, 2025",
+    "confidence": 0.9
+   },
+   "rent_commencement_date": {
+    "value": "2025-10-01",
+    "citation": "[Section 001: OFFICE BUILDING LEASE] commencing on the 1st day of October, 2025",
+    "confidence": 0.9
+   },
+   "lease_expiration_date": {
+    "value": "2027-04-30",
+    "citation": "[Section 001: OFFICE BUILDING LEASE] terminating on the 30th day of April, 2027",
+    "confidence": 0.9
+   },
+   "lease_term_months": {
+    "value": 19,
+    "citation": "[Section 001: OFFICE BUILDING LEASE] for the term of one (1) year and seven (7) months",
+    "confidence": 1.0
+   },
+   "rent_schedule_start_dates": {
+    "value": [
+     "2025-10-01"
+    ],
+    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] October 1, 2025 through April 30, 2027",
+    "confidence": 0.9
+   },
+   "rent_schedule_end_dates": {
+    "value": [
+     "2027-04-30"
+    ],
+    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] October 1, 2025 through April 30, 2027",
+    "confidence": 0.9
+   },
+   "rent_schedule_monthly_rent": {
+    "value": [
+     2845
+    ],
+    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] October 1, 2025 through April 30, 2027 | $2,845.00",
+    "confidence": 0.9
+   },
+   "rent_schedule_annual_rent_per_rsf": {
+    "value": [
+     18.53
+    ],
+    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] October 1, 2025 through April 30, 2027 | $2,845.00",
+    "confidence": 1.0
+   },
+   "total_base_rent": {
+    "value": 54055.0,
+    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] October 1, 2025 through April 30, 2027 | $2,845.00",
+    "confidence": 0.65
+   },
+   "base_rent_escalation": {
+    "value": "none; fixed at $2,845.00 per month",
+    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] October 1, 2025 through April 30, 2027 | $2,845.00",
+    "confidence": 0.9
+   },
+   "free_rent_months": {
+    "value": 3,
+    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] monthly Base Rent shall abate in an amount equal to the first three (3) full calendar months of Base Rent.",
+    "confidence": 0.9
+   },
+   "security_deposit_amount": {
+    "value": 2850,
+    "citation": "[Section 039: 27. SECURITY DEPOSIT.] the sum of Two Thousand Eight Hundred Fifty and 00/100 Dollars ($2,850.00)",
+    "confidence": 0.9
+   },
+   "letter_of_credit_required": {
+    "value": false,
+    "citation": "",
+    "confidence": 0.65
+   },
+   "expense_structure": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "base_year_expenses": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "base_year_taxes": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "electricity_provision": {
+    "value": "separately metered and billed directly to, and be the sole responsibility of, Tenant by Commonwealth Edison",
+    "citation": "[Section 012: (a) Utilities:] Electricity for all receptacles on the Premises and for all lighting on the Premises and DDC boxes for ventilation and secondary heating shall be separately metered and billed directly to, and be the sole responsibility of, Tenant by Commonwealth Edison.",
+    "confidence": 0.9
+   },
+   "parking_spaces": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "parking_monthly_charge": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "ti_allowance_total": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "renewal_option_exists": {
+    "value": false,
+    "citation": "",
+    "confidence": 0.65
+   },
+   "renewal_options_count": {
+    "value": 0,
+    "citation": "",
+    "confidence": 0.65
+   },
+   "renewal_term_months": {
+    "value": [],
+    "citation": "",
+    "confidence": 0.65
+   },
+   "renewal_notice_months": {
+    "value": [],
+    "citation": "",
+    "confidence": 0.65
+   },
+   "early_termination_right": {
+    "value": false,
+    "citation": "",
+    "confidence": 0.65
+   },
+   "termination_fee_description": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "right_to_sublet": {
+    "value": "with Landlord's prior written consent; consent not to be unreasonably withheld if the proposed assignee or sublessee meets the stated criteria",
+    "citation": "[Section 025: 15. ASSIGNMENT AND SUBLETTING.] Landlord agrees not to unreasonably withhold its consent to any proposed assignment or subletting if the proposed assignee or sublessee (in Landlord's judgment) has a financial condition comparable to or better than that of Tenant, has a good reputation in the business community and agrees to use the Premises for purposes satisfactory to Landlord.",
+    "confidence": 0.9
+   },
+   "guarantor_name": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "broker_names": {
+    "value": [
+     "PINNACLE REALTY"
+    ],
+    "citation": "[Section 040: 28. REAL ESTATE BROKER.] The Tenant represents that the Tenant has dealt with (and only with) PINNACLE REALTY, as broker",
+    "confidence": 0.9
+   },
+   "late_fee": {
+    "value": "One Hundred Fifty and 00/100 Dollars ($150.00) late charge and interest at the annual rate of four (4%) percent in excess of the Corporate base rate",
+    "citation": "[Section 034: 24. MISCELLANEOUS.] All payments becoming due under this Lease and remaining unpaid when due will be subject to a One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate",
+    "confidence": 0.9
+   },
+   "holdover_rent": {
+    "value": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
+    "citation": "[Section 027: 17. HOLDING OVER.] Tenant shall pay to Landlord double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
+    "confidence": 0.9
+   }
+  }
+ ],
+ "metadata": {
+  "model_calls": 1,
+  "tokens_in": 18302,
+  "tokens_out": 1730,
+  "cost_usd": 0.003153,
+  "latency_ms": 37307,
+  "cache_hits": 1,
+  "cost_usd_uncached": 0.004851,
+  "models": {
+   "openai/gpt-6-luna": {
+    "calls": 1,
+    "tokens_in": 18302,
+    "tokens_out": 1730,
+    "cost_usd": 0.003153,
+    "cache_hits": 1
+   }
+  }
+ },
+ "schema": "lease_abstraction"
+}

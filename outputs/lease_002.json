@@ -13,12 +13,12 @@
    },
    "property_name": {
     "value": "ONE HARLOW PLACE",
-    "citation": "[Section 004: TABLE OF CONTENTS] ONE HARLOW PLACE, 850 N. HARLOW AVENUE",
-    "confidence": 0.9
+    "citation": "[Section 004: TABLE OF CONTENTS] Land commonly known as ONE HARLOW PLACE",
+    "confidence": 0.65
    },
    "building_address": {
     "value": "850 N. HARLOW AVENUE, Naperville, Illinois 60540",
-    "citation": "[Section 004: TABLE OF CONTENTS] ONE HARLOW PLACE, 850 N. HARLOW AVENUE, Naperville, Illinois 60540",
+    "citation": "[Section 004: TABLE OF CONTENTS] 850 N. HARLOW AVENUE, Naperville, Illinois 60540",
     "confidence": 0.9
    },
    "premises": {
@@ -43,7 +43,7 @@
    },
    "lease_execution_date": {
     "value": "2025-08-21",
-    "citation": "[Section 004: TABLE OF CONTENTS] THIS LEASE is made as of the 21st day of August, 2025",
+    "citation": "[Section 004: TABLE OF CONTENTS] made as of the 21st day of August, 2025",
     "confidence": 0.9
    },
    "lease_commencement_date": {
@@ -53,7 +53,7 @@
    },
    "rent_commencement_date": {
     "value": "2025-10-01",
-    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] beginning as of the commencement of the Term",
+    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] October 1, 2025 through April 30, 2027",
     "confidence": 0.9
    },
    "lease_expiration_date": {
@@ -96,13 +96,13 @@
    },
    "total_base_rent": {
     "value": 54055.0,
-    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] $2,845.00",
+    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] $2,845.00; beginning as of the commencement of the Term, monthly Base Rent shall abate in an amount equal to the first three (3) full calendar months",
     "confidence": 0.65
    },
    "base_rent_escalation": {
-    "value": "none; fixed monthly Base Rent throughout the Term",
-    "citation": "[Section 006: PERIOD | MONTHLY BASE RENT] October 1, 2025 through April 30, 2027 | $2,845.00",
-    "confidence": 0.9
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
    },
    "free_rent_months": {
     "value": 3,
@@ -135,7 +135,7 @@
     "confidence": 0.6
    },
    "electricity_provision": {
-    "value": "Separately metered and billed directly to Tenant by Commonwealth Edison",
+    "value": "separately metered and billed directly to, and be the sole responsibility of, Tenant by Commonwealth Edison",
     "citation": "[Section 012: (a) Utilities:] Electricity for all receptacles on the Premises and for all lighting on the Premises and DDC boxes for ventilation and secondary heating shall be separately metered and billed directly to, and be the sole responsibility of, Tenant by Commonwealth Edison.",
     "confidence": 0.9
    },
@@ -185,8 +185,8 @@
     "confidence": 0.6
    },
    "right_to_sublet": {
-    "value": "Requires Landlord's prior written consent; consent not to be unreasonably withheld for a financially comparable or better, reputable proposed assignee or sublessee using the Premises for purposes satisfactory to Landlord. Landlord has a cancellation option for proposed assignments or subleases.",
-    "citation": "[Section 025: 15. ASSIGNMENT AND SUBLETTING.] Landlord agrees not to unreasonably withhold its consent to any proposed assignment or subletting",
+    "value": "with Landlord's prior written consent; consent not to be unreasonably withheld if the proposed assignee or sublessee meets the stated financial, reputation, and use requirements",
+    "citation": "[Section 025: 15. ASSIGNMENT AND SUBLETTING.] Landlord agrees not to unreasonably withhold its consent to any proposed assignment or subletting if the proposed assignee or sublessee (in Landlord's judgment) has a financial condition comparable to or better than that of Tenant, has a good reputation in the business community and agrees to use the Premises for purposes satisfactory to Landlord.",
     "confidence": 0.9
    },
    "guarantor_name": {
@@ -202,12 +202,12 @@
     "confidence": 0.9
    },
    "late_fee": {
-    "value": "$150.00 late charge and interest at 4% per annum in excess of the Corporate base rate announced by FIRST MERIDIAN",
-    "citation": "[Section 034: 24. MISCELLANEOUS.] subject to a One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate",
+    "value": "$150.00 late charge and interest at 4% per annum in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
+    "citation": "[Section 034: 24. MISCELLANEOUS.] subject to a One Hundred Fifty and 00/100 Dollars ($150.00) late charge and shall bear interest until paid at the annual rate of four (4%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
     "confidence": 0.9
    },
    "holdover_rent": {
-    "value": "Double the Base Rent set forth in Paragraph 1, plus applicable Additional Rent",
+    "value": "double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
     "citation": "[Section 027: 17. HOLDING OVER.] Tenant shall pay to Landlord double the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable",
     "confidence": 0.9
    }
@@ -218,9 +218,9 @@
   "tokens_in": 0,
   "tokens_out": 0,
   "cost_usd": 0.0,
-  "latency_ms": 7470,
+  "latency_ms": 5164,
   "cache_hits": 2,
-  "cost_usd_uncached": 0.004768,
+  "cost_usd_uncached": 0.00495,
   "models": {
    "openai/gpt-6-luna": {
     "calls": 0,

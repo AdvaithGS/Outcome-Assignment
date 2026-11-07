@@ -1,0 +1,288 @@
+{
+ "entries": [
+  {
+   "tenant_name": {
+    "value": "M.J. Delacroix & Associates, P.C.",
+    "citation": "[Section 010: REFERENCE PAGE] TENANT: M.J. Delacroix & Associates, P.C.",
+    "confidence": 0.9
+   },
+   "landlord_legal_name": {
+    "value": "TRENT MA-II HOLLIS OFFICE PLAZA, INC.",
+    "citation": "[Section 012: TRENT MA-II HOLLIS OFFICE PLAZA, INC.] a Delaware corporation",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "property_name": {
+    "value": "Hollis Office Plaza",
+    "citation": "[Section 010: REFERENCE PAGE] BUILDING: Hollis Office Plaza",
+    "confidence": 0.9
+   },
+   "building_address": {
+    "value": "1850 Hollis Road, Fairmont Hills, Illinois 60517",
+    "citation": "[Section 010: REFERENCE PAGE] 1850 Hollis Road Fairmont Hills, Illinois 60517",
+    "confidence": 0.65
+   },
+   "premises": {
+    "value": "Suite 214W",
+    "citation": "[Section 010: REFERENCE PAGE] PREMISES: Second Floor, West Section, Suite 214W",
+    "confidence": 0.9
+   },
+   "rentable_square_footage": {
+    "value": 1892,
+    "citation": "[Section 010: REFERENCE PAGE] PREMISES RENTABLE AREA: approximately 1,892 square feet",
+    "confidence": 0.9
+   },
+   "pro_rata_share": {
+    "value": 0.91,
+    "citation": "[Section 010: REFERENCE PAGE] TENANT'S PROPORTIONATE SHARE: 0.91 %",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "permitted_use": {
+    "value": "General Office: Architecture",
+    "citation": "[Section 010: REFERENCE PAGE] USE: General Office: Architecture",
+    "confidence": 0.9
+   },
+   "lease_execution_date": {
+    "value": "1993-03-05",
+    "citation": "[Section 010: REFERENCE PAGE] LEASE REFERENCE DATE: March 5 , 19 93",
+    "confidence": 0.9
+   },
+   "lease_commencement_date": {
+    "value": "1993-05-01",
+    "citation": "[Section 010: REFERENCE PAGE] COMMENCEMENT DATE: May 1 , 19 93",
+    "confidence": 0.9
+   },
+   "rent_commencement_date": {
+    "value": "1993-05-01",
+    "citation": "[Section 010: REFERENCE PAGE] COMMENCEMENT DATE: May 1 , 19 93",
+    "confidence": 0.9
+   },
+   "lease_expiration_date": {
+    "value": "1998-04-30",
+    "citation": "[Section 010: REFERENCE PAGE] TERMINATION DATE: April 30 , 19 98",
+    "confidence": 0.9
+   },
+   "lease_term_months": {
+    "value": 60,
+    "citation": "[Section 010: REFERENCE PAGE] TERM OF LEASE: Five years and no months",
+    "confidence": 1.0
+   },
+   "rent_schedule_start_dates": {
+    "value": [
+     "1993-05-01",
+     "1994-05-01",
+     "1995-05-01",
+     "1996-05-01",
+     "1997-05-01"
+    ],
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] 05/01/93 - 04/30/94 ... 05/01/97 - 04/30/98",
+    "confidence": 0.65
+   },
+   "rent_schedule_end_dates": {
+    "value": [
+     "1994-04-30",
+     "1995-04-30",
+     "1996-04-30",
+     "1997-04-30",
+     "1998-04-30"
+    ],
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] 05/01/93 - 04/30/94 ... 05/01/97 - 04/30/98",
+    "confidence": 0.65
+   },
+   "rent_schedule_monthly_rent": {
+    "value": [
+     1932,
+     1990,
+     2050,
+     2111,
+     2174
+    ],
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] $ 1,932 | $ 1,990 | $ 2,050 | $ 2,111 | $ 2,174",
+    "confidence": 0.65
+   },
+   "rent_schedule_annual_rent_per_rsf": {
+    "value": [
+     12.25,
+     12.62,
+     13.0,
+     13.39,
+     13.79
+    ],
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] Annual Base Rent $ 23,184 ... $ 26,088",
+    "confidence": 0.75
+   },
+   "total_base_rent": {
+    "value": 123084,
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] 60 | $ 123,084",
+    "confidence": 1.0,
+    "page_numbers": [
+     18
+    ]
+   },
+   "base_rent_escalation": {
+    "value": "fixed steps per schedule",
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] Annual Base Rent increasing from $ 23,184 to $ 26,088 over five periods",
+    "confidence": 0.65
+   },
+   "free_rent_months": {
+    "value": 0,
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] 12 installments in each period, no abatement stated",
+    "confidence": 0.65
+   },
+   "security_deposit_amount": {
+    "value": 2150,
+    "citation": "[Section 010: REFERENCE PAGE] SECURITY DEPOSIT: $ ~~2,400~~ [handwritten: 2150 M.J. Delacroix]",
+    "confidence": 0.9
+   },
+   "letter_of_credit_required": {
+    "value": false,
+    "citation": "[Section 021: 6. SECURITY DEPOSIT.] Tenant has deposited with Landlord the Security Deposit",
+    "confidence": 0.9,
+    "page_numbers": [
+     4
+    ]
+   },
+   "expense_structure": {
+    "value": "base year 1993 for direct expenses and taxes; no increases payable during first 18 months",
+    "citation": "[Section 010: REFERENCE PAGE] BASE YEAR (DIRECT EXPENSES): 19 93 ... BASE YEAR (TAXES): 19 93; [Section 058: 42. HAZARDOUS MATERIALS.] **Tenant shall not pay any increases in direct expenses and/or taxes during the first eighteen months of the lease term.",
+    "confidence": 0.9
+   },
+   "base_year_expenses": {
+    "value": 1993,
+    "citation": "[Section 010: REFERENCE PAGE] BASE YEAR (DIRECT EXPENSES): 19 93",
+    "confidence": 0.9
+   },
+   "base_year_taxes": {
+    "value": 1993,
+    "citation": "[Section 010: REFERENCE PAGE] BASE YEAR (TAXES): 19 93",
+    "confidence": 0.9
+   },
+   "electricity_provision": {
+    "value": "included in rent during business hours; excess usage separately metered and billed as additional rent",
+    "citation": "[Section 029: 14. SERVICES AND UTILITIES.] (f) electricity for lighting, convenience outlets and other direct uses ... Tenant shall procure the prior written consent of Landlord ... Landlord may cause a water meter or electric current meter to be installed",
+    "confidence": 0.9,
+    "page_numbers": [
+     7
+    ]
+   },
+   "parking_spaces": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "parking_monthly_charge": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "ti_allowance_total": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "renewal_option_exists": {
+    "value": false,
+    "citation": "[Section 001: TABLE OF CONTENTS] no renewal option article listed",
+    "confidence": 0.9
+   },
+   "renewal_options_count": {
+    "value": 0,
+    "citation": "[Section 001: TABLE OF CONTENTS] no renewal option article listed",
+    "confidence": 0.9
+   },
+   "renewal_term_months": {
+    "value": [],
+    "citation": "[Section 001: TABLE OF CONTENTS] no renewal option article listed",
+    "confidence": 0.9
+   },
+   "renewal_notice_months": {
+    "value": [],
+    "citation": "[Section 001: TABLE OF CONTENTS] no renewal option article listed",
+    "confidence": 0.9
+   },
+   "early_termination_right": {
+    "value": false,
+    "citation": "[Section 001: TABLE OF CONTENTS] no tenant early termination option article listed",
+    "confidence": 0.65
+   },
+   "termination_fee_description": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "right_to_sublet": {
+    "value": "with landlord's prior written consent, on 90 to 180 days' prior notice; landlord may recapture the space or terminate the lease and receives 50% of any excess consideration",
+    "citation": "[Section 025: 10. ASSIGNMENT AND SUBLETTING.] without the prior written consent of Landlord ... at least 90 days but no more than 180 days prior ... Landlord shall receive 50% of any consideration paid to Tenant",
+    "confidence": 0.9,
+    "page_numbers": [
+     5
+    ]
+   },
+   "guarantor_name": {
+    "value": "Martin J. Delacroix",
+    "citation": "[Section 076: CONTINUING LEASE GUARANTY] Guarantor: [handwritten: MARTIN J. DELACROIX]",
+    "confidence": 0.9,
+    "page_numbers": [
+     25
+    ]
+   },
+   "broker_names": {
+    "value": [
+     "Meridian Commercial Realty Group, Inc."
+    ],
+    "citation": "[Section 010: REFERENCE PAGE] REAL ESTATE BROKER DUE COMMISSION: Meridian Commercial Realty Group, Inc.",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "late_fee": {
+    "value": "greater of $75.00 or 6% of the unpaid rent or other payment",
+    "citation": "[Section 018: **3. RENT.**] the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "holdover_rent": {
+    "value": "150% of the Annual Rent for the last period prior to termination plus Rent Adjustments, prorated daily",
+    "citation": "[Section 032: 15. HOLDING OVER.] 150% of the amount of the Annual Rent for the last period prior to the date of such termination plus all Rent Adjustments ... prorated on a daily basis",
+    "confidence": 0.9,
+    "page_numbers": [
+     8
+    ]
+   }
+  }
+ ],
+ "metadata": {
+  "model_calls": 1,
+  "tokens_in": 24927,
+  "tokens_out": 3410,
+  "cost_usd": 0.0,
+  "latency_ms": 35340,
+  "cache_hits": 26,
+  "cost_usd_uncached": 0.017794,
+  "models": {
+   "openai/gpt-6-luna": {
+    "calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "cost_usd": 0.0,
+    "cache_hits": 26
+   },
+   "z-ai/glm-5.3-flash": {
+    "calls": 1,
+    "tokens_in": 24927,
+    "tokens_out": 3410,
+    "cost_usd": 0.0,
+    "cache_hits": 0
+   }
+  }
+ },
+ "schema": "lease_abstraction"
+}

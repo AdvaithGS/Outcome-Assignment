@@ -1,0 +1,329 @@
+{
+ "entries": [
+  {
+   "tenant_name": {
+    "value": "M.J. Delacroix & Associates, P.C.",
+    "citation": "[Page 2] TENANT: | M.J. Delacroix & Associates, P.C.",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "landlord_legal_name": {
+    "value": "TRENT MA-II HOLLIS OFFICE PLAZA, INC.",
+    "citation": "[Section 012: TRENT MA-II HOLLIS OFFICE PLAZA, INC.]",
+    "confidence": 0.65
+   },
+   "property_name": {
+    "value": "Hollis Office Plaza",
+    "citation": "[Page 2] BUILDING: | Hollis Office Plaza",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "building_address": {
+    "value": "1850 Hollis Road, Fairmont Hills, Illinois 60517",
+    "citation": "[Page 2] 1850 Hollis Road<br>Fairmont Hills, Illinois 60517",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "premises": {
+    "value": "Suite 214W",
+    "citation": "[Page 2] Second Floor, West Section, Suite 214W",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "rentable_square_footage": {
+    "value": 1892,
+    "citation": "[Page 2] PREMISES RENTABLE AREA: | approximately 1,892 square feet",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "pro_rata_share": {
+    "value": 0.91,
+    "citation": "[Page 2] TENANT'S PROPORTIONATE SHARE: | 0.91 %",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "permitted_use": {
+    "value": "General Office: Architecture",
+    "citation": "[Page 2] USE: | General Office: Architecture",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "lease_execution_date": {
+    "value": "1993-03-05",
+    "citation": "[Page 2] LEASE REFERENCE DATE: | March 5 , 19 93",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "lease_commencement_date": {
+    "value": "1993-05-01",
+    "citation": "[Page 2] COMMENCEMENT DATE: | May 1 , 19 93",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "rent_commencement_date": {
+    "value": "1993-05-01",
+    "citation": "[Page 2] COMMENCEMENT DATE: | May 1 , 19 93",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "lease_expiration_date": {
+    "value": "1998-04-30",
+    "citation": "[Page 2] TERMINATION DATE: | April 30 , 19 98",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "lease_term_months": {
+    "value": 60,
+    "citation": "[Page 2] TERM OF LEASE: | Five years and no months",
+    "confidence": 1.0,
+    "page_numbers": [
+     2
+    ]
+   },
+   "rent_schedule_start_dates": {
+    "value": [
+     "1993-05-01",
+     "1994-05-01",
+     "1995-05-01",
+     "1996-05-01",
+     "1997-05-01"
+    ],
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] 05/01/93 - 04/30/94",
+    "confidence": 0.9,
+    "page_numbers": [
+     18
+    ]
+   },
+   "rent_schedule_end_dates": {
+    "value": [
+     "1994-04-30",
+     "1995-04-30",
+     "1996-04-30",
+     "1997-04-30",
+     "1998-04-30"
+    ],
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] 05/01/93 - 04/30/94",
+    "confidence": 0.9,
+    "page_numbers": [
+     18
+    ]
+   },
+   "rent_schedule_monthly_rent": {
+    "value": [
+     1932,
+     1990,
+     2050,
+     2111,
+     2174
+    ],
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] $ 1,932 | $ 1,990 | $ 2,050 | $ 2,111 | $ 2,174",
+    "confidence": 0.65
+   },
+   "rent_schedule_annual_rent_per_rsf": {
+    "value": [
+     12.25,
+     12.62,
+     13.0,
+     13.39,
+     13.79
+    ],
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] $ 23,184 | $ 23,880 | $ 24,600 | $ 25,332 | $ 26,088",
+    "confidence": 0.75
+   },
+   "total_base_rent": {
+    "value": 123084,
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] $ 123,084",
+    "confidence": 1.0,
+    "page_numbers": [
+     18
+    ]
+   },
+   "base_rent_escalation": {
+    "value": "fixed steps per schedule",
+    "citation": "[Section 059: 43. BASE RENT SCHEDULE.] 05/01/93 - 04/30/94 | $ 23,184",
+    "confidence": 0.9,
+    "page_numbers": [
+     18
+    ]
+   },
+   "free_rent_months": {
+    "value": 0,
+    "citation": "",
+    "confidence": 0.65
+   },
+   "security_deposit_amount": {
+    "value": 2150,
+    "citation": "[Page 2] SECURITY DEPOSIT: | $ ~~2,400~~ [handwritten: 2150 M.J. Delacroix]",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "letter_of_credit_required": {
+    "value": false,
+    "citation": "",
+    "confidence": 0.65
+   },
+   "expense_structure": {
+    "value": "base year 1993 for direct expenses and taxes",
+    "citation": "[Page 2] BASE YEAR (DIRECT EXPENSES): | 19 93; BASE YEAR (TAXES): | 19 93",
+    "confidence": 0.65,
+    "page_numbers": [
+     2
+    ]
+   },
+   "base_year_expenses": {
+    "value": 1993,
+    "citation": "[Page 2] BASE YEAR (DIRECT EXPENSES): | 19 93",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "base_year_taxes": {
+    "value": 1993,
+    "citation": "[Page 2] BASE YEAR (TAXES): | 19 93",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "electricity_provision": {
+    "value": "Landlord furnishes electricity for lighting, convenience outlets and other direct uses during ordinary business hours; excess use may be separately metered and billed to Tenant.",
+    "citation": "[Section 029: 14. SERVICES AND UTILITIES.] electricity for lighting, convenience outlets and other direct uses",
+    "confidence": 0.9,
+    "page_numbers": [
+     7
+    ]
+   },
+   "parking_spaces": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "parking_monthly_charge": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "ti_allowance_total": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "renewal_option_exists": {
+    "value": false,
+    "citation": "",
+    "confidence": 0.65
+   },
+   "renewal_options_count": {
+    "value": 0,
+    "citation": "",
+    "confidence": 0.65
+   },
+   "renewal_term_months": {
+    "value": [],
+    "citation": "",
+    "confidence": 0.65
+   },
+   "renewal_notice_months": {
+    "value": [],
+    "citation": "",
+    "confidence": 0.65
+   },
+   "early_termination_right": {
+    "value": false,
+    "citation": "",
+    "confidence": 0.65
+   },
+   "termination_fee_description": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "right_to_sublet": {
+    "value": "with prior written landlord consent; Tenant must give 90 to 180 days' prior written notice, and Landlord may terminate the Lease or recapture space",
+    "citation": "[Section 025: 10. ASSIGNMENT AND SUBLETTING.] without the prior written consent of Landlord",
+    "confidence": 0.9,
+    "page_numbers": [
+     5
+    ]
+   },
+   "guarantor_name": {
+    "value": "MARTIN J. DELACROIX",
+    "citation": "[Page 25] Guarantor: [handwritten: MARTIN J. DELACROIX]",
+    "confidence": 0.9,
+    "page_numbers": [
+     25
+    ]
+   },
+   "broker_names": {
+    "value": [
+     "Meridian Commercial Realty Group, Inc."
+    ],
+    "citation": "[Page 2] REAL ESTATE BROKER DUE COMMISSION: | Meridian Commercial Realty Group, Inc.",
+    "confidence": 0.9,
+    "page_numbers": [
+     2
+    ]
+   },
+   "late_fee": {
+    "value": "greater of $75.00 or 6% of the unpaid rent or other payment, reassessed each successive monthly period until paid",
+    "citation": "[Section 018: **3. RENT.**] the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "holdover_rent": {
+    "value": "150% of the Annual Rent for the last period prior to termination plus all Rent Adjustments, prorated daily",
+    "citation": "[Section 032: 15. HOLDING OVER.] 150% of the amount of the Annual Rent for the last period prior to the date of such termination plus all Rent Adjustments",
+    "confidence": 0.9,
+    "page_numbers": [
+     8
+    ]
+   }
+  }
+ ],
+ "metadata": {
+  "model_calls": 2,
+  "tokens_in": 24634,
+  "tokens_out": 1902,
+  "cost_usd": 0.00403,
+  "latency_ms": 37933,
+  "cache_hits": 26,
+  "cost_usd_uncached": 0.021824,
+  "models": {
+   "openai/gpt-6-luna": {
+    "calls": 2,
+    "tokens_in": 24634,
+    "tokens_out": 1902,
+    "cost_usd": 0.00403,
+    "cache_hits": 26
+   }
+  }
+ },
+ "schema": "lease_abstraction"
+}

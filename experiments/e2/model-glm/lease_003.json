@@ -1,0 +1,397 @@
+{
+ "entries": [
+  {
+   "tenant_name": {
+    "value": "KRESTMOOR INCORPORATED",
+    "citation": "[Page 3] KRESTMOOR INCORPORATED, an Illinois corporation, (\"Tenant\")",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "landlord_legal_name": {
+    "value": "250 S. HARBOR LLC",
+    "citation": "[Page 3] 250 S. HARBOR LLC, an Illinois limited liability company, (\"Landlord\")",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "property_name": {
+    "value": "250 South Harbor",
+    "citation": "[Page 1] 250 South Harbor Chicago, Illinois 60606",
+    "confidence": 0.9,
+    "page_numbers": [
+     1
+    ]
+   },
+   "building_address": {
+    "value": "250 South Harbor Street, Chicago, Illinois 60606",
+    "citation": "[Page 3] known as 250 South Harbor Street, Chicago, Illinois 60606",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "premises": {
+    "value": "Suite 500",
+    "citation": "[Page 3] approximately 6,840 rentable square feet known as Suite 500",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "rentable_square_footage": {
+    "value": 6840,
+    "citation": "[Page 6] of the Premises is 6,840 rentable square feet",
+    "confidence": 0.9,
+    "page_numbers": [
+     6
+    ]
+   },
+   "pro_rata_share": {
+    "value": 12.855,
+    "citation": "[Page 6] Tenant's Proportionate Share for purposes of Additional Rent is 12.855%",
+    "confidence": 0.9,
+    "page_numbers": [
+     6
+    ]
+   },
+   "permitted_use": {
+    "value": "operation of law office or other general office purpose",
+    "citation": "[Page 6] Tenant shall use and occupy the Premises for the operation of law office or other general office purpose",
+    "confidence": 0.9,
+    "page_numbers": [
+     6
+    ]
+   },
+   "lease_execution_date": {
+    "value": "2010-03-04",
+    "citation": "[Page 3] THIS LEASE is made as of the 4\u1d57\u02b0 day of March, 2010",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "lease_commencement_date": {
+    "value": "2010-08-01",
+    "citation": "[Page 3] commencing on the 1\u02e2\u1d57 day of August, 2010",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "rent_commencement_date": {
+    "value": "2010-08-01",
+    "citation": "[Page 3] commencing on the 1\u02e2\u1d57 day of August, 2010",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "lease_expiration_date": {
+    "value": "2021-02-28",
+    "citation": "[Page 3] terminating on the 28\u1d57\u02b0 day of February, 2021",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "lease_term_months": {
+    "value": 127,
+    "citation": "[Page 3] the term of Ten (10) years Seven (7) months commencing on the 1\u02e2\u1d57 day of August, 2010, and terminating on the 28\u1d57\u02b0 day of February, 2021",
+    "confidence": 1.0,
+    "page_numbers": [
+     3
+    ]
+   },
+   "rent_schedule_start_dates": {
+    "value": [
+     "2010-08-01",
+     "2011-08-01",
+     "2012-08-01",
+     "2013-08-01",
+     "2014-08-01",
+     "2015-08-01",
+     "2016-08-01",
+     "2017-08-01",
+     "2018-08-01",
+     "2019-08-01",
+     "2020-08-01"
+    ],
+    "citation": "[Page 3] Table ID: 001 | August 1, 2010 through July 31, 2011 ... August 1, 2020 through February 28, 2021",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "rent_schedule_end_dates": {
+    "value": [
+     "2011-07-31",
+     "2012-07-31",
+     "2013-07-31",
+     "2014-07-31",
+     "2015-07-31",
+     "2016-07-31",
+     "2017-07-31",
+     "2018-07-31",
+     "2019-07-31",
+     "2020-07-31",
+     "2021-02-28"
+    ],
+    "citation": "[Page 3] Table ID: 001 | August 1, 2010 through July 31, 2011 ... August 1, 2020 through February 28, 2021",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "rent_schedule_monthly_rent": {
+    "value": [
+     11934,
+     12196,
+     12458,
+     12720,
+     12982,
+     13244,
+     13506,
+     13768,
+     14030,
+     14292,
+     14554
+    ],
+    "citation": "[Page 3] Table ID: 001 | $11,934.00 ... $14,554.00",
+    "confidence": 0.65,
+    "page_numbers": [
+     3
+    ]
+   },
+   "rent_schedule_annual_rent_per_rsf": {
+    "value": [
+     20.94,
+     21.4,
+     21.86,
+     22.32,
+     22.78,
+     23.24,
+     23.69,
+     24.15,
+     24.61,
+     25.07,
+     25.53
+    ],
+    "citation": "[Page 3] Table ID: 001 monthly Base Rent; [Page 6] 6,840 rentable square feet",
+    "confidence": 0.75,
+    "page_numbers": [
+     3
+    ]
+   },
+   "total_base_rent": {
+    "value": 1675438.0,
+    "citation": "[Page 3] Table ID: 001 monthly Base Rent schedule",
+    "confidence": 0.75,
+    "page_numbers": [
+     3
+    ]
+   },
+   "base_rent_escalation": {
+    "value": "fixed steps per schedule",
+    "citation": "[Page 3] Table ID: 001 monthly Base Rent increasing each August 1 from $11,934.00 to $14,554.00",
+    "confidence": 0.65,
+    "page_numbers": [
+     3
+    ]
+   },
+   "free_rent_months": {
+    "value": 0,
+    "citation": "[Page 3] Each monthly Base Rent payment shall be made in advance on the first day of each and every month during the Term",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "security_deposit_amount": {
+    "value": 310000,
+    "citation": "[Page 15] the sum of Three Hundred Ten Thousand and 00/100 Dollars ($310,000.00), (hereinafter referred to as \"Collateral\")",
+    "confidence": 0.9,
+    "page_numbers": [
+     15
+    ]
+   },
+   "letter_of_credit_required": {
+    "value": false,
+    "citation": "[Page 16] In lieu of some or all of the Collateral, Tenant may furnish Landlord an irrevocable Letter of Credit",
+    "confidence": 0.9,
+    "page_numbers": [
+     16
+    ]
+   },
+   "expense_structure": {
+    "value": "base year 2011, tenant pays proportionate share of Taxes and Operating Expenses in excess of Base Year, with Operating Expenses capped at 4% annual increase",
+    "citation": "[Page 3] Tenant's Proportionate Share ... of the Taxes which are in excess of the Taxes paid in the Base Year of 2011; [Page 4] Operating Expenses ... in excess of the Operating Expenses incurred in the Base Year of 2011; [Page 5] shall not increase by more than four percent (4%)",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "base_year_expenses": {
+    "value": 2011,
+    "citation": "[Page 4] in excess of the Operating Expenses incurred in the Base Year of 2011",
+    "confidence": 0.9,
+    "page_numbers": [
+     4
+    ]
+   },
+   "base_year_taxes": {
+    "value": 2011,
+    "citation": "[Page 3] in excess of the Taxes paid in the Base Year of 2011",
+    "confidence": 0.9,
+    "page_numbers": [
+     3
+    ]
+   },
+   "electricity_provision": {
+    "value": "separately metered and billed by Landlord as Additional Rent (Electricity Usage Fee) based on Tenant's actual usage",
+    "citation": "[Page 6] Electricity for all receptacles on the Premises ... shall be separately metered and shall be the sole responsibility of Tenant, and shall be billed by Landlord and paid by Tenant as Additional Rent",
+    "confidence": 0.9,
+    "page_numbers": [
+     6
+    ]
+   },
+   "parking_spaces": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "parking_monthly_charge": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "ti_allowance_total": {
+    "value": 389500,
+    "citation": "[Page 20] up to Three Hundred Eighty-Nine Thousand Five Hundred and 00/100 Dollars ($389,500.00, \"Landlord Contribution\")",
+    "confidence": 0.9,
+    "page_numbers": [
+     20
+    ]
+   },
+   "renewal_option_exists": {
+    "value": true,
+    "citation": "[Page 16] Tenant shall have the option to renew the term of this Lease for one additional period of Five (5) years",
+    "confidence": 0.9,
+    "page_numbers": [
+     16
+    ]
+   },
+   "renewal_options_count": {
+    "value": 1,
+    "citation": "[Page 16] one additional period of Five (5) years (\"Option Period\")",
+    "confidence": 0.9,
+    "page_numbers": [
+     16
+    ]
+   },
+   "renewal_term_months": {
+    "value": [
+     60
+    ],
+    "citation": "[Page 16] one additional period of Five (5) years",
+    "confidence": 0.9,
+    "page_numbers": [
+     16
+    ]
+   },
+   "renewal_notice_months": {
+    "value": [
+     9
+    ],
+    "citation": "[Page 16] written notice thereof which must be received by Landlord at least two hundred seventy (270) days prior to the expiration date",
+    "confidence": 0.9,
+    "page_numbers": [
+     16
+    ]
+   },
+   "early_termination_right": {
+    "value": true,
+    "citation": "[Page 17] Tenant shall have the right to terminate this Lease, said termination to be effective February 28, 2017",
+    "confidence": 0.9,
+    "page_numbers": [
+     17
+    ]
+   },
+   "termination_fee_description": {
+    "value": "unamortized brokers' commissions and abated rent plus undepreciated build-out costs amortized at 9% over the original rental stream, plus five months of the then monthly Base Rent",
+    "citation": "[Page 17] a termination fee (the \"Fee\") consisting of (i) the unamortized amount of all brokers commissions and abated rent ... and (ii) the undepreciated build-out costs ... at 9% interest thereon; plus an amount equal to five (5) months of the then monthly Base Rent",
+    "confidence": 0.9,
+    "page_numbers": [
+     17
+    ]
+   },
+   "right_to_sublet": {
+    "value": "with landlord prior written consent, not to be unreasonably withheld; landlord may cancel on proposed assignment or sublease of all of the premises; sublease of up to 40% of the premises to associated users permitted without consent",
+    "citation": "[Page 11] without the prior written consent of Landlord, which consent shall not be unreasonably withheld ... Tenant shall be allowed to sublease, or allow the use of, up to forty percent (40%) of the Premises ... without first obtaining Landlord's consent",
+    "confidence": 0.9,
+    "page_numbers": [
+     11
+    ]
+   },
+   "guarantor_name": {
+    "value": null,
+    "citation": "",
+    "confidence": 0.6
+   },
+   "broker_names": {
+    "value": [
+     "PINNACLE REALTY"
+    ],
+    "citation": "[Page 16] the Tenant has dealt only with PINNACLE REALTY, as broker",
+    "confidence": 0.9,
+    "page_numbers": [
+     16
+    ]
+   },
+   "late_fee": {
+    "value": "$300 late charge plus interest at 2% in excess of the Corporate base rate announced by FIRST MERIDIAN",
+    "citation": "[Page 14] subject to a Three Hundred and 00/100 Dollars ($300.00) late charge and shall bear interest until paid at the annual rate of two (2%) percent in excess of the Corporate base rate then announced from time to time by FIRST MERIDIAN",
+    "confidence": 0.9,
+    "page_numbers": [
+     14
+    ]
+   },
+   "holdover_rent": {
+    "value": "175% of the Base Rent plus any applicable Additional Rent",
+    "citation": "[Page 12] one hundred seventy-five percent (175%) of the Base Rent set forth in Paragraph 1 hereof and any appropriate Additional Rent then applicable (the \"Holdover Rate\")",
+    "confidence": 0.9,
+    "page_numbers": [
+     12
+    ]
+   }
+  }
+ ],
+ "metadata": {
+  "model_calls": 1,
+  "tokens_in": 26824,
+  "tokens_out": 3591,
+  "cost_usd": 0.0,
+  "latency_ms": 36137,
+  "cache_hits": 22,
+  "cost_usd_uncached": 0.018022,
+  "models": {
+   "openai/gpt-6-luna": {
+    "calls": 0,
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "cost_usd": 0.0,
+    "cache_hits": 22
+   },
+   "z-ai/glm-5.3-flash": {
+    "calls": 1,
+    "tokens_in": 26824,
+    "tokens_out": 3591,
+    "cost_usd": 0.0,
+    "cache_hits": 0
+   }
+  }
+ },
+ "schema": "lease_abstraction"
+}

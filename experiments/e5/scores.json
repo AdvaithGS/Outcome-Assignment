@@ -1,0 +1,112 @@
+[
+ {
+  "variant": "lease_002 terse+renamed",
+  "score": 0.65,
+  "rows": {
+   "predicted": 1,
+   "truth": 1
+  },
+  "hallucinations": 0,
+  "misses": 7,
+  "per_field_below_1": {
+   "landlord_legal_name": 0.0,
+   "property_name": 0.0,
+   "permitted_use": 0.0,
+   "rent_commencement_date": 0.0,
+   "rent_schedule_annual_rent_per_rsf": 0.0,
+   "total_base_rent": 0.0,
+   "letter_of_credit_required": 0.0,
+   "electricity_provision": 0.0,
+   "renewal_option_exists": 0.0,
+   "renewal_options_count": 0.0,
+   "early_termination_right": 0.0,
+   "right_to_sublet": 0.0,
+   "late_fee": 0.0,
+   "holdover_rent": 0.0
+  },
+  "notes": [],
+  "cost_usd": 0.004842
+ },
+ {
+  "variant": "lease_001 terse+renamed",
+  "score": 0.625,
+  "rows": {
+   "predicted": 1,
+   "truth": 1
+  },
+  "hallucinations": 0,
+  "misses": 7,
+  "per_field_below_1": {
+   "building_address": 0.0,
+   "premises": 0.0,
+   "lease_execution_date": 0.0,
+   "rent_commencement_date": 0.0,
+   "base_rent_escalation": 0.0,
+   "free_rent_months": 0.0,
+   "letter_of_credit_required": 0.0,
+   "expense_structure": 0.0,
+   "electricity_provision": 0.0,
+   "renewal_option_exists": 0.0,
+   "renewal_options_count": 0.0,
+   "early_termination_right": 0.0,
+   "right_to_sublet": 0.0,
+   "late_fee": 0.0,
+   "holdover_rent": 0.0
+  },
+  "notes": [],
+  "cost_usd": 0.004103
+ },
+ {
+  "variant": "boxscore contract schema",
+  "score": 1.0,
+  "rows": {
+   "predicted": 10,
+   "truth": 10
+  },
+  "hallucinations": 0,
+  "misses": 0,
+  "per_field_below_1": {},
+  "notes": [
+   "plan ok after 1 call(s)"
+  ],
+  "cost_usd": 0.00093
+ },
+ {
+  "variant": "rentroll as CSV",
+  "score": 0.9976,
+  "rows": {
+   "predicted": 325,
+   "truth": 325
+  },
+  "hallucinations": 0,
+  "misses": 0,
+  "per_field_below_1": {
+   "monthly_rent": 0.96
+  },
+  "notes": [
+   "plan ok after 1 call(s)",
+   "5 duplicate rows merged"
+  ],
+  "cost_usd": 0.000838
+ },
+ {
+  "variant": "t12 terse+renamed",
+  "score": 0.7257,
+  "rows": {
+   "predicted": 119,
+   "truth": 119
+  },
+  "hallucinations": 0,
+  "misses": 119,
+  "per_field_below_1": {
+   "property_name": 0.0,
+   "section": 0.983,
+   "category": 0.0,
+   "months_with_activity": 0.0
+  },
+  "notes": [
+   "plan ok after 1 call(s)"
+  ],
+  "cost_usd": 0.001823
+ }
+]

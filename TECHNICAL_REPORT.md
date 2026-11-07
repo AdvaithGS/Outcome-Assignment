@@ -263,7 +263,10 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | Table plans re-run after a prompt change (reproducibility) | 3 | 0.0029 | 0.03% |
 | Docker end-to-end check (box score in the container) | 2 | 0.0013 | 0.01% |
 | E2 free-text variants (verbatim, concise) + judge | 12 | 0.0291 | 0.29% |
-| **Total to date** | **172** | **0.2890** | **2.89%** |
+| E2 hints (3 runs) + judges | 17 | 0.0434 | 0.43% |
+| E2 extractor model choice (glm, haiku) + judge | 13 | 0.0236 | 0.24% |
+| E5 generalisation variants | 9 | 0.0125 | 0.13% |
+| **Total to date** | **213** | **0.3680** | **3.68%** |
 
 **Experiments:** _TODO_
 **Results:** _TODO_
