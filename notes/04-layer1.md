@@ -124,3 +124,42 @@ from cells).
 4. **Tables:** adopt the plan design as the primary path, with LLM rows as the fallback? (Adds `openpyxl`.)
 5. **Escalation:** build now, or after the first scores?
 6. **Null policy:** "citation not found" lowers confidence only (per E1b), never nulls on its own?
+
+---
+
+## 10. Revision → implementation, step 1 (pipeline v1 for single-entry documents)
+
+Defaults used (provisional, all configurable): gpt-6-luna with reasoning off for stage 0, extraction and vision;
+vision transcription for every scanned page with Tesseract fallback; Locator deferred (long documents only);
+computed fields in mode H; a citation that cannot be found only lowers confidence.
+
+**Built:** `app/pipeline/{formula,normalise,schema_analysis,ingest,single,postprocess,v1}.py`,
+`app/eval/run_samples.py`; registered as `PIPELINE=v1`. 87 tests pass.
+
+**Run 1 ($0.0487, 67 calls):** mean 0.833 on the 4 single-entry docs, but it took **80 minutes**: 15 calls hit
+network timeouts and some waited the full 300 s read timeout before retrying. Three stage-0 formulas were rejected
+(my bug: the documented `round(x, digits=0)` used a named argument that the parser refused).
+
+**Fixes:** per-call timeouts (vision 60 s, extraction 150 s, analysis 120 s; default `LLM_TIMEOUT_S` = 90) with
+`asyncio.wait_for` capping the *total* attempt time (httpx's read timeout only bounds gaps between bytes);
+deadline-aware retries (no attempt past the job deadline, no retry that cannot finish); `digits=` allowed.
+
+**Run 2 ($0.0135, 6 calls; stage 0 and all 46 vision pages from cache):** latency 39–52 s per document.
+
+| Doc | All-null | M | C | **H** |
+|---|---|---|---|---|
+| lease_001 | 0.150 | 0.800 | 0.800 | **0.800** |
+| lease_002 | 0.300 | 0.775 | 0.800 | **0.800** |
+| lease_003 | 0.075 | 0.825 | 0.850 | **0.850** |
+| om_001 | 0.172 | 0.931 | 0.931 | **0.931** |
+| **Mean** | 0.174 | 0.833 | 0.845 | **0.845** |
+
+**E2a conclusion: code-computed fields (C/H) beat the model's own arithmetic (M).** M was wrong on 4 computed
+cells (lease_001 $/RSF list, lease_002 total base rent net of free months, lease_003 total and one $/RSF entry);
+the formulas got all of them right. H = C on the samples (the only printed figure, lease_001's total, agrees with
+the formula). **Decision: keep H**, which also uses the printed figure when there is one.
+
+**Remaining errors (H):** mostly free text the strict validator rejects (their scorer uses an LLM judge), plus the
+interpretation errors seen in E1b (premises with floor text, property name, rent commencement date, submarket).
+lease_002's "hallucination" is a validator artefact: the answer "none" normalises to null, so our
+"none; fixed monthly Base Rent…" counts as invented. Lesson for descriptions: when the answer is "none", output exactly "none".

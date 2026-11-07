@@ -100,20 +100,34 @@ def ingest_pdf(path: str | Path, *, text_engine: str = "pymupdf", ocr_engine: st
                 ocr_results[i] = res
     t_ocr = time.perf_counter() - t1
 
-    b = MarkdownBuilder()
     pages: list[PageInfo] = []
     for i, text in enumerate(texts):
         if i in ocr_results:
             r = ocr_results[i]
-            text = r.text
-            pages.append(PageInfo(number=i + 1, method=f"ocr:{ocr_engine}", chars=len(text),
+            texts[i] = r.text
+            pages.append(PageInfo(number=i + 1, method=f"ocr:{ocr_engine}", chars=len(r.text),
                                   ocr_confidence=r.confidence, seconds=r.seconds))
         else:
             pages.append(PageInfo(number=i + 1, method="text", chars=len(text)))
-        b.page(i + 1)
-        feed_lines(b, text)
 
     name = variant or (f"ocr:{ocr_engine}@{ocr_dpi}" if force_ocr else f"{text_engine}+{ocr_engine}@{ocr_dpi}")
-    return b.build(source=path.name, kind="pdf", variant=name, pages=pages,
-                   meta={"seconds_text": round(t_text, 2), "seconds_ocr": round(t_ocr, 2),
-                         "ocr_pages": len(need_ocr), "ocr_page_seconds_sum": round(sum(r.seconds for r in ocr_results.values()), 2)})
+    return assemble_pdf(path.name, texts, pages, name,
+                        meta={"seconds_text": round(t_text, 2), "seconds_ocr": round(t_ocr, 2), "ocr_pages": len(need_ocr),
+                              "ocr_page_seconds_sum": round(sum(r.seconds for r in ocr_results.values()), 2)})
+
+
+def page_texts(path: str | Path, text_engine: str = "pdfplumber") -> list[str]:
+    return TEXT_ENGINES[text_engine](Path(path))
+
+
+def is_scanned_page(text: str, threshold: int = 50) -> bool:
+    return len("".join(text.split())) < threshold
+
+
+def assemble_pdf(source: str, texts: list[str], pages: list[PageInfo], variant: str, meta: dict | None = None) -> Document:
+    """Build the anchored Document from final per-page texts (text layer, OCR or vision transcription)."""
+    b = MarkdownBuilder()
+    for i, text in enumerate(texts):
+        b.page(i + 1)
+        feed_lines(b, text)
+    return b.build(source=source, kind="pdf", variant=variant, pages=pages, meta=meta or {})

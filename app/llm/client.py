@@ -111,7 +111,7 @@ class LLMClient:
     def __init__(self, *, base_url: str | None, api_key: str | None, cache: ResponseCache | None = None,
                  cache_mode: CacheMode = CacheMode.OFF, ledger: SpendLedger | None = None,
                  guard: BudgetGuard | None = None, run_id: str | None = None,
-                 http: httpx.AsyncClient | None = None, timeout_s: float = 300.0,
+                 http: httpx.AsyncClient | None = None, timeout_s: float = 90.0,
                  extra_body: dict | None = None, max_attempts: int = 6, base_backoff_s: float = 1.0,
                  max_backoff_s: float = 60.0, max_concurrency: int = 8):
         if cache_mode is not CacheMode.OFF and cache is None:
@@ -126,6 +126,7 @@ class LLMClient:
         self.extra_body = extra_body or {}   # sent on the wire, never part of the cache key
         self._http = http or httpx.AsyncClient(timeout=httpx.Timeout(timeout_s, connect=15.0))
         self._owns_http = http is None
+        self.timeout_s = timeout_s
         self._inflight: dict[str, asyncio.Future] = {}
         self.max_attempts = max_attempts
         self.base_backoff_s = base_backoff_s
@@ -157,7 +158,7 @@ class LLMClient:
         extra = {"usage": {"include": True}} if env.get("LLM_REQUEST_USAGE", "0") == "1" else None
         return cls(base_url=env.get("LLM_BASE_URL"), api_key=env.get("LLM_API_KEY"), cache=cache,
                    cache_mode=mode, ledger=ledger, guard=guard, run_id=run_id, http=http, extra_body=extra,
-                   max_attempts=int(env.get("LLM_MAX_ATTEMPTS", "6")),
+                   max_attempts=int(env.get("LLM_MAX_ATTEMPTS", "6")), timeout_s=float(env.get("LLM_TIMEOUT_S", "90")),
                    max_concurrency=int(env.get("LLM_MAX_CONCURRENCY", "8")))
 
     async def aclose(self) -> None:
@@ -170,7 +171,8 @@ class LLMClient:
 
     async def chat(self, *, model: str, messages: list[dict], stage: str, doc_id: str | None = None,
                    job_id: str | None = None, namespace: str = "", sample_index: int = 0,
-                   usage: UsageTracker | None = None, **params: Any) -> LLMResponse:
+                   usage: UsageTracker | None = None, timeout_s: float | None = None,
+                   deadline: float | None = None, **params: Any) -> LLMResponse:
         """One chat-completions call. `params` are passed through (temperature, max_tokens,
         response_format, tools, ...) and are part of the cache key."""
         ensure_allowed(model)
@@ -198,7 +200,8 @@ class LLMClient:
         self._inflight[key] = fut
         try:
             resp = await self._call_with_retry(body, key=key, model=model, stage=stage, doc_id=doc_id, job_id=job_id,
-                                               namespace=namespace, sample_index=sample_index, usage=usage)
+                                               namespace=namespace, sample_index=sample_index, usage=usage,
+                                               timeout_s=timeout_s or self.timeout_s, deadline=deadline)
         except asyncio.CancelledError:
             fut.cancel()
             raise
@@ -220,13 +223,20 @@ class LLMClient:
             tin, tout = tokens_of(resp.usage)
             usage.record(model=resp.model, tokens_in=tin, tokens_out=tout, cost_usd=resp.cost_usd, cached=True)
 
-    async def _call_with_retry(self, body: dict, **kw) -> LLMResponse:
+    async def _call_with_retry(self, body: dict, *, timeout_s: float, deadline: float | None, **kw) -> LLMResponse:
         """Retry transient failures (429, 5xx, timeouts, network errors, unusable 200 bodies) with exponential
-        backoff and full jitter, honouring Retry-After. Every attempt is logged and counted by `_call`."""
+        backoff and full jitter, honouring Retry-After. Every attempt is logged and counted by `_call`.
+        With a deadline (time.monotonic() value), no attempt runs past it and no retry starts that cannot finish."""
         attempt = 0
         while True:
+            t = timeout_s
+            if deadline is not None:
+                remaining = deadline - time.monotonic()
+                if remaining < 5:
+                    raise CallError("no time left before the job deadline")
+                t = min(t, remaining)
             try:
-                return await self._call(body, **kw)
+                return await self._call(body, timeout_s=t, **kw)
             except (LLMHTTPError, LLMBadResponse) as exc:
                 attempt += 1
                 if not exc.retryable or attempt >= self.max_attempts:
@@ -236,11 +246,13 @@ class LLMClient:
                 ra = getattr(exc, "retry_after", None)
                 if ra is not None:
                     delay = max(delay, min(ra, self.max_backoff_s))
+                if deadline is not None and time.monotonic() + delay + 5 > deadline:
+                    raise
                 await asyncio.sleep(delay)
 
     async def _call(self, body: dict, *, key: str, model: str, stage: str, doc_id: str | None,
                     job_id: str | None, namespace: str, sample_index: int,
-                    usage: UsageTracker | None) -> LLMResponse:
+                    usage: UsageTracker | None, timeout_s: float = 90.0) -> LLMResponse:
         if self.guard is not None:
             await asyncio.to_thread(self.guard.check)
         if not self.base_url or not self._api_key:
@@ -251,9 +263,13 @@ class LLMClient:
         try:
             async with self._limiter:
                 t0 = time.perf_counter()
-                r = await self._http.post(f"{self.base_url}/chat/completions", json=wire,
-                                          headers={"Authorization": f"Bearer {self._api_key}"})
-        except httpx.HTTPError as exc:
+                # wait_for caps the TOTAL time of the attempt; httpx's read timeout only bounds gaps between bytes
+                r = await asyncio.wait_for(
+                    self._http.post(f"{self.base_url}/chat/completions", json=wire,
+                                    headers={"Authorization": f"Bearer {self._api_key}"},
+                                    timeout=httpx.Timeout(timeout_s, connect=min(10.0, timeout_s))),
+                    timeout=timeout_s)
+        except (httpx.HTTPError, asyncio.TimeoutError) as exc:
             latency_ms = int((time.perf_counter() - t0) * 1000)
             self._log_attempt(key=key, model=model, stage=stage, doc_id=doc_id, job_id=job_id,
                               sample_index=sample_index, status=0, data=None, cost=0.0, source="none",

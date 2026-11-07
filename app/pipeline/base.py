@@ -118,7 +118,12 @@ class NullPipeline:
         return PipelineOutput(rows=[{}])
 
 
-PIPELINES: dict[str, Callable[[], Pipeline]] = {"null": NullPipeline}
+def _v1() -> Pipeline:
+    from app.pipeline.v1 import PipelineV1
+    return PipelineV1()
+
+
+PIPELINES: dict[str, Callable[[], Pipeline]] = {"null": NullPipeline, "v1": _v1}
 
 
 def get_pipeline(name: str) -> Pipeline:

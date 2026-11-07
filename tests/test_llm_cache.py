@@ -452,3 +452,20 @@ def test_non_retryable_error_is_not_retried(tmp_path):
 
     assert run(go()).retryable is False
     assert len(p.calls) == 1
+
+
+def test_slow_provider_times_out_and_deadline_stops_retries(tmp_path):
+    p = FakeProvider(delay=0.5)
+
+    async def go():
+        import time as _t
+        c = make_client(tmp_path, p, max_attempts=6)
+        t0 = _t.monotonic()
+        with pytest.raises((LLMHTTPError, Exception)):
+            await c.chat(model=MODEL, messages=MSGS, stage="s", timeout_s=0.1, deadline=_t.monotonic() + 5.5)
+        await c.aclose()
+        return _t.monotonic() - t0
+
+    elapsed = run(go())
+    assert elapsed < 5.5                          # never waits past the deadline
+    assert 1 <= len(p.calls) < 6                  # stopped retrying once an attempt could not finish in time
