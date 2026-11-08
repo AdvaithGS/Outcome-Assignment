@@ -4,10 +4,10 @@
 > evidence behind it, written so reviewers can comment on specific decisions. Section 11 lists the questions where
 > input is most useful. Compiled from `DESIGN.md`, `TECHNICAL_REPORT.md` and the working notes in `notes/`.
 >
-> **Status (2026-11-07):** sample-set mean **0.936** on the official validator (0.964 with an LLM judge on free-text
-> fields), **0 invented values**, every output valid, **$0.0042 per document** uncached. Load test at 10 jobs in flight:
-> 16/16 succeeded, p50 50 s / p95 83 s, nothing lost or duplicated. `docker compose up` verified end to end.
-> Development spend **$0.69 of the $10** budget. 104 automated tests.
+> **Status (2026-11-08):** sample-set mean **0.936** on the official validator (0.964 with an LLM judge on free-text
+> fields), **0 invented values**, every output valid, **~$0.004 per document** uncached. Load test from a fresh clone at
+> 10 jobs in flight: 16/16 succeeded, p50 25 s / p95 94 s, `POST` ≤ 95 ms, nothing lost or duplicated.
+> Development spend **$0.84 of the $10** budget. 117 automated tests.
 
 ---
 
@@ -61,36 +61,44 @@ All-null baseline (valid output, no extraction): **0.087**.
 |---|---|---|---|
 | Budget, **scanned** (every page rendered to an image) | Scanned table path | 0.991 | $0.0067 |
 | Rent roll **split over two sheets** | Multi-sheet tables | 1.000 | $0.0012 |
-| Rent roll **as CSV** | Format change | 1.000 | $0.0015 |
+| Rent roll **as CSV** | Format change (every cell text) | 1.000 | $0.0007 |
 | Box score with the **contract's** field list (different keys) | Unseen field list | 1.000 | ~$0.001 |
 | T12 / lease_002 / lease_001 with keys renamed to `field_NN` and **descriptions removed** | Worst-case unseen field list | **0.78 / 0.80 / 0.75** (was 0.54 / 0.65 / 0.63) | ~$0.002–0.005 |
 
 With no descriptions, stage 0 first writes standard real-estate definitions from the field names (§5.0), and the
-pipeline still **fails safe**: 0 invented values on every variant.
+pipeline still **fails safe**: 0 invented values on every variant. The table variants were re-run on the final code.
+
+| Robustness test | Result |
+|---|---|
+| 5 fresh, uncached plans per sample table | box score, budget, rent roll identical every time; T12 0.904–0.989 → **0.998–0.999** after the constants and label fixes (§5.3) |
+| 15 bad or mismatched inputs (corrupt, encrypted, blank, empty, wrong type, wrong field list) | every one ends in a defined state: FAILED with the reason, 400 at upload, or valid nulls with a note; no model calls on empty input (§5.4) |
+| Old vs new parsing on every sample cell (~35,000) | only intended changes (codes no longer read as numbers, percentages as displayed) |
+| Confidence vs correctness | single-entry values at ≥ 0.9 right 96% of the time (82% before) (§5.4) |
 
 ### 2.3 Latency (measured on the development machine)
 
 | Path | Typical time per document |
 |---|---|
-| `POST /jobs` | 134–240 ms |
-| `/health` after `docker compose up` (image built) | ~2 s |
-| Table documents | ~5–15 s (box score in Docker: 17 s end to end) |
-| Digital single-entry documents | ~20–40 s |
-| Scanned leases, every page by vision | ~45–60 s (selective vision sends ~2–6 pages; not re-timed) |
+| `POST /jobs` | ≤ 95 ms under load |
+| `/health` after `docker compose up` (image built) | 1.5 s |
+| Table documents, under load | 16–20 s |
+| Digital single-entry documents, under load | 30–68 s |
+| Scanned leases, under load | 79–105 s (Tesseract on every page, vision on 2–6) |
 
 **Load test** (Docker, real pipeline, LLM cache off; 16 jobs = 8 samples × 2 tenants, 10 in flight, topped up as jobs
 finish):
 
-| | Before tuning (4 jobs/worker, 8 model calls) | **Tuned defaults (10, 24)** |
-|---|---|---|
-| Terminal states | 16/16 SUCCESS, all valid | 16/16 SUCCESS, all valid |
-| Lost / duplicated; tenant isolation | 0 / 0; ✓ | 0 / 0; ✓ |
-| `POST /jobs` max | 145 ms | 447 ms |
-| p50 / p95 / max per job | 129 / 203 / 227 s | **49.5 / 82.6 / 98.7 s** |
-| Wall time, 16 jobs | 249 s | 99 s |
+| Run | Setup | p50 / p95 / max | POST max | Wall |
+|---|---|---|---|---|
+| 1 | 4 jobs / 8 model calls per worker, vision on every page | 129 / 203 / 227 s | 145 ms | 249 s |
+| 2 | 10 / 24 | 49.5 / 82.6 / 98.7 s | 447 ms | 99 s |
+| 3 | + selective vision | 104.7 / 149.7 / 183.9 s | **4,179 ms** | 184 s |
+| 4 | + OCR in its own CPU pool at low priority | 29.4 / 114.7 / 130.8 s | 146 ms | 131 s |
+| **5** | **all fixes, fresh clone** | **25.2 / 94.4 / 105.3 s** | **95 ms** | **107 s** |
 
-Before tuning, latency was mostly queueing (20 s table jobs waited behind scanned leases). The remaining time is
-processing, dominated by scanned leases; this run was before selective vision, which cuts their vision calls ~80%.
+Every run: 16/16 SUCCESS, all valid, 0 lost / duplicated, tenant isolation ✓. Run 1 was queueing (20 s table jobs
+behind scanned leases). Run 3 was a regression: per-page Tesseract filled the worker's thread pool, so claims,
+heartbeats and spreadsheet reads waited behind OCR (tables 103 s) and the API slowed; OCR now has its own pool.
 
 ---
 
@@ -347,15 +355,40 @@ plans (fixed one table, broke another).
 | Several sheets | Same plan applied per sheet; per-sheet constants | Two-sheet rent roll 1.000 |
 | PDF with text layer | Word positions → lines → fragments → column gutters; repeated page headers removed; rows keep their page | Budget 0.999 |
 | Scanned PDF | Vision transcription with a table prompt; **page 1's column header imposed on the other pages** | Scanned budget 0.701 → 0.930 → **0.991** |
-| DOCX | Word tables + paragraphs as rows | Unit-tested |
+| DOCX | Word tables + paragraphs as rows (struck-through text dropped) | Unit-tested |
+| Digital PDF without table-like lines | The text lines become the grid (never vision on pages with text) | Unit-tested |
+
+**Fresh-plan variance** (5 uncached plans per sample table): box score, budget and rent roll scored the same every
+time; T12 scored 0.904–0.989 because plans typed the header value themselves and shortened "Property =  417 .417" to
+"417" in 4 of 5 runs, and the label step varied with its inputs. Document-wide constants are now read as printed in
+the cell they cite (text fields only: a typed value such as budget year 2021 in "File: 2021.cm3" stays typed), and
+labels always see the row's own name and code: T12 over the same 5 plans **0.923 → 0.998–0.999**. Rejected: labels in
+document order (consistently worse), a 3-vote majority (no better, 4× the cost).
 
 ### 5.4 Post-processing (stage 4)
 
-Type normalisation (currency, thousands separators, negatives in parentheses, percentages as printed, dates in many
-formats including filled-in "19 93" forms); absent values ("0 if none" etc.); computed fields (mode H);
-citation grounding (verbatim check against the document); `page_numbers` from anchors or by locating the value;
-confidence from grounding and agreement. A citation that cannot be found **lowers confidence but never nulls a
-value**: E1b showed it is a weak error signal (precision 0.06–0.24).
+Type normalisation (one figure per value: currency, thousands separators, negatives in parentheses, units and
+multipliers such as "$24.50/SF" or "$1.2 million"; a string with several figures such as "1,200-1,500" is null, never
+the digits run together; labels such as "C5" are not amounts; percentages as printed; dates in many formats including
+filled-in "19 93" forms); absent values ("0 if none" etc.) only after a real extraction; computed fields (mode H);
+citation grounding (verbatim check against the document); `page_numbers` from anchors or by locating the value. A
+citation that cannot be found **lowers confidence but never nulls a value**: E1b showed it is a weak error signal.
+
+**Absent, bad and failed inputs** (15 cases tested with stubbed model calls): unstated values → null; unreadable files
+(corrupt, encrypted) → FAILED with the reason; unsupported files → 400 at upload; blank or empty documents, and table
+field lists on documents without a table → valid nulls (PARTIAL, with a note) and no model call; failed model calls →
+the next attempt or the fallback model, then valid nulls. Before the fix, a job whose every extraction call failed
+still emitted 8 values from absence defaults ("false", 0).
+
+**Confidence is evidence-based** and was checked against the answers: free text 0.7 cited / 0.55 not (paraphrase);
+yes/no 0.8 / 0.65 (a judgement); computed 0.85 ± agreement of printed figure, formula and model; printed values 0.92
+when both the citation and the value are found in the document, 0.75 one of them, 0.5 neither; nulls 0.75.
+
+| | Brier (lower is better) | Calibration error | Values at ≥ 0.9: right |
+|---|---|---|---|
+| Single-entry, before | 0.152 | 0.164 | 82% |
+| **Single-entry, after** | **0.108** | **0.078** | **96%** |
+| Tables, before → after | 0.022 → 0.012 | 0.115 → 0.095 | 100% |
 
 ---
 
@@ -420,7 +453,10 @@ with the same list), extraction the rest. With every page by vision it was ~$0.0
 | Tables | LLM plan, code executes | LLM writes rows; LLM writes code | Cost flat, no invented values |
 | Table safety | Required checks + 2 repairs (last by haiku) + bounded fallback | Plan voting; other plan models | §5.3 |
 | Job store / queue | SQLite table as queue, leases | Redis, Postgres | No extra container; tested guarantees |
-| Concurrency defaults | 10 jobs per worker, 24 concurrent model calls | 4 / 8 | Load test: p50 129 → 50 s, p95 203 → 83 s |
+| Concurrency defaults | 10 jobs per worker, 24 concurrent model calls; OCR in its own CPU pool at nice 10 | 4 / 8; shared pool | Load tests: p50 129 → 25 s, POST ≤ 95 ms |
+| Table constants and labels | Printed value from the cited cell (text); labels on the row's own fields | Plan's typed value; 3-vote labels | Fresh-plan variance: T12 0.923 → 0.998 |
+| Bad and empty inputs | FAILED only for unreadable files; valid nulls otherwise, no calls on empty input | Retry; FAILED | Failure matrix (15 cases) |
+| Confidence | Evidence-based (type, citation found, value found, agreement) | Flat by grounding | Calibration: ≥ 0.9 bin 82% → 96% right |
 | Escalation (2nd model) | Not yet | Disagreement → stronger model | Remaining errors are phrasing/interpretation |
 
 ---
@@ -439,6 +475,12 @@ with the same list), extraction the rest. With every page by vision it was ~$0.0
 - Standard definitions for terse field lists first **invented "0 if absent" conventions** (9 invented values) →
   "null if not stated" rule; and the OM's single "City." description triggered expansion → only when ≥ 25% are terse.
 - Footer stamps defeated an exact-match boilerplate filter (OCR reads them differently on each page) → fuzzy match.
+- Selective vision moved scanned pages onto the CPU and **per-page OCR starved the worker** (POST 4.2 s, tables 103 s)
+  → OCR in its own pool at low priority. The fresh Docker build also filled the disk (old image left dangling).
+- Selective vision also **broke scanned tables** (plain OCR text has no table structure: 1 of 55 rows), caught by a
+  replay of the scanned-budget variant → table documents always use vision on every page.
+- Our own fixes regressed twice, both caught at $0: a number-parser change read labels as amounts ("C5" → 5; an
+  old-vs-new comparison on every sample cell), and the constants change broke a typed field (scanned budget 0.919).
 
 ---
 
@@ -447,7 +489,10 @@ with the same list), extraction the rest. With every page by vision it was ~$0.0
 | Gap | Impact | Idea |
 |---|---|---|
 | A hard scanned page that every OCR signal misses is read by Tesseract alone | A value lost on such a page | Send a page to vision when the extraction cites it for a null or low-confidence field |
-| Load test predates selective vision | p50/p95 of scanned leases likely lower; not re-measured | Re-run (~$0.07) |
+| Confidence is measured but not acted on | Uncertain values are not re-checked | Second cheap model below ~0.8, escalate disagreements |
+| Field lists of ~75+ fields | One extraction call's output cap would truncate them | Extract by stage-0 group in parallel |
+| Scanned PDFs with a scanner's hidden OCR layer; mixed scanned/digital table PDFs | Our OCR and vision rule bypassed; rows on scanned pages lost | Detect invisible text; per-page routing for tables |
+| Several worker containers not load-tested | Scaling claim rests on design and unit tests | Load test with `--scale worker=2` |
 | Terse field lists still lose 0.03–0.2 against full descriptions | Unseen field lists | Accept (no invented values) |
 | Interpretation conventions (rent start after free rent; subject property's in-place rent; property name from the cover) | ~3–4 sample cells | Field-scoped hints written by stage 0 (risk of fitting the samples) |
 | Very long documents (100+ pages) | Untested | Locator path (designed, not built) |
@@ -472,12 +517,14 @@ with the same list), extraction the rest. With every page by vision it was ~$0.0
 ## 12. Planned next steps (ranked)
 
 Done since the first version of this document: load test and concurrency tuning; selective vision (with garbage-text
-and uncertain-line signals); vision resolution test; standard definitions for terse field lists.
+and uncertain-line signals); vision resolution test; standard definitions for terse field lists; a code review of the
+data path (number, date, percent, DOCX and table handling); fresh-plan variance fixes; defined states for bad and
+empty inputs; evidence-based confidence; a final load test from a fresh clone.
 
-1. Field-scoped interpretation hints (question 3), only if they generalise beyond the samples.
-2. Re-run the load test with selective vision.
-3. Docker polish: commit SHA in `/health`, slimmer image.
-4. Shorter citations / parallel field groups, if scanned leases still dominate latency.
+1. Act on confidence: a second cheap model on fields below ~0.8, escalating disagreements.
+2. Field-scoped interpretation hints (question 3), only if they generalise beyond the samples.
+3. Large field lists by group; hidden OCR text layers; a multi-container load test.
+4. Docker polish: commit SHA in `/health`, slimmer image.
 
 ---
 
@@ -497,10 +544,14 @@ and uncertain-line signals); vision resolution test; standard definitions for te
 | Load tests in Docker, cache off (before / after tuning; container ledgers) | 206 | 0.1587 |
 | Selective vision, resolution test, judge | 8 | 0.0121 |
 | Standard definitions for terse field lists (v1, v2) | 16 | 0.0268 |
-| **Total** | **562** | **0.6895** |
+| Load tests in Docker with selective vision (3 runs; container ledgers) | 107 | 0.1134 |
+| Table variants re-run on final code | 4 | 0.0022 |
+| Fresh-plan variance (20 plans) and label-step variants | 92 | 0.0327 |
+| **Total** | **765** | **0.8379** |
 
 Computed from `ledger/spend.jsonl` by run id (every call maps to a phase), plus the Docker containers' own ledgers.
-The garbage-text and uncertain-line signals cost $0 (local OCR and cached replays).
+The garbage-text and uncertain-line signals, the code review, the failure matrix and the calibration cost $0 (local
+OCR, stubbed calls and cached replays).
 
 ## Appendix B: configuration reference
 
@@ -519,6 +570,7 @@ The garbage-text and uncertain-line signals cost $0 (local OCR and cached replay
 | `VISION_LONG_SIDE` | 1500 | Long side of images sent to the vision model (px) |
 | `WORKER_CONCURRENCY` | 10 | Jobs per worker process |
 | `LLM_MAX_CONCURRENCY` | 24 | Concurrent model calls per process |
+| `OCR_WORKERS` | CPUs − 2 | Page rendering / OCR pool (runs at low priority) |
 | `LLM_TIMEOUT_S` | 90 | Default total time per call attempt |
 | `JOB_DEADLINE_S` | 1200 | Internal deadline from submission |
 | `LLM_CACHE_MODE` | `read_write` | `off` / `read_write` / `replay` / `refresh` |
@@ -534,4 +586,4 @@ The garbage-text and uncertain-line signals cost $0 (local OCR and cached replay
 | `app/eval/` | Experiments: E0, E1a, E1b, judge, run_samples, generalisation, load test |
 | `notes/` | Working notes per step (ideation → revision → results) |
 | `experiments/` | Scores and verdicts (no document content) |
-| `tests/` | 104 tests |
+| `tests/` | 117 tests |
