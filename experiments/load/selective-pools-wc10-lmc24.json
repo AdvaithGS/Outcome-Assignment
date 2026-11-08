@@ -1,0 +1,438 @@
+{
+ "tag": "selective-pools-wc10-lmc24",
+ "jobs": 16,
+ "inflight": 10,
+ "wall_s": 130.9,
+ "statuses": {
+  "SUCCESS": 16
+ },
+ "valid": 16,
+ "duplicate_job_ids": 0,
+ "isolation_ok": true,
+ "post_ms_max": 146,
+ "latency_p50_s": 29.4,
+ "latency_p95_s": 114.7,
+ "latency_max_s": 130.8,
+ "cost_usd_total": 0.0338,
+ "mean_score": 0.93,
+ "by_doc": {
+  "boxscore_001": {
+   "latency_s": [
+    16.2,
+    16.2
+   ],
+   "cost_usd": [
+    0.0,
+    0.001118
+   ],
+   "score": [
+    1.0,
+    1.0
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "budget_001": {
+   "latency_s": [
+    26.3,
+    26.4
+   ],
+   "cost_usd": [
+    0.0,
+    0.002575
+   ],
+   "score": [
+    0.9987,
+    0.9987
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "lease_001": {
+   "latency_s": [
+    114.7,
+    98.6
+   ],
+   "cost_usd": [
+    0.005886,
+    0.0
+   ],
+   "score": [
+    0.9,
+    0.9
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "lease_002": {
+   "latency_s": [
+    58.4,
+    74.6
+   ],
+   "cost_usd": [
+    0.0,
+    0.005156
+   ],
+   "score": [
+    0.85,
+    0.85
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "lease_003": {
+   "latency_s": [
+    110.1,
+    130.8
+   ],
+   "cost_usd": [
+    0.0,
+    0.00606
+   ],
+   "score": [
+    0.825,
+    0.825
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "om_001": {
+   "latency_s": [
+    30.4,
+    94.5
+   ],
+   "cost_usd": [
+    0.002916,
+    0.002954
+   ],
+   "score": [
+    0.931,
+    0.931
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "rentroll_001": {
+   "latency_s": [
+    20.2,
+    28.4
+   ],
+   "cost_usd": [
+    0.000703,
+    0.001828
+   ],
+   "score": [
+    0.8824,
+    1.0
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  },
+  "t12_001": {
+   "latency_s": [
+    22.2,
+    20.1
+   ],
+   "cost_usd": [
+    0.002402,
+    0.002252
+   ],
+   "score": [
+    0.9969,
+    0.9962
+   ],
+   "status": [
+    "SUCCESS",
+    "SUCCESS"
+   ]
+  }
+ },
+ "jobs_detail": [
+  {
+   "i": 0,
+   "doc": "boxscore_001",
+   "org": "load-selective-pools-wc10-lmc24-0",
+   "post_status": 202,
+   "post_ms": 73,
+   "job_id": "9dfd10e88fc14acc8e9d50b8ae59eed2",
+   "status": "SUCCESS",
+   "latency_s": 16.2,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.0,
+   "model_calls": 0,
+   "server_latency_ms": 15453,
+   "score": 1.0,
+   "isolation_ok": true
+  },
+  {
+   "i": 1,
+   "doc": "budget_001",
+   "org": "load-selective-pools-wc10-lmc24-1",
+   "post_status": 202,
+   "post_ms": 47,
+   "job_id": "91555c7d97aa46889e266561f133dcb3",
+   "status": "SUCCESS",
+   "latency_s": 26.4,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.002575,
+   "model_calls": 4,
+   "server_latency_ms": 25443,
+   "score": 0.9987,
+   "isolation_ok": true
+  },
+  {
+   "i": 2,
+   "doc": "lease_001",
+   "org": "load-selective-pools-wc10-lmc24-2",
+   "post_status": 202,
+   "post_ms": 89,
+   "job_id": "661818cdfe1e45d08e9a99d72449e52f",
+   "status": "SUCCESS",
+   "latency_s": 114.7,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.005886,
+   "model_calls": 6,
+   "server_latency_ms": 114054,
+   "score": 0.9,
+   "isolation_ok": true
+  },
+  {
+   "i": 3,
+   "doc": "lease_002",
+   "org": "load-selective-pools-wc10-lmc24-3",
+   "post_status": 202,
+   "post_ms": 65,
+   "job_id": "c6cc6993bd3440e5808f326c34cce152",
+   "status": "SUCCESS",
+   "latency_s": 74.6,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.005156,
+   "model_calls": 2,
+   "server_latency_ms": 73173,
+   "score": 0.85,
+   "isolation_ok": true
+  },
+  {
+   "i": 4,
+   "doc": "lease_003",
+   "org": "load-selective-pools-wc10-lmc24-4",
+   "post_status": 202,
+   "post_ms": 146,
+   "job_id": "58193ef91b3b44f6abc28a75cdc70de7",
+   "status": "SUCCESS",
+   "latency_s": 130.8,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.00606,
+   "model_calls": 3,
+   "server_latency_ms": 129133,
+   "score": 0.825,
+   "isolation_ok": true
+  },
+  {
+   "i": 5,
+   "doc": "om_001",
+   "org": "load-selective-pools-wc10-lmc24-5",
+   "post_status": 202,
+   "post_ms": 80,
+   "job_id": "5ebf669ea95a40acbfc6bb401bca671c",
+   "status": "SUCCESS",
+   "latency_s": 30.4,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.002916,
+   "model_calls": 3,
+   "server_latency_ms": 29592,
+   "score": 0.931,
+   "isolation_ok": true
+  },
+  {
+   "i": 6,
+   "doc": "t12_001",
+   "org": "load-selective-pools-wc10-lmc24-6",
+   "post_status": 202,
+   "post_ms": 45,
+   "job_id": "e32de817016d421fa8dedd049f864a26",
+   "status": "SUCCESS",
+   "latency_s": 22.2,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.002402,
+   "model_calls": 3,
+   "server_latency_ms": 22034,
+   "score": 0.9969,
+   "isolation_ok": true
+  },
+  {
+   "i": 7,
+   "doc": "rentroll_001",
+   "org": "load-selective-pools-wc10-lmc24-7",
+   "post_status": 202,
+   "post_ms": 57,
+   "job_id": "edd7ad9fdde0491f872c777576c3545f",
+   "status": "SUCCESS",
+   "latency_s": 20.2,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.000703,
+   "model_calls": 2,
+   "server_latency_ms": 18286,
+   "score": 0.8824,
+   "isolation_ok": true
+  },
+  {
+   "i": 8,
+   "doc": "boxscore_001",
+   "org": "load-selective-pools-wc10-lmc24-8",
+   "post_status": 202,
+   "post_ms": 39,
+   "job_id": "c8e19d2801d04872a4e9e86d4eccc467",
+   "status": "SUCCESS",
+   "latency_s": 16.2,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.001118,
+   "model_calls": 2,
+   "server_latency_ms": 15453,
+   "score": 1.0,
+   "isolation_ok": true
+  },
+  {
+   "i": 9,
+   "doc": "budget_001",
+   "org": "load-selective-pools-wc10-lmc24-9",
+   "post_status": 202,
+   "post_ms": 45,
+   "job_id": "8073699dbefa42d6a9833148f95218c6",
+   "status": "SUCCESS",
+   "latency_s": 26.3,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.0,
+   "model_calls": 0,
+   "server_latency_ms": 25443,
+   "score": 0.9987,
+   "isolation_ok": true
+  },
+  {
+   "i": 10,
+   "doc": "lease_001",
+   "org": "load-selective-pools-wc10-lmc24-10",
+   "post_status": 202,
+   "post_ms": 29,
+   "job_id": "ed0df50cac0b4c4b9f5a5553f40d0f38",
+   "status": "SUCCESS",
+   "latency_s": 98.6,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.0,
+   "model_calls": 0,
+   "server_latency_ms": 97957,
+   "score": 0.9,
+   "isolation_ok": true
+  },
+  {
+   "i": 11,
+   "doc": "lease_002",
+   "org": "load-selective-pools-wc10-lmc24-11",
+   "post_status": 202,
+   "post_ms": 13,
+   "job_id": "d96a8a63bf374792b1d86b8dba52a6fc",
+   "status": "SUCCESS",
+   "latency_s": 58.4,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.0,
+   "model_calls": 0,
+   "server_latency_ms": 57020,
+   "score": 0.85,
+   "isolation_ok": true
+  },
+  {
+   "i": 12,
+   "doc": "lease_003",
+   "org": "load-selective-pools-wc10-lmc24-12",
+   "post_status": 202,
+   "post_ms": 78,
+   "job_id": "f6a2cf96d5904bf79d33cbadef5caa5e",
+   "status": "SUCCESS",
+   "latency_s": 110.1,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.0,
+   "model_calls": 0,
+   "server_latency_ms": 108598,
+   "score": 0.825,
+   "isolation_ok": true
+  },
+  {
+   "i": 13,
+   "doc": "om_001",
+   "org": "load-selective-pools-wc10-lmc24-13",
+   "post_status": 202,
+   "post_ms": 18,
+   "job_id": "cabdb3b59dcb4c72aa6251f12d0e77d5",
+   "status": "SUCCESS",
+   "latency_s": 94.5,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.002954,
+   "model_calls": 3,
+   "server_latency_ms": 92634,
+   "score": 0.931,
+   "isolation_ok": true
+  },
+  {
+   "i": 14,
+   "doc": "t12_001",
+   "org": "load-selective-pools-wc10-lmc24-14",
+   "post_status": 202,
+   "post_ms": 7,
+   "job_id": "142cdaaed6494292989c07b65e5294bc",
+   "status": "SUCCESS",
+   "latency_s": 20.1,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.002252,
+   "model_calls": 3,
+   "server_latency_ms": 18168,
+   "score": 0.9962,
+   "isolation_ok": true
+  },
+  {
+   "i": 15,
+   "doc": "rentroll_001",
+   "org": "load-selective-pools-wc10-lmc24-15",
+   "post_status": 202,
+   "post_ms": 6,
+   "job_id": "f568a16231f0427f81270d8dc7e50462",
+   "status": "SUCCESS",
+   "latency_s": 28.4,
+   "error": null,
+   "valid": true,
+   "cost_usd": 0.001828,
+   "model_calls": 3,
+   "server_latency_ms": 27408,
+   "score": 1.0,
+   "isolation_ok": true
+  }
+ ]
+}
