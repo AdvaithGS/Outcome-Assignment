@@ -496,3 +496,23 @@ def test_large_field_lists_are_extracted_in_parallel_batches():
     small = heuristic_spec({"fields": dict(list(schema["fields"].items())[:40])})
     c = Echo(); asyncio.run(extract(small, doc, c, model="m", extra={}, fallback_model=None, fallback_extra=None, usage=None))
     assert len(c.calls) == 1                                    # 40 fields: one call, as before
+
+
+
+def test_scanner_ocr_layer_pages_are_treated_as_scanned(tmp_path):
+    import asyncio, pymupdf
+    from app.artifacts import ArtifactCache
+    from app.ingest.pdf import hidden_ocr_pages
+    from app.pipeline.ingest import ingest
+    from app.pipeline.v1 import V1Config
+    pix = pymupdf.Pixmap(pymupdf.csGRAY, pymupdf.IRect(0, 0, 600, 800), 0)
+    pix.set_rect(pix.irect, (255,))
+    d = pymupdf.open()
+    p = d.new_page(); p.insert_image(p.rect, pixmap=pix)               # a scan with the scanner's invisible OCR
+    p.insert_text((72, 100), "Security deposit: Two thousand four hundred dollars, as amended by hand. " * 2, render_mode=3)
+    p = d.new_page(); p.insert_image(p.rect, pixmap=pix)               # a photo behind real, visible text
+    p.insert_text((72, 100), "Offering memorandum: a photo behind visible marketing text on this page. " * 2)
+    d.save(tmp_path / "s.pdf")
+    assert hidden_ocr_pages(tmp_path / "s.pdf") == {0}
+    doc = asyncio.run(ingest(tmp_path / "s.pdf", "pdf", client=None, cfg=V1Config(), cache=ArtifactCache(tmp_path / "c")))
+    assert doc.pages[0].method != "text" and doc.pages[1].method == "text"

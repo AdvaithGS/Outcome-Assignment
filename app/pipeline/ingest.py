@@ -22,7 +22,7 @@ from app.ingest.document import Document, PageInfo
 from app.ingest.cpu import run_cpu
 from app.ingest.docx import ingest_docx
 from app.ingest.ocr import run_ocr
-from app.ingest.pdf import assemble_pdf, is_scanned_page, page_texts, render_page
+from app.ingest.pdf import assemble_pdf, hidden_ocr_pages, is_scanned_page, page_texts, render_page
 from app.llm import LLMClient, UsageTracker
 from app.pipeline.base import DocumentError
 
@@ -258,7 +258,8 @@ async def ingest(path: Path, file_type: str, *, client: LLMClient | None, cfg, c
     if not texts:
         raise DocumentError("PDF has no pages")
     sha = await asyncio.to_thread(file_sha256, path)
-    scanned = [i for i, t in enumerate(texts) if is_scanned_page(t)]
+    hidden = await asyncio.to_thread(hidden_ocr_pages, path)
+    scanned = [i for i, t in enumerate(texts) if is_scanned_page(t) or i in hidden]
     pages = [PageInfo(number=i + 1, method="text", chars=len(t)) for i, t in enumerate(texts)]
 
     got = await transcribe_pages(path, scanned, client=client, cfg=cfg, cache=cache, usage=usage, job_id=job_id,

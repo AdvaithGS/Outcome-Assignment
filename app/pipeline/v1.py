@@ -24,7 +24,7 @@ from app.pipeline.table import extract_table
 from app.ingest.grid import (grid_document, grid_from_docx, grid_from_markdown_pages, grid_from_pdf,
                              grid_from_text_lines, load_grid)
 from app.pipeline.base import DocumentError
-from app.ingest.pdf import is_scanned_page, page_texts
+from app.ingest.pdf import hidden_ocr_pages, is_scanned_page, page_texts
 from app.pipeline.ingest import transcribe_table_pages
 
 LUNA_OFF = ("openai/gpt-6-luna", {"reasoning": {"enabled": False}})
@@ -178,7 +178,8 @@ class PipelineV1:
                 raise DocumentError(f"cannot read PDF: {exc}") from exc
             if not texts:
                 raise DocumentError("PDF has no pages")
-            scanned = [i for i, t in enumerate(texts) if is_scanned_page(t)]
+            hidden = await asyncio.to_thread(hidden_ocr_pages, path)
+            scanned = [i for i, t in enumerate(texts) if is_scanned_page(t) or i in hidden]
             grid = None
             if len(scanned) * 2 < len(texts):
                 # a text layer: rebuild the table from word positions; if no table-like lines are found, the text

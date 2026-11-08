@@ -124,6 +124,30 @@ def is_scanned_page(text: str, threshold: int = 50) -> bool:
     return len("".join(text.split())) < threshold
 
 
+def hidden_ocr_pages(path: str | Path, min_invisible: float = 0.9, min_image_cover: float = 0.6) -> set[int]:
+    """0-based pages that are scans carrying a scanner's own OCR layer: (almost) all text is invisible (render mode 3)
+    and images cover most of the page. Their text layer is someone else's OCR, unchecked; we treat them as scanned
+    (our OCR, the vision rule). A photo behind real, visible text (marketing pages) does not qualify."""
+    import pymupdf
+    out: set[int] = set()
+    try:
+        with pymupdf.open(path) as doc:
+            for i, page in enumerate(doc):
+                counts = {}
+                for span in page.get_texttrace():
+                    counts[span["type"]] = counts.get(span["type"], 0) + len(span["chars"])
+                total = sum(counts.values())
+                if not total or counts.get(3, 0) / total < min_invisible:
+                    continue
+                area = page.rect.get_area() or 1
+                cover = sum((pymupdf.Rect(b["bbox"]) & page.rect).get_area() for b in page.get_image_info()) / area
+                if cover >= min_image_cover:
+                    out.add(i)
+    except Exception:  # noqa: BLE001 - detection is an enhancement; the text layer is still usable
+        return set()
+    return out
+
+
 def assemble_pdf(source: str, texts: list[str], pages: list[PageInfo], variant: str, meta: dict | None = None) -> Document:
     """Build the anchored Document from final per-page texts (text layer, OCR or vision transcription)."""
     b = MarkdownBuilder()
