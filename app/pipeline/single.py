@@ -101,7 +101,7 @@ spacing), the shortest passage that contains or states the value; "" when the va
 
 
 def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "describe", hints: bool = False,
-                   style: str = "value") -> list[dict]:
+                   style: str = "value", not_helpers: set[str] | None = None) -> list[dict]:
     lines = []
     for f in spec.fields.values():
         t = f.type + (f" of {f.item_type}" if f.type == "list" and f.item_type else "")
@@ -109,7 +109,7 @@ def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "descri
         if style in ("pointer", "hybrid") and field_style(f, style) in ("quote", "summary"):
             flags += "; " + field_style(f, style).upper()
         lines.append(f'- "{f.key}" ({f.name}) [{flags}]: {f.description}')
-    helpers = spec.helpers()
+    helpers = {k: v for k, v in spec.helpers().items() if k not in (not_helpers or set())}
     helper_block = ""
     if helpers:
         helper_block = ('\n\nAlso return "_helpers": an object with these keys, each {"value": ..., "citation": ...}:\n'
@@ -121,14 +121,69 @@ def build_messages(spec: SchemaSpec, doc_text: str, freetext_mode: str = "descri
             {"role": "user", "content": user}]
 
 
+BATCH_ABOVE = 50      # field lists longer than this are extracted in parallel batches (one call's output would not fit)
+BATCH_SIZE = 30       # fields per batch; the 40-field lease list uses up to ~6,500 of the 12,000 output tokens
+
+
+def field_batches(spec: SchemaSpec, size: int = BATCH_SIZE) -> list[list[str]]:
+    """Field keys in batches of at most `size`, keeping stage-0 groups together where they fit (related fields such as
+    a rent schedule's dates and amounts are extracted in the same call)."""
+    groups: dict[str, list[str]] = {}
+    for k, f in spec.fields.items():
+        groups.setdefault(f.group or "general", []).append(k)
+    batches: list[list[str]] = []
+    for keys in groups.values():
+        for i in range(0, len(keys), size):
+            part = keys[i:i + size]
+            if batches and len(batches[-1]) + len(part) <= size:
+                batches[-1].extend(part)
+            else:
+                batches.append(list(part))
+    return batches
+
+
 async def extract(spec: SchemaSpec, doc: Document, client: LLMClient, *, model: str, extra: dict,
                   fallback_model: str | None, fallback_extra: dict | None, usage: UsageTracker | None,
                   job_id: str | None = None, doc_id: str | None = None,
                   deadline: float | None = None, freetext_mode: str = "describe",
                   hints: bool = False, style: str = "value") -> tuple[dict | None, list[str]]:
-    """-> (raw JSON object or None, notes)."""
+    """-> (raw JSON object or None, notes). Field lists above BATCH_ABOVE fields are split into batches extracted in
+    parallel and merged (computed fields still see every operand: formulas run on the merged result)."""
+    if len(spec.fields) <= BATCH_ABOVE:
+        return await _extract_once(spec, doc, client, model=model, extra=extra, fallback_model=fallback_model,
+                                   fallback_extra=fallback_extra, usage=usage, job_id=job_id, doc_id=doc_id,
+                                   deadline=deadline, freetext_mode=freetext_mode, hints=hints, style=style)
+    import asyncio
+    from dataclasses import replace
+    batches = field_batches(spec)
+    subs = [replace(spec, fields={k: spec.fields[k] for k in keys}) for keys in batches]
+    got = await asyncio.gather(*(_extract_once(sub, doc, client, model=model, extra=extra, fallback_model=fallback_model,
+                                               fallback_extra=fallback_extra, usage=usage, job_id=job_id, doc_id=doc_id,
+                                               deadline=deadline, freetext_mode=freetext_mode, hints=hints, style=style,
+                                               not_helpers=set(spec.fields)) for sub in subs))
+    merged: dict = {}
+    notes = [f"{len(spec.fields)} fields extracted in {len(batches)} parallel batches"]
+    for keys, (data, n) in zip(batches, got):
+        notes += n
+        if data is None:
+            notes.append(f"batch of {len(keys)} fields failed; those fields are null")
+            continue
+        for k, v in data.items():
+            if k == "_helpers" and isinstance(v, dict):
+                merged.setdefault("_helpers", {}).update(v)
+            elif k in keys:
+                merged[k] = v
+    return (merged or None), notes
+
+
+async def _extract_once(spec: SchemaSpec, doc: Document, client: LLMClient, *, model: str, extra: dict,
+                        fallback_model: str | None, fallback_extra: dict | None, usage: UsageTracker | None,
+                        job_id: str | None = None, doc_id: str | None = None,
+                        deadline: float | None = None, freetext_mode: str = "describe",
+                        hints: bool = False, style: str = "value",
+                        not_helpers: set[str] | None = None) -> tuple[dict | None, list[str]]:
     notes: list[str] = []
-    msgs = build_messages(spec, doc.markdown, freetext_mode, hints, style)
+    msgs = build_messages(spec, doc.markdown, freetext_mode, hints, style, not_helpers)
     attempts = [(model, extra, msgs)]
     for i, (m, ex, ms) in enumerate(attempts):
         try:

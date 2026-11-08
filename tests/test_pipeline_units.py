@@ -463,3 +463,36 @@ def test_plan_constants_as_printed_only_for_text():
     assert printed_value(339050, "Property RSF: 339,050", "number") == 339050
     assert printed_value("Oak Ridge", "Property: Harbor Point") == "Oak Ridge"          # not part of the cell: plan's
     assert printed_value(None, "Property: Harbor Point  Period: Jan 2024") == "Harbor Point"   # per-sheet constant
+
+
+
+def test_large_field_lists_are_extracted_in_parallel_batches():
+    import asyncio, json, re
+    from types import SimpleNamespace
+    from app.ingest.document import MarkdownBuilder
+    from app.pipeline.schema_analysis import heuristic_spec
+    from app.pipeline.single import BATCH_SIZE, extract, field_batches
+    schema = {"fields": {f"f{i:02d}": {"name": f"Field {i}", "description": f"Value number {i} as a number"}
+                         for i in range(80)}}
+    spec = heuristic_spec(schema)
+    for i, f in enumerate(spec.fields.values()):
+        f.group = ["parties", "rent", "dates"][i % 3]
+    batches = field_batches(spec)
+    assert sum(len(b) for b in batches) == 80 and max(len(b) for b in batches) <= BATCH_SIZE
+    assert sorted(k for b in batches for k in b) == sorted(spec.fields)
+
+    class Echo:
+        def __init__(self): self.calls = []
+        async def chat(self, *, messages, **kw):
+            keys = re.findall(r'^- "(f\d\d)"', messages[1]["content"], re.M)
+            self.calls.append(keys)
+            return SimpleNamespace(content=json.dumps({k: {"value": int(k[1:]), "citation": ""} for k in keys}),
+                                   finish_reason="stop")
+    b = MarkdownBuilder(); b.text("A document."); doc = b.build(source="x", kind="pdf", variant="t")
+    c = Echo()
+    raw, notes = asyncio.run(extract(spec, doc, c, model="m", extra={}, fallback_model=None, fallback_extra=None, usage=None))
+    assert len(c.calls) == len(batches) and all(len(k) <= BATCH_SIZE for k in c.calls)
+    assert {k: v["value"] for k, v in raw.items()} == {k: int(k[1:]) for k in spec.fields}
+    small = heuristic_spec({"fields": dict(list(schema["fields"].items())[:40])})
+    c = Echo(); asyncio.run(extract(small, doc, c, model="m", extra={}, fallback_model=None, fallback_extra=None, usage=None))
+    assert len(c.calls) == 1                                    # 40 fields: one call, as before
