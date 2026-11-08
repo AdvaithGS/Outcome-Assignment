@@ -1,10 +1,13 @@
-"""Regenerate app/llm/pricing.json from OpenRouter's public model list (no key, no credit used).
+"""Regenerate app/llm/pricing.json from the gateway's public model list (no key, no credit used).
 
     python -m app.cli.fetch_pricing
+
+Developer tool only (the service never calls it). Like every model call it goes through LLM_BASE_URL.
 """
 from __future__ import annotations
 
 import json
+import os
 import sys
 from datetime import datetime, timezone
 
@@ -13,7 +16,7 @@ import httpx
 from app.llm.models import ALLOWED_MODELS
 from app.llm.pricing import PRICING_PATH
 
-MODELS_URL = "https://openrouter.ai/api/v1/models"
+MODELS_URL = os.environ.get("LLM_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/") + "/models"
 
 
 def _num(v) -> float | None:
