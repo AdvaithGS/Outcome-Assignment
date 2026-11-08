@@ -1,0 +1,1767 @@
+{
+ "boxscore_001": [
+  {
+   "run": 0,
+   "score": 1.0,
+   "rows": {
+    "predicted": 10,
+    "truth": 10
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000421,
+   "calls": 1,
+   "plan": {
+    "sheet": "boxscore_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "PR - [A-Z]\\d"
+    },
+    "first_data_row": 7,
+    "last_data_row": 16,
+    "columns": {
+     "code": "A",
+     "name": "B",
+     "avg_sq_ft": "D",
+     "avg_rent": "E",
+     "units": "F",
+     "occ_no_notice": "G",
+     "vacant_rented": "H",
+     "vacant_unrented": "I",
+     "notice_rented": "J",
+     "notice_unrented": "K",
+     "avail": "L",
+     "model": "M",
+     "down": "N",
+     "admin": "O",
+     "percent_occupied": "P",
+     "p_occ_wornonrev": "Q",
+     "percent_leased": "R",
+     "p_trend": "S"
+    },
+    "constants": {
+     "property_name": {
+      "value": "Pearl at Victory Ridge",
+      "cell": "A2",
+      "confidence": 1.0
+     },
+     "date": {
+      "value": "2025-02-09",
+      "cell": "A3",
+      "confidence": 1.0
+     }
+    },
+    "checks": []
+   }
+  },
+  {
+   "run": 1,
+   "score": 1.0,
+   "rows": {
+    "predicted": 10,
+    "truth": 10
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000188,
+   "calls": 1,
+   "plan": {
+    "sheet": "boxscore_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "PR - [A-Z]\\d"
+    },
+    "first_data_row": 7,
+    "last_data_row": null,
+    "columns": {
+     "code": "A",
+     "name": "B",
+     "avg_sq_ft": "D",
+     "avg_rent": "E",
+     "units": "F",
+     "occ_no_notice": "G",
+     "vacant_rented": "H",
+     "vacant_unrented": "I",
+     "notice_rented": "J",
+     "notice_unrented": "K",
+     "avail": "L",
+     "model": "M",
+     "down": "N",
+     "admin": "O",
+     "percent_occupied": "P",
+     "p_occ_wornonrev": "Q",
+     "percent_leased": "R",
+     "p_trend": "S"
+    },
+    "constants": {
+     "property_name": {
+      "value": "Pearl at Victory Ridge",
+      "cell": "A2",
+      "confidence": 1.0
+     },
+     "date": {
+      "value": "2025-02-09",
+      "cell": "A3",
+      "confidence": 1.0
+     }
+    },
+    "checks": []
+   }
+  },
+  {
+   "run": 2,
+   "score": 1.0,
+   "rows": {
+    "predicted": 10,
+    "truth": 10
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000189,
+   "calls": 1,
+   "plan": {
+    "sheet": "boxscore_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "PR - [A-Z]\\d+"
+    },
+    "first_data_row": 7,
+    "last_data_row": 16,
+    "columns": {
+     "code": "A",
+     "name": "B",
+     "avg_sq_ft": "D",
+     "avg_rent": "E",
+     "units": "F",
+     "occ_no_notice": "G",
+     "vacant_rented": "H",
+     "vacant_unrented": "I",
+     "notice_rented": "J",
+     "notice_unrented": "K",
+     "avail": "L",
+     "model": "M",
+     "down": "N",
+     "admin": "O",
+     "percent_occupied": "P",
+     "p_occ_wornonrev": "Q",
+     "percent_leased": "R",
+     "p_trend": "S"
+    },
+    "constants": {
+     "property_name": {
+      "value": "Pearl at Victory Ridge",
+      "cell": "A2",
+      "confidence": 1
+     },
+     "date": {
+      "value": "2025-02-09",
+      "cell": "A3",
+      "confidence": 1
+     }
+    },
+    "missing": [],
+    "checks": []
+   }
+  },
+  {
+   "run": 3,
+   "score": 1.0,
+   "rows": {
+    "predicted": 10,
+    "truth": 10
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000186,
+   "calls": 1,
+   "plan": {
+    "sheet": "boxscore_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "PR - [A-Z]\\d"
+    },
+    "first_data_row": 7,
+    "last_data_row": 16,
+    "columns": {
+     "code": "A",
+     "name": "B",
+     "avg_sq_ft": "D",
+     "avg_rent": "E",
+     "units": "F",
+     "occ_no_notice": "G",
+     "vacant_rented": "H",
+     "vacant_unrented": "I",
+     "notice_rented": "J",
+     "notice_unrented": "K",
+     "avail": "L",
+     "model": "M",
+     "down": "N",
+     "admin": "O",
+     "percent_occupied": "P",
+     "p_occ_wornonrev": "Q",
+     "percent_leased": "R",
+     "p_trend": "S"
+    },
+    "constants": {
+     "property_name": {
+      "value": "Pearl at Victory Ridge",
+      "cell": "A2",
+      "confidence": 1
+     },
+     "date": {
+      "value": "2025-02-09",
+      "cell": "A3",
+      "confidence": 1
+     }
+    },
+    "checks": []
+   }
+  },
+  {
+   "run": 4,
+   "score": 1.0,
+   "rows": {
+    "predicted": 10,
+    "truth": 10
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000186,
+   "calls": 1,
+   "plan": {
+    "sheet": "boxscore_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "PR - [A-Z]\\d"
+    },
+    "first_data_row": 7,
+    "last_data_row": 16,
+    "columns": {
+     "code": "A",
+     "name": "B",
+     "avg_sq_ft": "D",
+     "avg_rent": "E",
+     "units": "F",
+     "occ_no_notice": "G",
+     "vacant_rented": "H",
+     "vacant_unrented": "I",
+     "notice_rented": "J",
+     "notice_unrented": "K",
+     "avail": "L",
+     "model": "M",
+     "down": "N",
+     "admin": "O",
+     "percent_occupied": "P",
+     "p_occ_wornonrev": "Q",
+     "percent_leased": "R",
+     "p_trend": "S"
+    },
+    "constants": {
+     "property_name": {
+      "value": "Pearl at Victory Ridge",
+      "cell": "A2",
+      "confidence": 1
+     },
+     "date": {
+      "value": "2025-02-09",
+      "cell": "A3",
+      "confidence": 1
+     }
+    },
+    "checks": []
+   }
+  }
+ ],
+ "budget_001": [
+  {
+   "run": 0,
+   "score": 0.9987,
+   "rows": {
+    "predicted": 55,
+    "truth": 55
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {
+    "explanation_of_variance": 0.982
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000655,
+   "calls": 1,
+   "plan": {
+    "sheet": "budget_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "^\\d{4}-\\d{4}\\s+.+$"
+    },
+    "require_values": [
+     "B",
+     "C",
+     "D"
+    ],
+    "columns": {
+     "gl_code": {
+      "column": "A",
+      "regex": "^(\\d{4}-\\d{4})"
+     },
+     "line_item": {
+      "column": "A",
+      "regex": "^\\d{4}-\\d{4}\\s+(.+)$"
+     },
+     "prior_year_budget": "B",
+     "prior_year_reforecast": "C",
+     "budget": "D",
+     "reforecast_vs_prior_budget_variance": "E",
+     "reforecast_vs_prior_budget_pct": "F",
+     "budget_vs_reforecast_variance": "G",
+     "budget_vs_reforecast_pct": "H"
+    },
+    "header_fields": {
+     "section": {
+      "column": "A",
+      "header_row": {
+       "nonempty": [
+        "A"
+       ],
+       "empty": [
+        "B",
+        "C",
+        "D"
+       ]
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Lakeview Tower",
+      "cell": "D5",
+      "confidence": 1.0
+     },
+     "property_rsf": {
+      "value": 339050,
+      "cell": "A4",
+      "confidence": 1.0
+     },
+     "budget_year": {
+      "value": 2021,
+      "cell": "D11",
+      "confidence": 1.0
+     }
+    },
+    "block_fields": {
+     "explanation_of_variance": {
+      "mode": "join",
+      "column": "I"
+     }
+    },
+    "value_maps": {
+     "reforecast_vs_prior_budget_pct": {
+      "N/A": null
+     },
+     "budget_vs_reforecast_pct": {
+      "N/A": null
+     }
+    },
+    "checks": []
+   }
+  },
+  {
+   "run": 1,
+   "score": 0.9987,
+   "rows": {
+    "predicted": 55,
+    "truth": 55
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {
+    "explanation_of_variance": 0.982
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000281,
+   "calls": 1,
+   "plan": {
+    "sheet": "budget_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "^\\d{4}-\\d{4}\\s+.+$"
+    },
+    "first_data_row": 14,
+    "last_data_row": 254,
+    "columns": {
+     "gl_code": {
+      "column": "A",
+      "regex": "^(\\d{4}-\\d{4})"
+     },
+     "line_item": {
+      "column": "A",
+      "regex": "^\\d{4}-\\d{4}\\s+(.*)$"
+     },
+     "prior_year_budget": "B",
+     "prior_year_reforecast": "C",
+     "budget": "D",
+     "reforecast_vs_prior_budget_variance": "E",
+     "reforecast_vs_prior_budget_pct": "F",
+     "budget_vs_reforecast_variance": "G",
+     "budget_vs_reforecast_pct": "H"
+    },
+    "header_fields": {
+     "section": {
+      "column": "A",
+      "header_row": {
+       "nonempty": [
+        "A"
+       ],
+       "empty": [
+        "B",
+        "C",
+        "D"
+       ]
+      }
+     }
+    },
+    "block_fields": {
+     "explanation_of_variance": {
+      "mode": "join",
+      "column": "I"
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Lakeview Tower",
+      "cell": "D5",
+      "confidence": 1.0
+     },
+     "property_rsf": {
+      "value": 339050,
+      "cell": "A4",
+      "confidence": 1.0
+     },
+     "budget_year": {
+      "value": 2021,
+      "cell": "D11",
+      "confidence": 1.0
+     }
+    },
+    "value_maps": {
+     "reforecast_vs_prior_budget_pct": {
+      "N/A": null
+     },
+     "budget_vs_reforecast_pct": {
+      "N/A": null
+     }
+    },
+    "null_values": [
+     "N/A"
+    ],
+    "checks": []
+   }
+  },
+  {
+   "run": 2,
+   "score": 0.9987,
+   "rows": {
+    "predicted": 55,
+    "truth": 55
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 2 call(s)"
+   ],
+   "per_field_below_1": {
+    "explanation_of_variance": 0.982
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000618,
+   "calls": 2,
+   "plan": {
+    "sheet": "budget_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "^\\d{4}-\\d{4}\\s+.+$"
+    },
+    "first_data_row": 14,
+    "last_data_row": 254,
+    "columns": {
+     "gl_code": {
+      "column": "A",
+      "regex": "^(\\d{4}-\\d{4})"
+     },
+     "line_item": {
+      "column": "A",
+      "regex": "^\\d{4}-\\d{4}\\s+(.*)$"
+     },
+     "prior_year_budget": "B",
+     "prior_year_reforecast": "C",
+     "budget": "D",
+     "reforecast_vs_prior_budget_variance": "E",
+     "reforecast_vs_prior_budget_pct": "F",
+     "budget_vs_reforecast_variance": "G",
+     "budget_vs_reforecast_pct": "H"
+    },
+    "header_fields": {
+     "section": {
+      "column": "A",
+      "header_row": {
+       "nonempty": [
+        "A"
+       ],
+       "empty": [
+        "B",
+        "C",
+        "D"
+       ]
+      }
+     }
+    },
+    "block_fields": {
+     "explanation_of_variance": {
+      "mode": "join",
+      "column": "I"
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Lakeview Tower",
+      "cell": "D5",
+      "confidence": 1
+     },
+     "property_rsf": {
+      "value": 339050,
+      "cell": "A4",
+      "confidence": 1
+     },
+     "budget_year": {
+      "value": 2021,
+      "cell": "D11",
+      "confidence": 1
+     }
+    },
+    "value_maps": {
+     "reforecast_vs_prior_budget_pct": {
+      "N/A": null
+     },
+     "budget_vs_reforecast_pct": {
+      "N/A": null
+     }
+    },
+    "null_values": [
+     "N/A"
+    ],
+    "checks": []
+   }
+  },
+  {
+   "run": 3,
+   "score": 0.9987,
+   "rows": {
+    "predicted": 55,
+    "truth": 55
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {
+    "explanation_of_variance": 0.982
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000269,
+   "calls": 1,
+   "plan": {
+    "sheet": "budget_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "^\\d{4}-\\d{4}\\s+.+$"
+    },
+    "require_values": [
+     "B",
+     "C",
+     "D"
+    ],
+    "columns": {
+     "gl_code": {
+      "column": "A",
+      "regex": "^(\\d{4}-\\d{4})"
+     },
+     "line_item": {
+      "column": "A",
+      "regex": "^\\d{4}-\\d{4}\\s+(.+)$"
+     },
+     "prior_year_budget": "B",
+     "prior_year_reforecast": "C",
+     "budget": "D",
+     "reforecast_vs_prior_budget_variance": "E",
+     "reforecast_vs_prior_budget_pct": "F",
+     "budget_vs_reforecast_variance": "G",
+     "budget_vs_reforecast_pct": "H"
+    },
+    "header_fields": {
+     "section": {
+      "column": "A",
+      "header_row": {
+       "nonempty": [
+        "A"
+       ],
+       "empty": [
+        "B"
+       ]
+      }
+     }
+    },
+    "block_fields": {
+     "explanation_of_variance": {
+      "mode": "join",
+      "column": "I"
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Lakeview Tower",
+      "cell": "D5",
+      "confidence": 1
+     },
+     "property_rsf": {
+      "value": 339050,
+      "cell": "A4",
+      "confidence": 1
+     },
+     "budget_year": {
+      "value": 2021,
+      "cell": "D11",
+      "confidence": 1
+     }
+    },
+    "value_maps": {
+     "reforecast_vs_prior_budget_pct": {
+      "N/A": null
+     },
+     "budget_vs_reforecast_pct": {
+      "N/A": null
+     }
+    },
+    "checks": []
+   }
+  },
+  {
+   "run": 4,
+   "score": 0.9987,
+   "rows": {
+    "predicted": 55,
+    "truth": 55
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {
+    "explanation_of_variance": 0.982
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.00027,
+   "calls": 1,
+   "plan": {
+    "sheet": "budget_001",
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{4}-\\d{4}\\s+.+"
+    },
+    "require_values": [
+     "B",
+     "C",
+     "D"
+    ],
+    "columns": {
+     "gl_code": {
+      "column": "A",
+      "regex": "^(\\d{4}-\\d{4})"
+     },
+     "line_item": {
+      "column": "A",
+      "regex": "^\\d{4}-\\d{4}\\s+(.*)$"
+     },
+     "prior_year_budget": "B",
+     "prior_year_reforecast": "C",
+     "budget": "D",
+     "reforecast_vs_prior_budget_variance": "E",
+     "reforecast_vs_prior_budget_pct": "F",
+     "budget_vs_reforecast_variance": "G",
+     "budget_vs_reforecast_pct": "H"
+    },
+    "header_fields": {
+     "section": {
+      "column": "A",
+      "header_row": {
+       "nonempty": [
+        "A"
+       ],
+       "empty": [
+        "B"
+       ]
+      }
+     }
+    },
+    "block_fields": {
+     "explanation_of_variance": {
+      "mode": "join",
+      "column": "I"
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Lakeview Tower",
+      "cell": "D5",
+      "confidence": 1.0
+     },
+     "property_rsf": {
+      "value": 339050,
+      "cell": "A4",
+      "confidence": 1.0
+     },
+     "budget_year": {
+      "value": 2021,
+      "cell": "G9",
+      "confidence": 1.0
+     }
+    },
+    "value_maps": {
+     "reforecast_vs_prior_budget_pct": {
+      "N/A": null
+     },
+     "budget_vs_reforecast_pct": {
+      "N/A": null
+     }
+    },
+    "checks": []
+   }
+  }
+ ],
+ "t12_001": [
+  {
+   "run": 0,
+   "score": 0.9083,
+   "rows": {
+    "predicted": 119,
+    "truth": 119
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 2 call(s)"
+   ],
+   "per_field_below_1": {
+    "property_name": 0.0,
+    "category": 0.992
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.002238,
+   "calls": 3,
+   "plan": {
+    "sheet": "Report1",
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "first_data_row": 8,
+    "last_data_row": 148,
+    "require_values": [
+     "C",
+     "O"
+    ],
+    "columns": {
+     "gl_code": "A",
+     "line_item": "B",
+     "amount_total": "O",
+     "amount_first_month": "C",
+     "amount_last_month": "N"
+    },
+    "header_fields": {
+     "section": {
+      "column": "B",
+      "header_row": {
+       "nonempty": [
+        "B"
+       ],
+       "empty": [
+        "C"
+       ]
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "417",
+      "cell": "A1",
+      "confidence": 0.98
+     },
+     "period_start": {
+      "value": "2024-11-01",
+      "cell": "A3",
+      "confidence": 0.99
+     },
+     "period_end": {
+      "value": "2025-10-31",
+      "cell": "A3",
+      "confidence": 0.99
+     }
+    },
+    "classify": {
+     "category": {
+      "options": [
+       "Revenue",
+       "Expense",
+       "Other"
+      ],
+      "inputs": [
+       "section",
+       "gl_code",
+       "line_item"
+      ]
+     }
+    },
+    "row_aggregates": {
+     "months_with_activity": {
+      "op": "count_nonzero",
+      "columns": [
+       "C",
+       "N"
+      ]
+     }
+    },
+    "checks": []
+   }
+  },
+  {
+   "run": 1,
+   "score": 0.9091,
+   "rows": {
+    "predicted": 119,
+    "truth": 119
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {
+    "property_name": 0.0
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000929,
+   "calls": 2,
+   "plan": {
+    "sheet": "Report1",
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "first_data_row": 8,
+    "last_data_row": 148,
+    "require_values": [
+     "B",
+     "C",
+     "N",
+     "O"
+    ],
+    "columns": {
+     "gl_code": "A",
+     "line_item": "B",
+     "amount_total": "O",
+     "amount_first_month": "C",
+     "amount_last_month": "N"
+    },
+    "header_fields": {
+     "section": {
+      "column": "B",
+      "header_row": {
+       "nonempty": [
+        "B"
+       ],
+       "empty": [
+        "C"
+       ]
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "417",
+      "cell": "A1",
+      "confidence": 0.98
+     },
+     "period_start": {
+      "value": "2024-11-01",
+      "cell": "A3",
+      "confidence": 0.99
+     },
+     "period_end": {
+      "value": "2025-10-31",
+      "cell": "A3",
+      "confidence": 0.99
+     }
+    },
+    "classify": {
+     "category": {
+      "options": [
+       "Revenue",
+       "Expense",
+       "Other"
+      ],
+      "inputs": [
+       "gl_code",
+       "section",
+       "line_item"
+      ]
+     }
+    },
+    "row_aggregates": {
+     "months_with_activity": {
+      "op": "count_nonzero",
+      "columns": [
+       "C",
+       "N"
+      ]
+     }
+    },
+    "missing": [],
+    "checks": []
+   }
+  },
+  {
+   "run": 2,
+   "score": 0.906,
+   "rows": {
+    "predicted": 119,
+    "truth": 119
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {
+    "property_name": 0.0,
+    "category": 0.966
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000926,
+   "calls": 2,
+   "plan": {
+    "sheet": "Report1",
+    "first_data_row": 8,
+    "last_data_row": 148,
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "require_values": [
+     "C",
+     "O"
+    ],
+    "columns": {
+     "gl_code": "A",
+     "line_item": "B",
+     "amount_total": "O",
+     "amount_first_month": "C",
+     "amount_last_month": "N"
+    },
+    "header_fields": {
+     "section": {
+      "column": "B",
+      "header_row": {
+       "nonempty": [
+        "B"
+       ],
+       "empty": [
+        "C"
+       ]
+      }
+     }
+    },
+    "classify": {
+     "category": {
+      "options": [
+       "Revenue",
+       "Expense",
+       "Other"
+      ],
+      "inputs": [
+       "gl_code",
+       "line_item",
+       "section"
+      ]
+     }
+    },
+    "row_aggregates": {
+     "months_with_activity": {
+      "op": "count_nonzero",
+      "columns": [
+       "C",
+       "N"
+      ]
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "417",
+      "cell": "A1",
+      "confidence": 0.98
+     },
+     "period_start": {
+      "value": "2024-11-01",
+      "cell": "A3",
+      "confidence": 0.99
+     },
+     "period_end": {
+      "value": "2025-10-31",
+      "cell": "A3",
+      "confidence": 0.99
+     }
+    },
+    "missing": [],
+    "checks": []
+   }
+  },
+  {
+   "run": 3,
+   "score": 0.9885,
+   "rows": {
+    "predicted": 119,
+    "truth": 119
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {
+    "section": 0.983,
+    "category": 0.891
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000359,
+   "calls": 2,
+   "plan": {
+    "sheet": "Report1",
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "first_data_row": 8,
+    "last_data_row": 148,
+    "require_values": [
+     "C",
+     "O"
+    ],
+    "columns": {
+     "gl_code": "A",
+     "line_item": "B",
+     "amount_total": "O"
+    },
+    "header_fields": {
+     "section": {
+      "column": "B",
+      "header_row": {
+       "nonempty": [
+        "A",
+        "B"
+       ],
+       "empty": [
+        "C"
+       ]
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "417 .417",
+      "cell": "A1",
+      "confidence": 0.99
+     },
+     "period_start": {
+      "value": "2024-11-01",
+      "cell": "A3",
+      "confidence": 0.99
+     },
+     "period_end": {
+      "value": "2025-10-31",
+      "cell": "A3",
+      "confidence": 0.99
+     }
+    },
+    "classify": {
+     "category": {
+      "options": [
+       "Revenue",
+       "Expense",
+       "Other"
+      ],
+      "inputs": [
+       "section"
+      ]
+     }
+    },
+    "row_aggregates": {
+     "amount_first_month": {
+      "op": "sum",
+      "columns": [
+       "C",
+       "C"
+      ]
+     },
+     "amount_last_month": {
+      "op": "sum",
+      "columns": [
+       "N",
+       "N"
+      ]
+     },
+     "months_with_activity": {
+      "op": "count_nonzero",
+      "columns": [
+       "C",
+       "N"
+      ]
+     }
+    },
+    "checks": []
+   }
+  },
+  {
+   "run": 4,
+   "score": 0.9037,
+   "rows": {
+    "predicted": 119,
+    "truth": 119
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)"
+   ],
+   "per_field_below_1": {
+    "property_name": 0.0,
+    "category": 0.941
+   },
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000574,
+   "calls": 2,
+   "plan": {
+    "sheet": "Report1",
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "first_data_row": 8,
+    "last_data_row": 148,
+    "require_values": [
+     "C",
+     "D",
+     "E",
+     "F",
+     "G",
+     "H",
+     "I",
+     "J",
+     "K",
+     "L",
+     "M",
+     "N",
+     "O"
+    ],
+    "columns": {
+     "gl_code": "A",
+     "line_item": "B",
+     "amount_total": "O",
+     "amount_first_month": "C",
+     "amount_last_month": "N"
+    },
+    "header_fields": {
+     "section": {
+      "column": "B",
+      "header_row": {
+       "nonempty": [
+        "B"
+       ],
+       "empty": [
+        "C"
+       ]
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "417",
+      "cell": "A1",
+      "confidence": 0.99
+     },
+     "period_start": {
+      "value": "2024-11-01",
+      "cell": "A3",
+      "confidence": 0.99
+     },
+     "period_end": {
+      "value": "2025-10-31",
+      "cell": "A3",
+      "confidence": 0.99
+     }
+    },
+    "classify": {
+     "category": {
+      "options": [
+       "Revenue",
+       "Expense",
+       "Other"
+      ],
+      "inputs": [
+       "section",
+       "gl_code",
+       "line_item"
+      ]
+     }
+    },
+    "row_aggregates": {
+     "months_with_activity": {
+      "op": "count_nonzero",
+      "columns": [
+       "C",
+       "N"
+      ]
+     }
+    },
+    "checks": []
+   }
+  }
+ ],
+ "rentroll_001": [
+  {
+   "run": 0,
+   "score": 1.0,
+   "rows": {
+    "predicted": 325,
+    "truth": 325
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 2 call(s)",
+    "5 duplicate rows merged"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.001171,
+   "calls": 2,
+   "plan": {
+    "sheet": "Willow Creek Commons",
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "first_data_row": 8,
+    "last_data_row": 3057,
+    "record_end": {
+     "column": "G",
+     "pattern": "Charge Total:"
+    },
+    "columns": {
+     "unit_number": "A",
+     "unit_type_code": "B",
+     "unit_square_feet": "C",
+     "unit_status": "D",
+     "resident_name": "E",
+     "market_rent": "F",
+     "balance": "J",
+     "deposit_held": "K",
+     "move_in_date": "L",
+     "lease_start_date": "M",
+     "lease_end_date": "N",
+     "expected_move_out_date": "O"
+    },
+    "block_fields": {
+     "monthly_rent": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "equals": "Rent"
+      }
+     },
+     "monthly_other_charges": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "not_equals": "Rent"
+      }
+     },
+     "monthly_total_charges": {
+      "mode": "value",
+      "column": "I",
+      "where": {
+       "column": "G",
+       "equals": "Charge Total:"
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Willow Creek Commons",
+      "cell": "A3",
+      "confidence": 1
+     },
+     "report_period": {
+      "value": "2023-02",
+      "cell": "A4",
+      "confidence": 1
+     }
+    },
+    "null_values": [
+     "-- Vacant --",
+     "-"
+    ],
+    "blank_defaults": {
+     "monthly_rent": 0,
+     "monthly_other_charges": 0,
+     "deposit_held": 0
+    },
+    "checks": [
+     {
+      "expr": "add(monthly_rent, monthly_other_charges)",
+      "equals": "monthly_total_charges"
+     }
+    ]
+   }
+  },
+  {
+   "run": 1,
+   "score": 1.0,
+   "rows": {
+    "predicted": 325,
+    "truth": 325
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 1 call(s)",
+    "5 duplicate rows merged"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000314,
+   "calls": 1,
+   "plan": {
+    "sheet": "Willow Creek Commons",
+    "first_data_row": 8,
+    "last_data_row": 3057,
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "require_values": [
+     "B",
+     "C",
+     "D"
+    ],
+    "record_end": {
+     "column": "G",
+     "pattern": "Charge Total:"
+    },
+    "columns": {
+     "unit_number": "A",
+     "unit_type_code": "B",
+     "unit_square_feet": "C",
+     "unit_status": "D",
+     "resident_name": "E",
+     "market_rent": "F",
+     "balance": "J",
+     "deposit_held": "K",
+     "move_in_date": "L",
+     "lease_start_date": "M",
+     "lease_end_date": "N",
+     "expected_move_out_date": "O"
+    },
+    "block_fields": {
+     "monthly_rent": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "equals": "Rent"
+      }
+     },
+     "monthly_other_charges": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "not_equals": "Rent"
+      }
+     },
+     "monthly_total_charges": {
+      "mode": "value",
+      "column": "I",
+      "where": {
+       "column": "G",
+       "equals": "Charge Total:"
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Willow Creek Commons",
+      "cell": "A3",
+      "confidence": 1
+     },
+     "report_period": {
+      "value": "2023-02",
+      "cell": "A4",
+      "confidence": 1
+     }
+    },
+    "null_values": [
+     "-- Vacant --",
+     "-"
+    ],
+    "blank_defaults": {
+     "monthly_rent": 0,
+     "monthly_other_charges": 0,
+     "deposit_held": 0
+    },
+    "checks": [
+     {
+      "expr": "add(monthly_rent, monthly_other_charges)",
+      "equals": "monthly_total_charges"
+     }
+    ]
+   }
+  },
+  {
+   "run": 2,
+   "score": 1.0,
+   "rows": {
+    "predicted": 325,
+    "truth": 325
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 3 call(s) (last by anthropic/claude-haiku-5.5)",
+    "5 duplicate rows merged"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.001664,
+   "calls": 3,
+   "plan": {
+    "sheet": "Willow Creek Commons",
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "first_data_row": 8,
+    "last_data_row": 3057,
+    "record_end": {
+     "column": "G",
+     "pattern": "Charge Total:"
+    },
+    "columns": {
+     "unit_number": "A",
+     "unit_type_code": "B",
+     "unit_square_feet": "C",
+     "unit_status": "D",
+     "resident_name": "E",
+     "market_rent": "F",
+     "balance": "J",
+     "deposit_held": "K",
+     "move_in_date": "L",
+     "lease_start_date": "M",
+     "lease_end_date": "N",
+     "expected_move_out_date": "O"
+    },
+    "block_fields": {
+     "monthly_rent": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "equals": "Rent"
+      }
+     },
+     "monthly_other_charges": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "not_equals": "Rent"
+      }
+     },
+     "monthly_total_charges": {
+      "mode": "value",
+      "column": "I",
+      "where": {
+       "column": "G",
+       "equals": "Charge Total:"
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Willow Creek Commons",
+      "cell": "A3",
+      "confidence": 1.0
+     },
+     "report_period": {
+      "value": "2023-02",
+      "cell": "A4",
+      "confidence": 1.0
+     }
+    },
+    "null_values": [
+     "-- Vacant --",
+     "-"
+    ],
+    "blank_defaults": {
+     "monthly_rent": 0,
+     "monthly_other_charges": 0,
+     "deposit_held": 0
+    },
+    "checks": [
+     {
+      "expr": "add(monthly_rent, monthly_other_charges)",
+      "equals": "monthly_total_charges"
+     }
+    ]
+   }
+  },
+  {
+   "run": 3,
+   "score": 1.0,
+   "rows": {
+    "predicted": 325,
+    "truth": 325
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 2 call(s)",
+    "5 duplicate rows merged"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.000694,
+   "calls": 2,
+   "plan": {
+    "sheet": "Willow Creek Commons",
+    "first_data_row": 8,
+    "last_data_row": 3057,
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "record_end": {
+     "column": "G",
+     "pattern": "Charge Total:"
+    },
+    "columns": {
+     "unit_number": "A",
+     "unit_type_code": "B",
+     "unit_square_feet": "C",
+     "unit_status": "D",
+     "resident_name": "E",
+     "market_rent": "F",
+     "balance": "J",
+     "deposit_held": "K",
+     "move_in_date": "L",
+     "lease_start_date": "M",
+     "lease_end_date": "N",
+     "expected_move_out_date": "O"
+    },
+    "block_fields": {
+     "monthly_rent": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "equals": "Rent"
+      }
+     },
+     "monthly_other_charges": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "not_equals": "Rent"
+      }
+     },
+     "monthly_total_charges": {
+      "mode": "value",
+      "column": "I",
+      "where": {
+       "column": "G",
+       "equals": "Charge Total:"
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Willow Creek Commons",
+      "cell": "A3",
+      "confidence": 1.0
+     },
+     "report_period": {
+      "value": "2023-02",
+      "cell": "A4",
+      "confidence": 1.0
+     }
+    },
+    "null_values": [
+     "-- Vacant --",
+     "-"
+    ],
+    "blank_defaults": {
+     "monthly_rent": 0,
+     "monthly_other_charges": 0,
+     "deposit_held": 0
+    },
+    "checks": [
+     {
+      "expr": "add(monthly_rent, monthly_other_charges)",
+      "equals": "monthly_total_charges"
+     }
+    ]
+   }
+  },
+  {
+   "run": 4,
+   "score": 1.0,
+   "rows": {
+    "predicted": 325,
+    "truth": 325
+   },
+   "method": "plan",
+   "notes": [
+    "plan ok after 2 call(s)",
+    "5 duplicate rows merged"
+   ],
+   "per_field_below_1": {},
+   "halluc": 0,
+   "miss": 0,
+   "cost": 0.00069,
+   "calls": 2,
+   "plan": {
+    "sheet": "Willow Creek Commons",
+    "first_data_row": 8,
+    "last_data_row": 3057,
+    "record_start": {
+     "column": "A",
+     "pattern": "\\d{3}-\\d{3}"
+    },
+    "record_end": {
+     "column": "G",
+     "pattern": "Charge Total:"
+    },
+    "columns": {
+     "unit_number": "A",
+     "unit_type_code": "B",
+     "unit_square_feet": "C",
+     "unit_status": "D",
+     "resident_name": "E",
+     "market_rent": "F",
+     "balance": "J",
+     "deposit_held": "K",
+     "move_in_date": "L",
+     "lease_start_date": "M",
+     "lease_end_date": "N",
+     "expected_move_out_date": "O"
+    },
+    "block_fields": {
+     "monthly_rent": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "equals": "Rent"
+      }
+     },
+     "monthly_other_charges": {
+      "mode": "sum",
+      "column": "I",
+      "where": {
+       "column": "H",
+       "not_equals": "Rent"
+      }
+     },
+     "monthly_total_charges": {
+      "mode": "value",
+      "column": "I",
+      "where": {
+       "column": "G",
+       "equals": "Charge Total:"
+      }
+     }
+    },
+    "constants": {
+     "property_name": {
+      "value": "Willow Creek Commons",
+      "cell": "A3",
+      "confidence": 1
+     },
+     "report_period": {
+      "value": "2023-02",
+      "cell": "A4",
+      "confidence": 1
+     }
+    },
+    "null_values": [
+     "-- Vacant --",
+     "-"
+    ],
+    "blank_defaults": {
+     "monthly_rent": 0,
+     "monthly_other_charges": 0,
+     "deposit_held": 0
+    },
+    "checks": [
+     {
+      "expr": "add(monthly_rent, monthly_other_charges)",
+      "equals": "monthly_total_charges"
+     }
+    ]
+   }
+  }
+ ]
+}

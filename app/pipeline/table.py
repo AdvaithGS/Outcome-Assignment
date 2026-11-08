@@ -133,6 +133,28 @@ def _cell_ok(sheet: Sheet, r: int, cond: dict | None) -> bool:
     return True
 
 
+_LABELLED = re.compile(r"^\s*[A-Za-z][^:=]{0,60}?\s*[:=]\s*(\S.*?)\s*$")
+
+
+def printed_value(llm_value, cell_value):
+    """A document-wide value (a plan constant) as the document prints it. Plans type the value themselves, and fresh
+    plans shorten it differently ("417" for a header cell "Property =  417 .417", where the value is "417 .417"): when
+    the cited cell reads "Label = value" / "Label: value" and the plan's value is part of that value, the cell's full
+    value wins. Without an llm_value (per-sheet constants) the cell's value part is used. Anything else: the plan's."""
+    if cell_value is None:
+        return llm_value
+    if not isinstance(cell_value, str):
+        return cell_value if llm_value is None else llm_value
+    m = _LABELLED.match(cell_value)
+    rest = re.split(r"\s*;\s*|\s{2,}(?=[A-Za-z][\w ]{0,30}[:=])", m.group(1))[0].strip() if m else None
+    if llm_value is None:
+        return rest or cell_value
+    lv = " ".join(fmt(llm_value, 10_000).lower().split())
+    if rest and lv and lv in " ".join(rest.lower().split()) and len(rest) > len(lv):
+        return rest
+    return llm_value
+
+
 def _num(v):
     if isinstance(v, bool):
         return None
@@ -370,12 +392,16 @@ def _execute_sheet(plan: dict, grid: Grid, spec: SchemaSpec, diag: dict | None =
         for k, cst in (plan.get("constants") or {}).items():
             ref = cst.get("cell") or ""
             fr = {"value": cst.get("value"), "citation": "", "source_locations": [], "confidence": cst.get("confidence")}
-            if multi and cst.get("per_sheet") and ref:
+            if ref:
                 try:
                     _, cr, cc = split_ref(ref)
-                    fr["value"] = sheet.get(cr, cc)             # read this sheet's own cell (normalised later)
+                    cell_v = sheet.get(cr, cc)
                 except ValueError:
-                    pass
+                    cell_v = None
+                if multi and cst.get("per_sheet"):
+                    fr["value"] = printed_value(None, cell_v)      # this sheet's own cell (normalised later)
+                else:
+                    fr["value"] = printed_value(cst.get("value"), cell_v)
             if ref:
                 try:
                     _, cr, cc = split_ref(ref)
@@ -519,25 +545,51 @@ def _cite_cells(rows: list[dict]) -> list[dict]:
     return rows
 
 
+CLASSIFY_ORDER = "sorted"        # sorted | document (plan-variance E: document order was consistently worse, 0.96 vs 0.98-0.99)
+CLASSIFY_AUTO_INPUTS = True      # also the row's own text fields (name, code): section-only inputs scored 0.891 on T12
+CLASSIFY_VOTES = 1               # >1: majority over different item orders (3 votes: no better than 1, 4x cost)
+
+
+def _classify_inputs(c: dict, plan: dict, spec: SchemaSpec, k: str) -> list[str]:
+    inputs = [i for i in c.get("inputs") or [] if i in spec.fields and i != k]
+    if CLASSIFY_AUTO_INPUTS:
+        mapped = set((plan.get("columns") or {})) | set((plan.get("block_fields") or {})) | set((plan.get("header_fields") or {}))
+        for f in spec.fields.values():           # a label depends on the line itself, not only on its section
+            if f.key != k and f.key in mapped and f.scope == "row" and f.type in ("text", "freetext") and f.key not in inputs:
+                inputs.append(f.key)
+    return inputs
+
+
 async def classify(rows: list[dict], plan: dict, spec: SchemaSpec, client: LLMClient, *, model: str, extra: dict,
                    usage: UsageTracker | None, job_id: str | None, deadline: float | None) -> None:
     for k, c in (plan.get("classify") or {}).items():
-        inputs = [i for i in c.get("inputs") or [] if i in spec.fields]
+        inputs = _classify_inputs(c, plan, spec, k)
         options = [str(o) for o in c.get("options") or []]
         if not inputs or not options or k not in spec.fields:
             continue
-        combos = sorted({tuple(fmt(r[i]["value"]) if r[i]["value"] is not None else "" for i in inputs) for r in rows})
-        items = "\n".join(f"{n}. " + " | ".join(f"{i}={v}" for i, v in zip(inputs, combo)) for n, combo in enumerate(combos))
-        msgs = [{"role": "system", "content": CLASSIFY_SYSTEM},
-                {"role": "user", "content": f"Field: {k}: {spec.fields[k].description}\nAllowed labels: {options}\n\n{items}"}]
-        r = await client.chat(model=model, messages=msgs, stage="table_classify", job_id=job_id, usage=usage,
-                              temperature=0, max_tokens=4000, timeout_s=90, deadline=deadline,
-                              response_format={"type": "json_object"}, **extra)
-        got = parse_json(r.content) or {}
-        labels = {combo: got.get(str(n)) for n, combo in enumerate(combos)}
+        def combo_of(r):
+            return tuple(fmt(r[i]["value"]) if r[i]["value"] is not None else "" for i in inputs)
+        combos = list(dict.fromkeys(combo_of(r) for r in rows))           # document order: totals stay in context
+        if CLASSIFY_ORDER == "sorted":
+            combos = sorted(combos)
+        orders = [combos, combos[::-1], sorted(combos)][:max(1, CLASSIFY_VOTES)]
+        votes: dict[tuple, list] = {}
+        for order in orders:
+            items = "\n".join(f"{n}. " + " | ".join(f"{i}={v}" for i, v in zip(inputs, combo)) for n, combo in enumerate(order))
+            msgs = [{"role": "system", "content": CLASSIFY_SYSTEM},
+                    {"role": "user", "content": f"Field: {k}: {spec.fields[k].description}\nAllowed labels: {options}\n\n{items}"}]
+            r = await client.chat(model=model, messages=msgs, stage="table_classify", job_id=job_id, usage=usage,
+                                  temperature=0, max_tokens=4000, timeout_s=90, deadline=deadline,
+                                  response_format={"type": "json_object"}, **extra)
+            got = parse_json(r.content) or {}
+            for n, combo in enumerate(order):
+                votes.setdefault(combo, []).append(got.get(str(n)))
+        labels = {}
+        for combo, vs in votes.items():
+            ok = [v for v in vs if v in options]
+            labels[combo] = max(set(ok), key=lambda v: (ok.count(v), -vs.index(v))) if ok else None
         for row in rows:
-            combo = tuple(fmt(row[i]["value"]) if row[i]["value"] is not None else "" for i in inputs)
-            lab = labels.get(combo)
+            lab = labels.get(combo_of(row))
             row[k] = {"value": lab if lab in options else None, "citation": "", "source_locations": [],
                       "confidence": 0.8 if lab in options else 0.5}
 

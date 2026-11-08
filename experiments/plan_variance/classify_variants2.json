@@ -1,0 +1,110 @@
+{
+ "A sorted, plan inputs (repeat)": [
+  {
+   "category": 0.975,
+   "score": 0.9977,
+   "cost": 0.000274
+  },
+  {
+   "category": 1.0,
+   "score": 1.0,
+   "cost": 0.000274
+  },
+  {
+   "category": 0.992,
+   "score": 0.9992,
+   "cost": 0.000274
+  },
+  {
+   "category": 0.891,
+   "score": 0.9885,
+   "cost": 6.1e-05
+  },
+  {
+   "category": 0.966,
+   "score": 0.9969,
+   "cost": 0.000274
+  }
+ ],
+ "E sorted + row label fields": [
+  {
+   "category": 0.95,
+   "score": 0.9954,
+   "cost": 0.000274
+  },
+  {
+   "category": 1.0,
+   "score": 1.0,
+   "cost": 0.000274
+  },
+  {
+   "category": 0.992,
+   "score": 0.9992,
+   "cost": 0.000274
+  },
+  {
+   "category": 1.0,
+   "score": 0.9985,
+   "cost": 0.000274
+  },
+  {
+   "category": 0.975,
+   "score": 0.9977,
+   "cost": 0.000274
+  }
+ ],
+ "E sorted + row label fields (repeat)": [
+  {
+   "category": 1.0,
+   "score": 1.0,
+   "cost": 0.000274
+  },
+  {
+   "category": 1.0,
+   "score": 1.0,
+   "cost": 0.000274
+  },
+  {
+   "category": 0.992,
+   "score": 0.9992,
+   "cost": 0.000274
+  },
+  {
+   "category": 1.0,
+   "score": 0.9985,
+   "cost": 0.000274
+  },
+  {
+   "category": 0.975,
+   "score": 0.9977,
+   "cost": 0.000274
+  }
+ ],
+ "F = E, 3 votes": [
+  {
+   "category": 0.983,
+   "score": 0.9985,
+   "cost": 0.001188
+  },
+  {
+   "category": 1.0,
+   "score": 1.0,
+   "cost": 0.001188
+  },
+  {
+   "category": 0.992,
+   "score": 0.9992,
+   "cost": 0.001189
+  },
+  {
+   "category": 0.992,
+   "score": 0.9977,
+   "cost": 0.001191
+  },
+  {
+   "category": 0.966,
+   "score": 0.9969,
+   "cost": 0.000822
+  }
+ ]
+}
