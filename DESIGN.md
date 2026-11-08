@@ -14,9 +14,8 @@ worker: claim (lease) ─► stage 0: analyse the field list (once per schema, c
 
 ## Decisions and why
 
-Every option was measured on the samples before it was chosen, using the rule *cheapest option within noise of the
-best* (noise ±0.02–0.03). The LLM does the understanding; code does everything mechanical (cells, arithmetic,
-formatting, citations, page numbers).
+Every option was measured before it was chosen: *cheapest within noise of the best* (±0.02–0.03). The LLM does the
+understanding; code does everything mechanical (cells, arithmetic, formatting, citations, page numbers).
 
 - **Ingestion is local.** pdfplumber for PDF text; our own DOCX parser (sections for citations, image OCR);
   spreadsheets as grids with cell addresses. **Scanned pages:** Tesseract reads every page and only pages it signals
@@ -25,8 +24,8 @@ formatting, citations, page numbers).
 - **Stage 0 analyses each new field list once:** types, absent values, rewritten descriptions, and formulas for
   computed fields in a small safe expression language. Lists of bare names first get standard real-estate
   definitions (descriptions removed: lease 0.65 → 0.80, T12 0.54 → 0.78, no invented values).
-- **Leases and OMs: the whole document in one call**, with concise free text and a few generic domain rules. A passage
-  Locator did not pay for itself at these sizes. With this prompt the cheapest model tied the dearer ones.
+- **Leases and OMs: the whole document in one call**, concise free text, a few generic domain rules; with this prompt
+  the cheapest model tied the dearer ones (a passage Locator did not pay for itself at these sizes).
 - **Computed fields are calculated in code**; a figure the document prints wins. The model's arithmetic was wrong on
   4 lease cells, the formulas on none.
 - **Tables: the LLM writes an extraction plan from a fixed-size preview; code runs it on the full grid.** ~$0.0005–0.003
@@ -39,9 +38,8 @@ formatting, citations, page numbers).
   fallback model, then valid nulls.
 - **Confidence is evidence-based**, checked against the answers: free text and yes/no judgements score lower, printed
   values higher when their citation and the value are both found. Values at ≥ 0.9 were right 96% of the time (82% before).
-- **Service:** the SQLite job table is the queue (atomic claims, leases + heartbeats, fencing, idempotency per file +
-  field list + tenant). A pipeline error never loses a document: it is retried, then finished PARTIAL with valid nulls.
-  OCR runs in its own CPU pool at low priority, so it never delays claims, heartbeats or the API.
+- **Service:** the SQLite job table is the queue (atomic claims, leases + heartbeats, fencing, idempotency). A pipeline
+  error never loses a document (retried, then PARTIAL with valid nulls); OCR runs in its own low-priority CPU pool.
 
 ## Tradeoffs taken
 
@@ -99,17 +97,12 @@ response is cached, so re-scoring after a downstream change costs $0; replay mod
   `docker compose up --scale worker=3` (workers share the queue on the `data` volume).
 - JSON logs on stdout: `docker compose logs worker | grep <job_id>` shows a job's stages, cost and errors; a FAILED
   job's reason is in its `error` field.
-- Required settings: `LLM_BASE_URL`, `LLM_API_KEY`; the rest are listed in `README.md` (e.g. `OCR_WORKERS` sizes the
-  OCR pool; default: available CPUs − 2).
-- Sample answers: no errors found; lease_002's `base_rent_escalation` is "none", which the validator treats as null.
+- Required settings: `LLM_BASE_URL`, `LLM_API_KEY`; the rest are in `README.md` (e.g. `OCR_WORKERS`, default CPUs − 2).
+- Sample answers: no errors found (lease_002's "none" is scored as null by the validator).
 
 ## With another week
 
-- Field-scoped interpretation hints (rent starts after free rent; the subject property's in-place rent), tested on
-  documents outside the samples so they do not just fit three leases.
-- Act on low confidence: a second cheap model on fields scored below ~0.8, and only fields where the two disagree go to
-  a stronger one (disagreement caught > 90% of errors in E1b).
-- Field lists of ~75+ fields: extract by stage-0 group in parallel calls (one call's output cap would truncate them).
-- Scanned PDFs that carry a scanner's hidden OCR text layer: treat as scanned; mixed scanned/digital table PDFs.
-- A load test with several worker containers; send a page to vision when the extraction leaves a field on it null;
-  a slimmer image; a Locator path for 100+ page documents.
+- Act on low confidence: a second cheap model on fields below ~0.8, escalating only disagreements (E1b: disagreement
+  caught > 90% of errors). Field-scoped hints (rent starts after free rent), tested beyond the samples.
+- Field lists of ~75+ fields by stage-0 group in parallel; scanned PDFs with a hidden OCR text layer; mixed
+  scanned/digital table PDFs; a multi-container load test; a slimmer image; a Locator for 100+ page documents.
