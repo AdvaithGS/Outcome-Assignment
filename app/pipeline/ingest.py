@@ -18,6 +18,7 @@ from pathlib import Path
 from app.artifacts import ArtifactCache
 from app.hashing import file_sha256
 from app.ingest.document import Document, PageInfo
+from app.ingest.cpu import run_cpu
 from app.ingest.docx import ingest_docx
 from app.ingest.ocr import run_ocr
 from app.ingest.pdf import assemble_pdf, is_scanned_page, page_texts, render_page
@@ -191,14 +192,14 @@ async def transcribe_pages(path: Path, indices: list[int], *, client: LLMClient 
     if selective:
         # OCR every page first: page-level and line-level signals, with stamps/footers recurring across pages ignored
         async def ocr(i: int):
-            img = await asyncio.to_thread(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
-            return i, await asyncio.to_thread(run_ocr, "tesseract", img, cache=cache)
+            img = await run_cpu(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
+            return i, await run_cpu(run_ocr, "tesseract", img, cache=cache)
         ocr_first = dict(await asyncio.gather(*(ocr(i) for i in indices)))
         order = list(ocr_first)
         unsure = dict(zip(order, uncertain_lines([ocr_first[i].lines for i in order])))
 
     async def one(i: int):
-        img = await asyncio.to_thread(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
+        img = await run_cpu(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
         if selective:
             r = ocr_first[i]
             need, why = page_needs_vision(r.text, r.confidence, r.low_share, unsure.get(i))
@@ -214,7 +215,7 @@ async def transcribe_pages(path: Path, indices: list[int], *, client: LLMClient 
             except Exception as exc:  # noqa: BLE001 - fall back to local OCR for this page
                 log.warning("vision transcription failed; using local OCR", extra={"job_id": job_id, "page": i + 1,
                                                                                    "error": str(exc)[:200]})
-        r = await asyncio.to_thread(run_ocr, cfg.fallback_ocr, img, cache=cache)
+        r = await run_cpu(run_ocr, cfg.fallback_ocr, img, cache=cache)
         return i, r.text, f"ocr:{cfg.fallback_ocr}"
 
     return {i: (t, m) for i, t, m in await asyncio.gather(*(one(i) for i in indices))}

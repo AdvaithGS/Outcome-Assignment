@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import io
 import os
+import shutil
 import subprocess
 import threading
 import time
@@ -19,6 +20,8 @@ from dataclasses import asdict, dataclass
 
 from app.artifacts import ArtifactCache
 from app.hashing import sha256_hex
+
+_NICE = ["nice", "-n", "10"] if shutil.which("nice") else []
 
 OCR_VERSION = 3   # v2: low-confidence share; v3: per-line statistics
 
@@ -35,7 +38,8 @@ class OcrResult:
 
 def _tesseract(image: bytes, psm: int, stats: dict | None = None) -> tuple[str, float | None]:
     env = {**os.environ, "OMP_THREAD_LIMIT": "1"}   # pages run in parallel; one thread each
-    out = subprocess.run(["tesseract", "stdin", "stdout", "--psm", str(psm), "-l", "eng", "tsv"],
+    # low CPU priority: under load, OCR yields to the API and to the jobs' lighter work instead of starving them
+    out = subprocess.run([*_NICE, "tesseract", "stdin", "stdout", "--psm", str(psm), "-l", "eng", "tsv"],
                          input=image, capture_output=True, env=env, timeout=300, check=True).stdout.decode("utf-8", "replace")
     lines: dict[tuple, list[str]] = {}
     low60: dict[tuple, int] = {}

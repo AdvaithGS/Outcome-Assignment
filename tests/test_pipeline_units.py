@@ -255,3 +255,12 @@ def test_garbage_and_line_level_signals():
     assert unsure[:2] == [None, None] and unsure[2].startswith("SECURITY DEPOSIT")
     assert page_needs_vision(clean, 0.92, 0.01, unsure[2])[1].startswith("uncertain line")
     assert page_needs_vision(clean, 0.92, 0.01, unsure[0]) == (False, "OCR adequate")
+
+
+
+def test_cpu_pool_size_and_run():
+    import asyncio
+    from app.ingest.cpu import available_cpus, cpu_slots, run_cpu
+    assert cpu_slots({"OCR_WORKERS": "3"}) == 3
+    assert cpu_slots({}) == max(1, available_cpus() - 2) >= 1
+    assert asyncio.run(run_cpu(sum, [1, 2, 3])) == 6

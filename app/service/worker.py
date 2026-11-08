@@ -56,6 +56,11 @@ class Worker:
         self.pipeline = get_pipeline(settings.pipeline)
 
     async def run(self, stop: asyncio.Event) -> None:
+        # the default pool (cores + 4 threads) serves the queue, heartbeats and per-document reads; size it to the job
+        # slots so it never runs out (CPU-heavy per-page work has its own bounded pool: app/ingest/cpu.py)
+        from concurrent.futures import ThreadPoolExecutor
+        asyncio.get_running_loop().set_default_executor(
+            ThreadPoolExecutor(max_workers=max(32, 3 * self.s.worker_concurrency + 8), thread_name_prefix="io"))
         log.info("worker started", extra={"worker": self.id, "concurrency": self.s.worker_concurrency,
                                           "pipeline": self.pipeline.name})
         await asyncio.gather(*(self._slot(stop, i) for i in range(self.s.worker_concurrency)))
