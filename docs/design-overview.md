@@ -7,7 +7,7 @@
 > **Status (2026-11-08):** sample-set mean **0.936** on the official validator (0.964 with an LLM judge on free-text
 > fields), **0 invented values**, every output valid, **~$0.004 per document** uncached. Load test from a fresh clone at
 > 10 jobs in flight: 16/16 succeeded, p50 25 s / p95 94 s, `POST` ≤ 95 ms, nothing lost or duplicated.
-> Development spend **$0.84 of the $10** budget. 117 automated tests.
+> Development spend **$0.89 of the $10** budget. 119 automated tests.
 
 ---
 
@@ -95,10 +95,13 @@ finish):
 | 3 | + selective vision | 104.7 / 149.7 / 183.9 s | **4,179 ms** | 184 s |
 | 4 | + OCR in its own CPU pool at low priority | 29.4 / 114.7 / 130.8 s | 146 ms | 131 s |
 | **5** | **all fixes, fresh clone** | **25.2 / 94.4 / 105.3 s** | **95 ms** | **107 s** |
+| 6 | final code, 2 worker containers on the same machine | 29.6 / 133.2 / 145.3 s | 188 ms | 145 s |
 
 Every run: 16/16 SUCCESS, all valid, 0 lost / duplicated, tenant isolation ✓. Run 1 was queueing (20 s table jobs
 behind scanned leases). Run 3 was a regression: per-page Tesseract filled the worker's thread pool, so claims,
-heartbeats and spreadsheet reads waited behind OCR (tables 103 s) and the API slowed; OCR now has its own pool.
+heartbeats and spreadsheet reads waited behind OCR (tables 103 s) and the API slowed; OCR now has its own pool. Run 6:
+two containers share the queue correctly, but on one laptop their OCR competed for the same cores (slower than one);
+more containers help only with more CPU, and on one machine `WORKER_CONCURRENCY` is the lever.
 
 ---
 
@@ -148,7 +151,8 @@ stateDiagram-v2
 | A bug never loses a document | Pipeline errors retried, then PARTIAL with valid nulls; FAILED only for unreadable documents | ✓ |
 | Diagnosable failures | JSON logs with job_id, stage, timings, cost; error code + message on the job | — |
 
-Scaling: raise `WORKER_CONCURRENCY` or `docker compose up --scale worker=N`; all workers share one queue.
+Scaling: raise `WORKER_CONCURRENCY` on one machine; `docker compose up --scale worker=N` (one shared queue) when the
+workers get more CPU (load test run 6).
 
 ---
 
@@ -492,9 +496,8 @@ with the same list), extraction the rest. With every page by vision it was ~$0.0
 |---|---|---|
 | A hard scanned page that every OCR signal misses is read by Tesseract alone | A value lost on such a page | Send a page to vision when the extraction cites it for a null or low-confidence field |
 | Confidence is measured but not acted on | Uncertain values are not re-checked | Second cheap model below ~0.8, escalate disagreements |
-| Field lists of ~75+ fields | One extraction call's output cap would truncate them | Extract by stage-0 group in parallel |
-| Scanned PDFs with a scanner's hidden OCR layer; mixed scanned/digital table PDFs | Our OCR and vision rule bypassed; rows on scanned pages lost | Detect invisible text; per-page routing for tables |
-| Several worker containers not load-tested | Scaling claim rests on design and unit tests | Load test with `--scale worker=2` |
+| Mixed scanned/digital table PDFs | Rows on the scanned pages of a mostly digital table are lost | Per-page routing for tables |
+| Worker containers on one machine compete for OCR CPU | Two containers on one laptop were slower than one | A host-wide OCR limit; scale containers only with more CPU |
 | Terse field lists still lose 0.03–0.2 against full descriptions | Unseen field lists | Accept (no invented values) |
 | Interpretation conventions (rent start after free rent; subject property's in-place rent; property name from the cover) | ~3–4 sample cells | Field-scoped hints written by stage 0 (risk of fitting the samples) |
 | Very long documents (100+ pages) | Untested | Locator path (designed, not built) |
@@ -521,11 +524,12 @@ with the same list), extraction the rest. With every page by vision it was ~$0.0
 Done since the first version of this document: load test and concurrency tuning; selective vision (with garbage-text
 and uncertain-line signals); vision resolution test; standard definitions for terse field lists; a code review of the
 data path (number, date, percent, DOCX and table handling); fresh-plan variance fixes; defined states for bad and
-empty inputs; evidence-based confidence; a final load test from a fresh clone.
+empty inputs; evidence-based confidence; large field lists in parallel batches; scanner OCR layers treated as scanned;
+a final load test from a fresh clone, and one with two worker containers.
 
 1. Act on confidence: a second cheap model on fields below ~0.8, escalating disagreements.
 2. Field-scoped interpretation hints (question 3), only if they generalise beyond the samples.
-3. Large field lists by group; hidden OCR text layers; a multi-container load test.
+3. Per-page routing for mixed scanned/digital tables; a host-wide OCR limit.
 4. Docker polish: commit SHA in `/health`, slimmer image.
 
 ---
@@ -547,9 +551,11 @@ empty inputs; evidence-based confidence; a final load test from a fresh clone.
 | Selective vision, resolution test, judge | 8 | 0.0121 |
 | Standard definitions for terse field lists (v1, v2) | 16 | 0.0268 |
 | Load tests in Docker with selective vision (3 runs; container ledgers) | 107 | 0.1134 |
+| Load test with 2 worker containers | 46 | 0.0472 |
+| T12 terse variant re-checked live | 1 | 0.0007 |
 | Table variants re-run on final code | 4 | 0.0022 |
 | Fresh-plan variance (20 plans) and label-step variants | 92 | 0.0327 |
-| **Total** | **765** | **0.8379** |
+| **Total** | **812** | **0.8857** |
 
 Computed from `ledger/spend.jsonl` by run id (every call maps to a phase), plus the Docker containers' own ledgers.
 The garbage-text and uncertain-line signals, the code review, the failure matrix and the calibration cost $0 (local
@@ -588,4 +594,4 @@ OCR, stubbed calls and cached replays).
 | `app/eval/` | Experiments: E0, E1a, E1b, judge, run_samples, generalisation, load test |
 | `notes/` | Working notes per step (ideation → revision → results) |
 | `experiments/` | Scores and verdicts (no document content) |
-| `tests/` | 117 tests |
+| `tests/` | 119 tests |

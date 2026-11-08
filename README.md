@@ -23,7 +23,8 @@ curl -s localhost:8080/jobs/<job_id>
 ```
 
 Optional: `X-Organization-Id` header (tenant isolation), `webhook_url` form field. Scale with
-`WORKER_CONCURRENCY=20` (default 10 jobs per worker) or `docker compose up --scale worker=3`.
+`WORKER_CONCURRENCY=20` (default 10 jobs per worker) on one machine, or `docker compose up --scale worker=3` when the
+workers get more CPU (two containers sharing one laptop's cores were slower: scanned pages are OCR'd on the CPU).
 
 ## Settings
 
@@ -73,6 +74,6 @@ fields (the graders' scorer is "slightly more lenient" there) the sample mean is
 
 ```bash
 pip install -r requirements-dev.txt
-pytest          # 117 tests: service guarantees, retries/timeouts, cache, ingestion, normalisation, formulas,
-                #            table plans, bad / empty / failed inputs
+pytest          # 119 tests: service guarantees, retries/timeouts, cache, ingestion, normalisation, formulas,
+                #            table plans, large field lists, scanner OCR layers, bad / empty / failed inputs
 ```

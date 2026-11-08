@@ -35,7 +35,8 @@ understanding; code does everything mechanical (cells, arithmetic, formatting, c
 - **Absent, bad and failed inputs end in a defined state** (15 bad or mismatched inputs tested): unstated values are
   null; unreadable files are FAILED with the reason; empty documents, or a table field list on a document without a
   table, give valid nulls (PARTIAL, with a note) and no model calls; unusable model output gets a repair retry, the
-  fallback model, then valid nulls.
+  fallback model, then valid nulls. Field lists above 50 fields are extracted in parallel batches by stage-0 group;
+  scans that carry a scanner's hidden OCR layer get our OCR and the vision rule like any scanned page.
 - **Confidence is evidence-based**, checked against the answers: free text and yes/no judgements score lower, printed
   values higher when their citation and the value are both found. Values at ≥ 0.9 were right 96% of the time (82% before).
 - **Service:** the SQLite job table is the queue (atomic claims, leases + heartbeats, fencing, idempotency). A pipeline
@@ -74,7 +75,7 @@ understanding; code does everything mechanical (cells, arithmetic, formatting, c
 | Lease / OM extraction | gpt-6-luna, reasoning off (fallback claude-haiku-5.5) | ~$0.003–0.007 |
 | Table plan and repairs | gpt-6-luna; last repair claude-haiku-5.5 | ~$0.0005–0.003 |
 
-**Development spend: $0.84 of the $10** (765 calls, almost all experiments, incl. five Docker load tests). Every
+**Development spend: $0.89 of the $10** (812 calls, almost all experiments, incl. six Docker load tests). Every
 response is cached, so re-scoring after a downstream change costs $0; replay mode fails instead of spending.
 
 ## What broke and how it was handled
@@ -93,8 +94,9 @@ response is cached, so re-scoring after a downstream change costs $0; replay mod
 
 ## Running it (ops notes)
 
-- `docker compose up` starts `api` (:8080) and one `worker`. More throughput: `WORKER_CONCURRENCY` or
-  `docker compose up --scale worker=3` (workers share the queue on the `data` volume).
+- `docker compose up` starts `api` (:8080) and one `worker`. More throughput on one machine: `WORKER_CONCURRENCY`;
+  `--scale worker=N` (one shared queue) only with more CPU: two containers on one laptop were slower (p95 133 vs 94 s),
+  their OCR competing for the same cores.
 - JSON logs on stdout: `docker compose logs worker | grep <job_id>` shows a job's stages, cost and errors; a FAILED
   job's reason is in its `error` field.
 - Required settings: `LLM_BASE_URL`, `LLM_API_KEY`; the rest are in `README.md` (e.g. `OCR_WORKERS`, default CPUs − 2).
@@ -104,5 +106,5 @@ response is cached, so re-scoring after a downstream change costs $0; replay mod
 
 - Act on low confidence: a second cheap model on fields below ~0.8, escalating only disagreements (E1b: disagreement
   caught > 90% of errors). Field-scoped hints (rent starts after free rent), tested beyond the samples.
-- Field lists of ~75+ fields by stage-0 group in parallel; scanned PDFs with a hidden OCR text layer; mixed
-  scanned/digital table PDFs; a multi-container load test; a slimmer image; a Locator for 100+ page documents.
+- Mixed scanned/digital table PDFs; a host-wide OCR limit shared by worker containers on one machine; a slimmer
+  image; a Locator for 100+ page documents.

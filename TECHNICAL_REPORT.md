@@ -15,7 +15,7 @@ Each section follows the same layout:
 
 **Where it ended:** sample mean **0.936** on `tools/validate.py` (0.964 with an LLM judge on free-text fields),
 **0 invented values**, every output valid, **~$0.004 per document** uncached; 10 jobs in flight in Docker from a fresh
-clone: 16/16 SUCCESS, p50 25 s, p95 94 s, none lost or duplicated. Development spend **$0.84 of $10**. 117 tests.
+clone: 16/16 SUCCESS, p50 25 s, p95 94 s, none lost or duplicated. Development spend **$0.89 of $10**. 119 tests.
 
 ---
 
@@ -84,6 +84,7 @@ pipeline, LLM cache **off** (realistic cost). Dev machine: 12-thread laptop CPU 
 | 3 | + selective vision | 16/16 | 104.7 / 149.7 / 183.9 s | **4,179 ms** | 184 s | $0.044 |
 | 4 | + own OCR pool, nice | 16/16 | 29.4 / 114.7 / 130.8 s | 146 ms | 131 s | $0.034 |
 | **5** | **all fixes, fresh clone** | **16/16 SUCCESS, 0 lost / duplicated, isolation ✓** | **25.2 / 94.4 / 105.3 s** | **95 ms** | **107 s** | $0.036 |
+| 6 | final code, fresh clone, **2 worker containers** on the same machine | 16/16 SUCCESS, 0 lost / duplicated, isolation ✓ | 29.6 / 133.2 / 145.3 s | 188 ms | 145 s | $0.047 |
 
 Run 1 was queueing: 20 s table jobs waited ~200 s behind scanned leases in 4 slots. Run 3 was a regression: selective
 vision moved scanned pages from the network to the CPU (Tesseract ~4 s/page single-threaded), and 92 page tasks filled
@@ -93,8 +94,13 @@ queue for > 120 s could also have let a lease expire. Costs of runs 2–5 are ha
 deduplication of the two identical copies; distinct documents cost ~$0.0035 each in run 5. `/health` answered 1.5 s
 after `docker compose up` (image built; a first build takes ~3 min).
 
-**Open issues:** scaling by worker *containers* (`--scale worker=N`) is designed and unit-tested (shared SQLite queue)
-but was not load-tested; scanned leases remain CPU-bound (on a small VM they would be slower; `SCANNED_MODE=vision`
+Run 6: two containers share one queue correctly (no job lost or run twice across processes), but on one 12-thread
+laptop they were slower than one: each sizes its OCR pool to the whole machine, so ~20 Tesseract processes competed
+(scanned leases 119–145 s; tables unchanged at 14–28 s). More containers help only with more CPU (other hosts, or a
+container CPU limit, which the pool respects); on one machine `WORKER_CONCURRENCY` is the lever. Its cost is not halved
+(the two copies of a document ran in different processes, so no in-flight sharing).
+
+**Open issues:** a host-wide OCR limit shared by containers on one machine; scanned leases remain CPU-bound (on a small VM they would be slower; `SCANNED_MODE=vision`
 trades ~$0.013 per scanned lease for network-bound latency).
 
 ---
@@ -221,8 +227,11 @@ Changed cells: one yes/no judgement and two free-text phrasings; no OCR-sensitiv
 cuts vision input ~45% but lost the landlord's legal name on the hardest page; with selective vision the saving would
 be ~$0.001 per document → **1,500 px for every document** (`VISION_LONG_SIDE`).
 
-**Open issues:** scanned PDFs that carry a scanner's hidden OCR text layer are treated as digital (our OCR and the
-vision rule are bypassed); in table PDFs where fewer than half the pages are scanned, rows on the scanned pages are not
+**Scanner OCR layers:** a page whose text is (almost) all invisible (render mode 3) and mostly covered by images is a
+scan carrying the scanner's own, unchecked OCR; it is treated as scanned (our OCR and the vision rule). A photo behind
+visible text does not qualify; no sample page does (unit-tested on synthetic pages).
+
+**Open issues:** in table PDFs where fewer than half the pages are scanned, rows on the scanned pages are not
 read; DOCX has no pagination (no `page_numbers`; LibreOffice would bloat the image).
 
 ---
@@ -266,8 +275,12 @@ conventions ("0 if absent", "empty string if absent") that the pipeline then app
 the document does not state it", with two exceptions (yes/no → false, lists → empty). The OM's single "City."
 description triggered expansion on a rich list, hence the 25% threshold. None of the 6 sample lists triggers it.
 
-**Open issues:** a field list of ~75+ fields would exceed the extraction call's 12,000-token output cap (the 40-field
-lease list uses up to 6,500); stage 0 already writes groups, which could be extracted as parallel calls.
+**Large field lists:** the 40-field lease list uses up to ~6,500 of the extraction call's 12,000 output tokens, so a
+list of ~75+ fields would be truncated. Above 50 fields the list is now split into batches of at most 30, keeping
+stage-0 groups together, extracted in parallel and merged (formulas run on the merged result). The sample lists are
+unchanged. Live re-check of the terse T12 variant on current code: **0.868** (was 0.781).
+
+**Open issues:** batches each read the whole document, so a very long field list costs a few times more prompt tokens.
 
 ---
 
@@ -482,7 +495,9 @@ keep development spend inside $10. Affects Cost and Load/latency.
 | Table variants re-run on current code (scanned budget, CSV rent roll, contract box score) | 4 | 0.0022 | 0.02% |
 | Plan variance (20 fresh table plans) | 32 | 0.0128 | 0.13% |
 | Label-step variants (4 + 4 variants × 5 plans) | 60 | 0.0199 | 0.20% |
-| **Total** | **765** | **0.8379** | **8.38%** |
+| T12 terse variant re-checked live on current code | 1 | 0.0007 | 0.01% |
+| Load test with 2 worker containers (fresh clone, cache off) | 46 | 0.0472 | 0.47% |
+| **Total** | **812** | **0.8857** | **8.86%** |
 
 Computed from `ledger/spend.jsonl` by run id, plus the Docker containers' own ledgers (`experiments/load/*.json`).
 
@@ -506,7 +521,7 @@ failures diagnosable, and start cleanly with Docker. Affects Design/code and the
 |---|---|---|---|---|
 | D36 | Eval harness | Ad hoc; harness | **`app/eval/`**: `run_samples` (official validator, per-doc errors, cost estimate, `--tag` per variant), `judge` (free-text fields only), `generalise` (E5 variants), `loadtest`, E0/E1a/E1b; replay mode for $0 re-scoring | Every decision above has a run behind it |
 | D37 | Generalisation to unseen field lists | Trust; simulate | **Simulated**: contract field list, renamed keys, removed descriptions, CSV and two-sheet conversions, a scanned copy | §4 results; re-run on current code |
-| D38 | Test suite scope | Happy path; regressions in what matters | **117 tests**: service guarantees (claims, leases, fencing, idempotency, isolation, deadlines, 413/400), LLM client (retries, timeouts, cache modes, single-flight, budget), ingestion (DOCX headings/strike/hidden, grids, percent cells, scanned detection), formulas, normalisation (ranges, units, labels, dates), table plans (checks, repairs, last-record cap, constants), failure handling (blank, empty, corrupt, failed calls) | `pytest` |
+| D38 | Test suite scope | Happy path; regressions in what matters | **119 tests**: service guarantees (claims, leases, fencing, idempotency, isolation, deadlines, 413/400), LLM client (retries, timeouts, cache modes, single-flight, budget), ingestion (DOCX headings/strike/hidden, grids, percent cells, scanned detection), formulas, normalisation (ranges, units, labels, dates), table plans (checks, repairs, last-record cap, constants), failure handling (blank, empty, corrupt, failed calls), large field lists in batches, scanner OCR layers | `pytest` |
 | D39 | Load test | None; in-process; Docker | **Docker, real pipeline, cache off**, 10 in flight, 2 tenants | §2 results |
 | D40 | Logging and observability | Plain logs; structured | **JSON lines** with job_id, worker, stage, timings, cost, error; pages sent to vision with the reason; failure reason stored on the job and returned in `error` | — |
 | D41 | Docker packaging | — | python:3.14-slim + tesseract + OpenCV libs; RapidOCR models inside the wheel; compose services `api` + `worker` on one `data` volume; healthcheck; `LLM_*`, pipeline and service settings passed through | Fresh clone: build ~3 min, `/health` 1.5 s after `up`; five load tests |
@@ -516,7 +531,7 @@ change (replay miss), the scanned-table regression from selective vision (replay
 constants change that broke a typed field (scanned budget 0.991 → 0.919, fixed back to 0.991), and a parser change that
 read labels as amounts (old-vs-new comparison on every cell).
 
-**Open issues:** a load test with several worker containers; the image is 1.46 GB (duplicate OpenCV builds).
+**Open issues:** the image is 1.46 GB (duplicate OpenCV builds).
 
 ---
 
@@ -535,8 +550,8 @@ No clear errors were found in the answers.
    (E1b: disagreement caught > 90% of errors at ~+$0.004/doc).
 2. **Field-scoped interpretation hints** (rent starts after free rent; the subject property's in-place rent), tested on
    documents outside the samples.
-3. **Large field lists:** extract by stage-0 group in parallel calls above ~50 fields.
-4. **Scanned PDFs with a hidden OCR text layer** treated as scanned; mixed scanned/digital table PDFs.
+3. **Mixed scanned/digital table PDFs:** per-page routing (rows on the scanned pages of a mostly digital table).
+4. **A host-wide OCR limit** shared by worker containers on one machine.
 5. **A Locator path for 100+ page documents** (designed in `notes/04-layer1.md`); send a page to vision when the
    extraction leaves a field on it null.
-6. **Operations:** a multi-container load test, commit SHA in `/health`, a slimmer image.
+6. **Operations:** commit SHA in `/health`, a slimmer image.
