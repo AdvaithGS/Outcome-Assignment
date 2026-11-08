@@ -1,6 +1,11 @@
 # Working plan: Document Extraction Service
 
-Internal working file. Every decision below is **OPEN**. We close them one at a time, recording
+> **Status (8 Nov): all decisions closed.** This is the opening plan as written on day 1 (7 Nov), kept as the record
+> of where the work started. Every decision below was closed with evidence: the outcomes, under the same IDs, are in
+> `TECHNICAL_REPORT.md`, and the summary in `DESIGN.md`. Statements below about the environment (e.g. Docker and
+> Tesseract not installed) describe day 1.
+
+Internal working file. Every decision below was **OPEN** when written. We closed them one at a time, recording
 the choice and the reason, and the closed ones feed `DESIGN.md`.
 
 Deadline: **Sun 8 Nov 2026, 11:59 PM IST**. Budget: **$10 OpenRouter, no top-ups.**
@@ -68,7 +73,7 @@ Other observations:
 
 ---
 
-## 5. Decision register (all OPEN)
+## 5. Decision register (as opened on day 1; all closed in `TECHNICAL_REPORT.md`)
 
 Each entry has the question, the options we know of, and what the decision depends on.
 
