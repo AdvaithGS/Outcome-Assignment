@@ -4,7 +4,7 @@
    "tenant_name": {
     "value": "M.J. Delacroix & Associates, P.C.",
     "citation": "[Page 2] TENANT: | M.J. Delacroix & Associates, P.C.",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -12,7 +12,7 @@
    "landlord_legal_name": {
     "value": "TRENT MA-II HOLLIS OFFICE PLAZA, INC.",
     "citation": "[Page 2] BUILDING: | Hollis Office Plaza<br>1850 Hollis Road<br>Fairmont Hills, Illinois 60517<br>TRENT MA-II HOLLIS OFFICE PLAZA, INC.",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -20,7 +20,7 @@
    "property_name": {
     "value": "Hollis Office Plaza",
     "citation": "[Page 2] BUILDING: | Hollis Office Plaza",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -28,7 +28,7 @@
    "building_address": {
     "value": "1850 Hollis Road, Fairmont Hills, Illinois 60517",
     "citation": "[Page 2] BUILDING: | Hollis Office Plaza<br>1850 Hollis Road<br>Fairmont Hills, Illinois 60517",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -36,7 +36,7 @@
    "premises": {
     "value": "Suite 214W",
     "citation": "[Page 2] PREMISES: | Second Floor, West Section, Suite 214W",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -44,7 +44,7 @@
    "rentable_square_footage": {
     "value": 1892,
     "citation": "[Page 2] PREMISES RENTABLE AREA: | approximately 1,892 square feet",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -52,7 +52,7 @@
    "pro_rata_share": {
     "value": 0.91,
     "citation": "[Page 2] TENANT'S PROPORTIONATE SHARE: | 0.91 %",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -60,7 +60,7 @@
    "permitted_use": {
     "value": "General Office: Architecture",
     "citation": "[Page 2] USE: | General Office: Architecture",
-    "confidence": 0.9,
+    "confidence": 0.7,
     "page_numbers": [
      2
     ]
@@ -68,7 +68,7 @@
    "lease_execution_date": {
     "value": "1993-03-05",
     "citation": "[Page 2] LEASE REFERENCE DATE: | March 5 , 19 93",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -76,7 +76,7 @@
    "lease_commencement_date": {
     "value": "1993-05-01",
     "citation": "[Page 2] COMMENCEMENT DATE: | May 1 , 19 93",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -84,7 +84,7 @@
    "rent_commencement_date": {
     "value": "1993-05-01",
     "citation": "[Page 2] COMMENCEMENT DATE: | May 1 , 19 93",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -92,7 +92,7 @@
    "lease_expiration_date": {
     "value": "1998-04-30",
     "citation": "[Page 2] TERMINATION DATE: | April 30 , 19 98",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -100,7 +100,7 @@
    "lease_term_months": {
     "value": 60,
     "citation": "[Page 2] TERM OF LEASE: | Five years and no months",
-    "confidence": 1.0,
+    "confidence": 0.95,
     "page_numbers": [
      2
     ]
@@ -114,7 +114,7 @@
      "1997-05-01"
     ],
     "citation": "[Section 059: 43. BASE RENT SCHEDULE.] Period: 05/01/93 - 04/30/94; 05/01/94 - 04/30/95; 05/01/95 - 04/30/96; 05/01/96 - 04/30/97; 05/01/97 - 04/30/98",
-    "confidence": 0.65
+    "confidence": 0.75
    },
    "rent_schedule_end_dates": {
     "value": [
@@ -125,7 +125,7 @@
      "1998-04-30"
     ],
     "citation": "[Section 059: 43. BASE RENT SCHEDULE.] Period: 05/01/93 - 04/30/94; 05/01/94 - 04/30/95; 05/01/95 - 04/30/96; 05/01/96 - 04/30/97; 05/01/97 - 04/30/98",
-    "confidence": 0.65
+    "confidence": 0.75
    },
    "rent_schedule_monthly_rent": {
     "value": [
@@ -136,7 +136,7 @@
      2174
     ],
     "citation": "[Section 059: 43. BASE RENT SCHEDULE.] Monthly Installment: $ 1,932; $ 1,990; $ 2,050; $ 2,111; $ 2,174",
-    "confidence": 0.65
+    "confidence": 0.75
    },
    "rent_schedule_annual_rent_per_rsf": {
     "value": [
@@ -147,12 +147,12 @@
      13.79
     ],
     "citation": "[Section 059: 43. BASE RENT SCHEDULE.] Monthly Installment: $ 1,932; $ 1,990; $ 2,050; $ 2,111; $ 2,174",
-    "confidence": 0.75
+    "confidence": 0.95
    },
    "total_base_rent": {
     "value": 123084,
     "citation": "[Section 059: 43. BASE RENT SCHEDULE.] Total Base Rent For Period: $ 123,084",
-    "confidence": 0.75,
+    "confidence": 0.95,
     "page_numbers": [
      18
     ]
@@ -160,12 +160,12 @@
    "base_rent_escalation": {
     "value": "fixed steps per schedule",
     "citation": "[Section 059: 43. BASE RENT SCHEDULE.] Period: 05/01/93 - 04/30/94; 05/01/94 - 04/30/95; 05/01/95 - 04/30/96; 05/01/96 - 04/30/97; 05/01/97 - 04/30/98",
-    "confidence": 0.65
+    "confidence": 0.55
    },
    "free_rent_months": {
     "value": 0,
     "citation": "",
-    "confidence": 0.65,
+    "confidence": 0.75,
     "page_numbers": [
      2
     ]
@@ -173,7 +173,7 @@
    "security_deposit_amount": {
     "value": 2150,
     "citation": "[Page 2] SECURITY DEPOSIT: | $ ~~2,400~~ [handwritten: 2150 M.J. Delacroix]",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -186,7 +186,7 @@
    "expense_structure": {
     "value": "base year 1993 for direct expenses and taxes; no increases payable during the first eighteen months",
     "citation": "[Page 2] BASE YEAR (DIRECT EXPENSES): | 19 93; BASE YEAR (TAXES): | 19 93; [Page 17] Tenant shall not pay any increases in direct expenses and/or taxes during the first eighteen months of the lease term.",
-    "confidence": 0.9,
+    "confidence": 0.7,
     "page_numbers": [
      2
     ]
@@ -194,7 +194,7 @@
    "base_year_expenses": {
     "value": 1993,
     "citation": "[Page 2] BASE YEAR (DIRECT EXPENSES): | 19 93",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -202,7 +202,7 @@
    "base_year_taxes": {
     "value": 1993,
     "citation": "[Page 2] BASE YEAR (TAXES): | 19 93",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -210,7 +210,7 @@
    "electricity_provision": {
     "value": "Landlord furnishes electricity for lighting, convenience outlets and other direct uses during ordinary business hours; excess use requires consent and is billed at utility rates plus additional expense",
     "citation": "[Section 028: 14. SERVICES AND UTILITIES.] electricity for lighting, convenience outlets and other direct uses",
-    "confidence": 0.9,
+    "confidence": 0.7,
     "page_numbers": [
      7
     ]
@@ -218,17 +218,17 @@
    "parking_spaces": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "parking_monthly_charge": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "ti_allowance_total": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "renewal_option_exists": {
     "value": false,
@@ -238,7 +238,7 @@
    "renewal_options_count": {
     "value": 0,
     "citation": "",
-    "confidence": 0.65,
+    "confidence": 0.75,
     "page_numbers": [
      2
     ]
@@ -246,17 +246,17 @@
    "renewal_term_months": {
     "value": [],
     "citation": "",
-    "confidence": 0.65
+    "confidence": 0.5
    },
    "renewal_notice_months": {
     "value": [],
     "citation": "",
-    "confidence": 0.65
+    "confidence": 0.5
    },
    "early_termination_right": {
     "value": true,
     "citation": "[Page 15] Tenant by written notice to Landlord may elect not to move to the other space and in lieu thereof terminate this Lease, effective 60 days after date of the original notice of relocating by Landlord.",
-    "confidence": 0.9,
+    "confidence": 0.8,
     "page_numbers": [
      15
     ]
@@ -264,12 +264,12 @@
    "termination_fee_description": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "right_to_sublet": {
     "value": "only with Landlord's prior written consent; Tenant must give written notice at least 90 days but no more than 180 days before the proposed commencement date",
     "citation": "[Section 024: 10. ASSIGNMENT AND SUBLETTING.] without the prior written consent of Landlord",
-    "confidence": 0.9,
+    "confidence": 0.7,
     "page_numbers": [
      5
     ]
@@ -277,7 +277,7 @@
    "guarantor_name": {
     "value": "MARTIN J. DELACROIX",
     "citation": "[Page 25] Guarantor: [handwritten: MARTIN J. DELACROIX]",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      25
     ]
@@ -287,7 +287,7 @@
      "Meridian Commercial Realty Group, Inc."
     ],
     "citation": "[Page 2] REAL ESTATE BROKER DUE COMMISSION: | Meridian Commercial Realty Group, Inc.",
-    "confidence": 0.9,
+    "confidence": 0.92,
     "page_numbers": [
      2
     ]
@@ -295,12 +295,12 @@
    "late_fee": {
     "value": "greater of $75.00 or 6% of the unpaid amount if unpaid ten days after due; reassessed each successive monthly period until paid",
     "citation": "[Section 017: 3. RENT.] a late charge in an amount equal to the greater of: (a) $75.00, or (b) a sum equal to 6% of the unpaid rent or other payment.",
-    "confidence": 0.9
+    "confidence": 0.7
    },
    "holdover_rent": {
     "value": "150% of the Annual Rent for the last period prior to termination plus all Rent Adjustments, prorated daily",
     "citation": "[Section 031: 15. HOLDING OVER.] 150% of the amount of the Annual Rent for the last period prior to the date of such termination plus all Rent Adjustments",
-    "confidence": 0.9,
+    "confidence": 0.7,
     "page_numbers": [
      8
     ]
@@ -312,7 +312,7 @@
   "tokens_in": 0,
   "tokens_out": 0,
   "cost_usd": 0.0,
-  "latency_ms": 1208,
+  "latency_ms": 1937,
   "cache_hits": 8,
   "cost_usd_uncached": 0.009051,
   "models": {

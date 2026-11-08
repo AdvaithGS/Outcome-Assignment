@@ -54,6 +54,45 @@ def _page_of_value(value, doc: Document) -> list[int]:
     return pages if len(pages) <= 2 else []                 # a value found on many pages says nothing
 
 
+def _value_found(value, doc: Document, memo: dict) -> bool | None:
+    """Is the value itself printed in the document (any common formatting)? None when that cannot be checked (yes/no
+    judgements). Lists: at least half of the items are found."""
+    from app.eval.coverage import _find, classify, normalise_with_map
+    if value is None or isinstance(value, bool):
+        return None
+    if "norm" not in memo:
+        memo["norm"] = normalise_with_map(doc.markdown)[0]
+    items = value if isinstance(value, list) else [value]
+    if not items:
+        return None
+    found = sum(1 for v in items if v is not None and _find(v, classify(v), memo["norm"])[0] == "found")
+    return found * 2 >= len(items)
+
+
+def confidence(f: FieldSpec, grounded: bool, located: bool | None, conf_bonus: float = 0.0,
+               p_conf: float | None = None) -> float:
+    """Evidence-based confidence. Checked against the sample answers (notes/05-e2.md): values whose citation and value
+    were both found were right 100% of the time, those found by neither 60-75%; free text matched exactly 25% of the
+    time (paraphrase); yes/no fields are judgements with no span to check.
+        free text      0.7 cited / 0.55 not            yes/no     0.8 cited / 0.65 not
+        computed       0.85, +0.1 when the printed figure, the formula and the model agree, -0.25 when they differ
+        printed value  0.92 citation and value found / 0.75 one of them / 0.5 neither
+    A value read from an exact spreadsheet cell (pointer mode) keeps its cell confidence."""
+    if f.type == "freetext":
+        return 0.7 if grounded else 0.55
+    if f.type == "bool":
+        return 0.8 if grounded else 0.65
+    if f.computed:
+        return 0.85 + conf_bonus
+    if p_conf is not None:
+        return p_conf
+    return 0.92 if (grounded and located) else (0.75 if (grounded or located) else 0.5)
+
+
+NULL_CONFIDENCE = 0.75        # nulls after a real extraction were right 98-100% of the time on the samples
+NO_READ_CONFIDENCE = 0.3      # nothing was extracted (every call failed / no readable text): a null by necessity
+
+
 def _ground(citation: str, doc: Document, doc_norm: str) -> tuple[bool, list[int]]:
     """Is the cited snippet really in the document, and on which pages?"""
     pages: list[int] = []
@@ -161,6 +200,7 @@ def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "
     # at all (every call failed, or no readable text) nothing was read, so every field stays null
     extracted = bool(raw)
     raw = raw or {}
+    memo: dict = {}
     helpers_raw = raw.get("_helpers") if isinstance(raw.get("_helpers"), dict) else {}
     doc_norm = norm_text(doc.markdown)
 
@@ -210,7 +250,8 @@ def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "
         if value is None and f.absent is not None and extracted:
             value, absent_default = (list(f.absent) if isinstance(f.absent, list) else f.absent), True
         if value is None or absent_default:
-            out[key] = {"value": value, "citation": "", "confidence": 0.7 if absent_default else 0.6}
+            out[key] = {"value": value, "citation": "",
+                        "confidence": 0.7 if absent_default else (NULL_CONFIDENCE if extracted else NO_READ_CONFIDENCE)}
             continue
         p_conf, locs = None, []
         if style in ("pointer", "hybrid"):
@@ -218,14 +259,15 @@ def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "
             value, cites[key], p_pages, p_conf, locs = _pointer(f, fst, value, raw.get(key) if isinstance(raw.get(key), dict) else {},
                                                                doc, doc_norm_map[0], doc_norm_map[1])
             if value is None:
-                out[key] = {"value": None, "citation": "", "confidence": 0.6}
+                out[key] = {"value": None, "citation": "", "confidence": NULL_CONFIDENCE}
                 continue
         grounded, pages = _ground(cites[key], doc, doc_norm)
         if style in ("pointer", "hybrid") and p_pages:
             pages = p_pages
         if not pages:
             pages = _page_of_value(value, doc)
-        conf = (p_conf if p_conf is not None else (0.9 if grounded else 0.65)) + conf_bonus
+        located = bool(pages) or bool(_value_found(value, doc, memo))
+        conf = confidence(f, grounded, located, conf_bonus, p_conf)
         fr = {"value": value, "citation": cites[key], "confidence": round(min(1.0, max(0.05, conf)), 2)}
         if pages:
             fr["page_numbers"] = pages

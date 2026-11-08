@@ -137,7 +137,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -337,7 +337,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2478,
@@ -379,27 +379,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -541,7 +541,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -683,7 +683,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -826,7 +826,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -968,7 +968,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -1112,7 +1112,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -1253,7 +1253,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -1393,7 +1393,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -1536,7 +1536,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -1677,7 +1677,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -1818,7 +1818,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -1960,7 +1960,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -2100,7 +2100,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -2155,7 +2155,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3057,
@@ -2197,27 +2197,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -2272,7 +2272,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3100,
@@ -2314,27 +2314,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -2473,7 +2473,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -2612,7 +2612,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -2754,7 +2754,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -2893,7 +2893,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -3033,7 +3033,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -3176,7 +3176,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -3459,7 +3459,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -3601,7 +3601,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -3656,7 +3656,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3161,
@@ -3698,27 +3698,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -3856,7 +3856,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -3995,7 +3995,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -4126,12 +4126,12 @@
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -4275,7 +4275,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -4416,7 +4416,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -4559,7 +4559,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -4710,7 +4710,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -4851,7 +4851,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -4992,7 +4992,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -5047,7 +5047,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3218,
@@ -5089,27 +5089,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -5251,7 +5251,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -5393,7 +5393,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -5535,7 +5535,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -5676,7 +5676,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -5815,7 +5815,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -5955,7 +5955,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -6099,7 +6099,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -6240,7 +6240,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -6382,7 +6382,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -6523,7 +6523,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -6664,7 +6664,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -6804,7 +6804,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -6945,7 +6945,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -7085,7 +7085,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -7224,7 +7224,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -7365,7 +7365,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -7506,7 +7506,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -7648,7 +7648,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -7791,7 +7791,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -7926,7 +7926,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -8066,7 +8066,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -8211,7 +8211,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -8351,7 +8351,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -8494,7 +8494,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -8636,7 +8636,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -8776,7 +8776,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -8918,7 +8918,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -9055,7 +9055,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -9110,7 +9110,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2406,
@@ -9152,27 +9152,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -9317,7 +9317,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -9462,7 +9462,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -9604,7 +9604,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -9748,7 +9748,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -9890,7 +9890,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -10028,7 +10028,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -10173,7 +10173,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -10314,7 +10314,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -10369,7 +10369,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2736,
@@ -10408,27 +10408,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -10576,7 +10576,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -10863,7 +10863,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -10918,7 +10918,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2315,
@@ -10960,27 +10960,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -11124,7 +11124,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -11265,7 +11265,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -11406,7 +11406,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -11549,7 +11549,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -11692,7 +11692,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -12120,7 +12120,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -12261,7 +12261,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -12400,7 +12400,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -12687,7 +12687,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -12823,7 +12823,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -12966,7 +12966,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -13109,7 +13109,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -13248,7 +13248,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -13388,7 +13388,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -13529,7 +13529,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -13673,7 +13673,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -13814,7 +13814,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -13954,7 +13954,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -14097,7 +14097,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -14239,7 +14239,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -14437,7 +14437,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3096,
@@ -14479,27 +14479,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -14639,7 +14639,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -14781,7 +14781,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -14923,7 +14923,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -15066,7 +15066,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -15207,7 +15207,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -15348,7 +15348,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -15489,7 +15489,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -15635,7 +15635,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -15775,7 +15775,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -15916,7 +15916,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -16059,7 +16059,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -16200,7 +16200,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -16342,7 +16342,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -16486,7 +16486,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -16625,7 +16625,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -16765,7 +16765,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -16906,7 +16906,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -16961,7 +16961,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2271,
@@ -17003,27 +17003,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -17163,7 +17163,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -17299,12 +17299,12 @@
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -17447,7 +17447,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -17586,7 +17586,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -17727,7 +17727,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -17867,7 +17867,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -18007,7 +18007,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -18062,7 +18062,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2335,
@@ -18104,27 +18104,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -18264,7 +18264,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -18406,7 +18406,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -18548,7 +18548,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -18688,7 +18688,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -18833,7 +18833,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -18975,7 +18975,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -19112,7 +19112,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -19253,7 +19253,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -19393,7 +19393,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -19535,7 +19535,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -19682,7 +19682,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -19823,7 +19823,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -19962,7 +19962,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -20103,7 +20103,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -20244,7 +20244,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -20299,7 +20299,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3208,
@@ -20341,27 +20341,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -20501,7 +20501,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -20643,7 +20643,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -20785,7 +20785,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -20926,7 +20926,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -21069,7 +21069,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -21214,7 +21214,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -21353,7 +21353,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -21494,7 +21494,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -21636,7 +21636,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -21777,7 +21777,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -21917,7 +21917,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -22066,7 +22066,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -22206,7 +22206,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -22347,7 +22347,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -22489,7 +22489,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -22630,7 +22630,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -22772,7 +22772,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -22916,7 +22916,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -23057,7 +23057,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -23346,7 +23346,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -23487,7 +23487,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -23628,7 +23628,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -23770,7 +23770,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -23911,7 +23911,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -24054,7 +24054,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -24198,7 +24198,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -24343,7 +24343,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -24483,7 +24483,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -24691,7 +24691,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3276,
@@ -24733,27 +24733,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -24808,7 +24808,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2335,
@@ -24850,27 +24850,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -25015,7 +25015,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -25153,7 +25153,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -25293,7 +25293,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -25432,7 +25432,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -25575,7 +25575,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -25720,7 +25720,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -25858,7 +25858,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -26002,7 +26002,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -26143,7 +26143,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -26287,7 +26287,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -26429,7 +26429,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -26569,7 +26569,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -26710,7 +26710,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -26851,7 +26851,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -26993,7 +26993,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -27133,7 +27133,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -27274,7 +27274,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -27416,7 +27416,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -27557,7 +27557,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -27699,7 +27699,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -27840,7 +27840,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -27980,7 +27980,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -28121,7 +28121,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -28262,7 +28262,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -28407,7 +28407,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -28551,7 +28551,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -28693,7 +28693,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -28836,7 +28836,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -28977,7 +28977,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -29120,7 +29120,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -29263,7 +29263,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -29405,7 +29405,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -29547,7 +29547,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -29687,7 +29687,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -29828,7 +29828,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -29968,7 +29968,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -30110,7 +30110,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -30255,7 +30255,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -30396,7 +30396,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -30538,7 +30538,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -30679,7 +30679,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -30821,7 +30821,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -30963,7 +30963,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -31107,7 +31107,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -31247,7 +31247,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -31387,7 +31387,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -31528,7 +31528,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -31671,7 +31671,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -31811,7 +31811,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -31954,7 +31954,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -32095,7 +32095,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -32240,7 +32240,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -32381,7 +32381,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -32522,7 +32522,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -32662,7 +32662,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -32805,7 +32805,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -32946,7 +32946,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -33090,7 +33090,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -33232,7 +33232,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -33380,7 +33380,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -33520,7 +33520,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -33805,7 +33805,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -33945,7 +33945,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -34089,7 +34089,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -34231,7 +34231,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -34515,7 +34515,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -34657,7 +34657,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -34801,7 +34801,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -34943,7 +34943,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -35085,7 +35085,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -35227,7 +35227,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -35282,7 +35282,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2847,
@@ -35321,27 +35321,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -35769,7 +35769,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -35911,7 +35911,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -35966,7 +35966,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2577,
@@ -36008,27 +36008,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -36170,7 +36170,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -36311,7 +36311,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -36453,7 +36453,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -36594,7 +36594,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -36736,7 +36736,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -37022,7 +37022,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -37162,7 +37162,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -37303,7 +37303,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -37444,7 +37444,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -37585,7 +37585,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -37726,7 +37726,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -37869,7 +37869,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -38009,7 +38009,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -38064,7 +38064,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3682,
@@ -38106,27 +38106,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -38266,7 +38266,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -38415,7 +38415,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -38558,7 +38558,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -38757,7 +38757,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3158,
@@ -38799,27 +38799,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -38960,7 +38960,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -39101,7 +39101,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -39246,7 +39246,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -39389,7 +39389,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -39533,7 +39533,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -39679,7 +39679,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -39821,7 +39821,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -39963,7 +39963,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -40108,7 +40108,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -40248,7 +40248,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -40390,7 +40390,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -40532,7 +40532,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -40679,7 +40679,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -40734,7 +40734,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2487,
@@ -40773,27 +40773,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -41079,7 +41079,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -41221,7 +41221,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -41361,7 +41361,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -41501,7 +41501,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -41641,7 +41641,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -41784,7 +41784,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -41925,7 +41925,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -42068,7 +42068,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -42214,7 +42214,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -42361,7 +42361,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -42502,7 +42502,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -42642,7 +42642,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -42786,7 +42786,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -42841,7 +42841,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 2319,
@@ -42880,27 +42880,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -42955,7 +42955,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3984,
@@ -42997,27 +42997,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -43157,7 +43157,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -43589,7 +43589,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -43644,7 +43644,7 @@
    "resident_name": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "market_rent": {
     "value": 3775,
@@ -43686,27 +43686,27 @@
    "balance": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "move_in_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_start_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "lease_end_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    },
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -43993,7 +43993,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -44138,7 +44138,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -44281,7 +44281,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -44425,7 +44425,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -44565,7 +44565,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -44707,7 +44707,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -44848,7 +44848,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -45134,7 +45134,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -45276,7 +45276,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -45416,7 +45416,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   },
   {
@@ -45557,7 +45557,7 @@
    "expected_move_out_date": {
     "value": null,
     "citation": "",
-    "confidence": 0.6
+    "confidence": 0.75
    }
   }
  ],
@@ -45566,7 +45566,7 @@
   "tokens_in": 0,
   "tokens_out": 0,
   "cost_usd": 0.0,
-  "latency_ms": 3411,
+  "latency_ms": 6088,
   "cache_hits": 3,
   "cost_usd_uncached": 0.00181,
   "models": {

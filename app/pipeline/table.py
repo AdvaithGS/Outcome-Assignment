@@ -20,6 +20,7 @@ from app.ingest.grid import Grid, Sheet, col_index, col_letter, fmt, preview, sp
 from app.llm import LLMClient, UsageTracker
 from app.pipeline import formula as F
 from app.pipeline.normalise import normalise
+from app.pipeline.postprocess import NULL_CONFIDENCE
 from app.pipeline.schema_analysis import SchemaSpec, parse_json
 
 log = logging.getLogger("table")
@@ -543,8 +544,11 @@ def _cite_cells(rows: list[dict]) -> list[dict]:
     for row in rows:
         for fr in row.values():
             if fr.get("confidence") is None:
-                fr["confidence"] = 0.9 if fr.get("source_locations") and fr.get("value") is not None else (
-                    0.6 if fr.get("value") is None else 0.75)
+                # copied from a cell (a spreadsheet address, or a row of a table rebuilt from a PDF page) → 0.9;
+                # a null where the plan found no value → NULL_CONFIDENCE, as for single-entry documents
+                copied = fr.get("source_locations") or fr.get("page_numbers")
+                fr["confidence"] = 0.9 if copied and fr.get("value") is not None else (
+                    NULL_CONFIDENCE if fr.get("value") is None else 0.75)
             if fr.get("value") is None:
                 fr["citation"], fr["source_locations"] = "", []
     return rows
