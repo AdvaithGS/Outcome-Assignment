@@ -8,6 +8,7 @@ Rendering, OCR and vision results are all cached (artifact cache / LLM cache), s
 from __future__ import annotations
 
 import asyncio
+import dataclasses
 import io
 import logging
 import re
@@ -61,7 +62,11 @@ def table_header(markdown: str) -> str | None:
 
 async def transcribe_table_pages(path: Path, n_pages: int, **kw) -> dict[int, tuple[str, str]]:
     """Table documents: transcribe page 1 first, then the remaining pages in parallel with page 1's column header as a
-    layout to follow, so every page yields the same columns (one plan maps fixed columns)."""
+    layout to follow, so every page yields the same columns (one plan maps fixed columns). Always vision on every page:
+    selective vision would return plain OCR text for "easy" pages, which has no table structure for the plan."""
+    cfg = kw.get("cfg")
+    if getattr(cfg, "scanned_mode", None) == "selective":
+        kw["cfg"] = dataclasses.replace(cfg, scanned_mode="vision")
     first = await transcribe_pages(path, [0], prompt=TABLE_VISION_PROMPT, **kw)
     header = table_header(first[0][0]) if 0 in first else None
     prompt = TABLE_VISION_PROMPT
