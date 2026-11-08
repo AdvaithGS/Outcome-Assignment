@@ -41,6 +41,7 @@ Read from the shell environment (or a local `.env`) by `docker compose`; default
 | `FALLBACK_MODEL` | `anthropic/claude-haiku-5.5` | Used when a model's output is unusable; last table-plan repair |
 | `SCANNED_MODE` | `selective` | `selective`: Tesseract first, vision for hard pages; `vision`: every page; `ocr`: no vision |
 | `FREETEXT_MODE` | `concise` | Free-text answers: `concise`, `verbatim` (quotes) or `describe` |
+| `OCR_WORKERS` | CPUs − 2 | Size of the page-rendering / OCR pool (runs at low priority) |
 
 ## Sample-set scores (`tools/validate.py`)
 
@@ -60,13 +61,14 @@ python tools/validate.py outputs/ --schema-dir sample/schemas --truth-dir sample
 | t12_001 | 0.999 | 0 | 0 | 119/119 |
 | **Mean** | **0.936** | | | |
 
-All 8 outputs are VALID. Uncached cost **$0.0042 per document** on average (scanned 25-page lease ~$0.009, tables
-~$0.001–0.003). Load test in Docker, 10 jobs in flight: 16/16 SUCCESS, p50 50 s, p95 83 s, none lost or duplicated. Regenerate them with `python -m app.eval.run_samples --go`;
+All 8 outputs are VALID. Uncached cost **~$0.004 per document** on average (scanned 25-page lease ~$0.007–0.009,
+tables ~$0.0005–0.003). Load test in Docker from a fresh clone, 10 jobs in flight, cache off: 16/16 SUCCESS, p50 25 s,
+p95 94 s, `POST /jobs` ≤ 95 ms, none lost or duplicated (`experiments/load/final-wc10-lmc24.json`). Regenerate them with `python -m app.eval.run_samples --go`;
 `LLM_CACHE_MODE=replay` reproduces them from cached responses at $0 (and fails loudly if a prompt changed).
 
 ## Tests
 
 ```bash
 pip install -r requirements-dev.txt
-pytest          # 104 tests: service guarantees, retries/timeouts, cache, ingestion, formulas, table plans
+pytest          # 117 tests: service guarantees, retries/timeouts, cache, ingestion, formulas, table plans
 ```

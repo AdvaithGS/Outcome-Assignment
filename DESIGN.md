@@ -1,8 +1,8 @@
 # Design
 
 Written for a colleague who has to run this on Monday. Sample mean **0.936** on `tools/validate.py`, no invented
-values, **~$0.0042 per document**; at 10 jobs in flight, 16/16 SUCCESS, p50 50 s, p95 83 s. Every experiment and table
-is in `TECHNICAL_REPORT.md`, the working notes in `notes/`.
+values, **~$0.004 per document**; at 10 jobs in flight (fresh clone, cache off): 16/16 SUCCESS, p50 25 s, p95 94 s,
+none lost or duplicated. Every experiment and table is in `TECHNICAL_REPORT.md`, the working notes in `notes/`.
 
 ```
 POST /jobs ─► store upload + PENDING row (SQLite) ─► 202 in ~0.15 s
@@ -29,14 +29,19 @@ formatting, citations, page numbers).
   Locator did not pay for itself at these sizes. With this prompt the cheapest model tied the dearer ones.
 - **Computed fields are calculated in code**; a figure the document prints wins. The model's arithmetic was wrong on
   4 lease cells, the formulas on none.
-- **Tables: the LLM writes an extraction plan from a fixed-size preview and code runs it on the full grid**: cost is
-  ~$0.001–0.003 whatever the length (the rent roll is 3,000 rows), values are copied from cells, and each carries its
-  address. Plans must state the description's cross-field relations as checks that code verifies on every row; a
-  failing plan gets two repairs, the last by a second model. Works for XLSX/CSV (several sheets too), PDF tables
-  rebuilt from word positions, DOCX tables and scanned tables (page 1's columns imposed on later pages: scanned
-  budget 0.991).
+- **Tables: the LLM writes an extraction plan from a fixed-size preview; code runs it on the full grid.** ~$0.001–0.003
+  whatever the length (the rent roll has 3,000 rows); values are copied from cells with their address; the
+  description's cross-field relations are checks verified on every row. XLSX/CSV (several sheets too), PDF tables
+  rebuilt from word positions, DOCX tables, scanned tables (scanned budget 0.991).
+- **Absent, bad and failed inputs end in a defined state** (15 bad or mismatched inputs tested): unstated values are
+  null; unreadable files are FAILED with the reason; empty documents, or a table field list on a document without a
+  table, give valid nulls (PARTIAL, with a note) and no model calls; unusable model output gets a repair retry, the
+  fallback model, then valid nulls.
+- **Confidence is evidence-based**, checked against the answers: free text and yes/no judgements score lower, printed
+  values higher when their citation and the value are both found. Values at ≥ 0.9 were right 96% of the time (82% before).
 - **Service:** the SQLite job table is the queue (atomic claims, leases + heartbeats, fencing, idempotency per file +
   field list + tenant). A pipeline error never loses a document: it is retried, then finished PARTIAL with valid nulls.
+  OCR runs in its own CPU pool at low priority, so it never delays claims, heartbeats or the API.
 
 ## Tradeoffs taken
 
@@ -57,21 +62,22 @@ formatting, citations, page numbers).
 | Lease / OM extraction | gpt-6-luna, reasoning off (fallback claude-haiku-5.5) | ~$0.003–0.007 |
 | Table plan and repairs | gpt-6-luna; last repair claude-haiku-5.5 | ~$0.001–0.003 |
 
-**Development spend: $0.69 of the $10** (562 calls, almost all experiments). Every response is cached, so re-scoring
+**Development spend: $0.84 of the $10** (765 calls, almost all experiments, incl. five Docker load tests). Every response is cached, so re-scoring
 after a downstream change costs $0; replay mode fails instead of spending.
 
 ## What broke and how it was handled
 
-- **An 80-minute run:** calls hung on a 300 s read timeout. Every attempt now has a total time cap, and retries stop
-  at the job's deadline.
-- **Hidden reasoning tokens** made a test cost 3.5× its estimate: estimates include them; reasoning off by default.
-- **Table plans** dropped columns, read wrapped text only on its first line, picked the wrong "Rent" line: generic
-  checks and required cross-field checks catch these. A failed plan once ran 31 fallback calls on a big sheet, so the
-  fallback is now bounded.
-- **Scanned table pages** were transcribed with different column layouts: page 1's header is imposed on the rest.
-- **Terse-list definitions first invented "0 if absent" conventions** (9 invented values): now "null unless stated".
-- **The first load test** queued 20 s table jobs behind scanned leases (p50 129 s): concurrency raised to 10 jobs and
-  24 model calls per worker (p50 50 s).
+- **An 80-minute run** (calls hung on a 300 s read timeout): every attempt has a total time cap; retries stop at the
+  job deadline. **Hidden reasoning tokens** tripled a test's cost: estimates include them; reasoning off by default.
+- **Table plans** dropped columns, cut wrapped text, picked the wrong "Rent" line, and once ran 31 fallback calls:
+  generic and required cross-field checks, two repairs, a bounded fallback. **Fresh plans** shortened a header value
+  in 4 of 5 runs: document-wide values are now taken as printed in their cell (T12, five fresh plans: 0.923 → 0.997).
+- **Scanned tables**: pages came back with different column layouts (page 1's header is now imposed), and later
+  selective vision turned "easy" pages into plain text (1 of 55 rows; tables always use vision again, 0.991).
+- **Load tests**: table jobs queued behind scanned leases (p50 129 s → concurrency 10 jobs / 24 calls, 50 s); then
+  per-page OCR filled the worker's thread pool (tables 103 s, POST 4.2 s → own CPU pool at low priority, p50 25 s).
+- **Our own fixes**: terse-list definitions invented "0 if absent" (9 invented values → "null unless stated"), and a
+  number-parser fix read labels as amounts ("C5" → 5; caught by comparing old and new parsing on every sample cell).
 
 ## Running it (ops notes)
 
@@ -79,14 +85,17 @@ after a downstream change costs $0; replay mode fails instead of spending.
   `docker compose up --scale worker=3` (workers share the queue on the `data` volume).
 - JSON logs on stdout: `docker compose logs worker | grep <job_id>` shows a job's stages, cost and errors; a FAILED
   job's reason is in its `error` field.
-- Required settings: `LLM_BASE_URL`, `LLM_API_KEY`; the rest are listed in `README.md`.
+- Required settings: `LLM_BASE_URL`, `LLM_API_KEY`; the rest are listed in `README.md` (e.g. `OCR_WORKERS` sizes the
+  OCR pool; default: available CPUs − 2).
 - Sample answers: no errors found; lease_002's `base_rent_escalation` is "none", which the validator treats as null.
 
 ## With another week
 
 - Field-scoped interpretation hints (rent starts after free rent; the subject property's in-place rent), tested on
   documents outside the samples so they do not just fit three leases.
-- Escalation: a second cheap model, and only fields where the two disagree go to a stronger one (disagreement caught
-  >90% of errors in E1b).
-- Send a scanned page to vision when the extraction leaves a field null that should be on it.
-- A slimmer image, and a Locator path for 100+ page documents.
+- Act on low confidence: a second cheap model on fields scored below ~0.8, and only fields where the two disagree go to
+  a stronger one (disagreement caught > 90% of errors in E1b).
+- Field lists of ~75+ fields: extract by stage-0 group in parallel calls (one call's output cap would truncate them).
+- Scanned PDFs that carry a scanner's hidden OCR text layer: treat as scanned; mixed scanned/digital table PDFs.
+- A load test with several worker containers; send a page to vision when the extraction leaves a field on it null;
+  a slimmer image; a Locator path for 100+ page documents.

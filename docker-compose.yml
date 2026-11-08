@@ -21,6 +21,7 @@ x-env: &env
   FALLBACK_MODEL: ${FALLBACK_MODEL:-anthropic/claude-haiku-5.5}
   SCANNED_MODE: ${SCANNED_MODE:-selective}
   FREETEXT_MODE: ${FREETEXT_MODE:-concise}
+  OCR_WORKERS: ${OCR_WORKERS:-}
   LOG_LEVEL: ${LOG_LEVEL:-INFO}
 
 services:
