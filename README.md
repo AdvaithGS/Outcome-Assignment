@@ -23,7 +23,24 @@ curl -s localhost:8080/jobs/<job_id>
 ```
 
 Optional: `X-Organization-Id` header (tenant isolation), `webhook_url` form field. Scale with
-`WORKER_CONCURRENCY=8` or `docker compose up --scale worker=3`.
+`WORKER_CONCURRENCY=20` (default 10 jobs per worker) or `docker compose up --scale worker=3`.
+
+## Settings
+
+Read from the shell environment (or a local `.env`) by `docker compose`; defaults are the tested configuration.
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `LLM_BASE_URL`, `LLM_API_KEY` | OpenRouter, — | Model gateway and key (key required) |
+| `WORKER_CONCURRENCY` | 10 | Jobs each worker runs at once |
+| `LLM_MAX_CONCURRENCY` | 24 | Concurrent model calls per worker |
+| `JOB_DEADLINE_S` | 1200 | Internal deadline per job, from submission (the brief allows 30 min) |
+| `LLM_TIMEOUT_S` | 90 | Total time cap per model-call attempt |
+| `LLM_CACHE_MODE` | `read_write` | Response cache: `read_write`, `off`, `replay` (never spends), `refresh` |
+| `EXTRACT_MODEL`, `VISION_MODEL`, `TABLE_MODEL`, `ANALYSIS_MODEL` | `openai/gpt-6-luna` | Model per stage (reasoning off) |
+| `FALLBACK_MODEL` | `anthropic/claude-haiku-5.5` | Used when a model's output is unusable; last table-plan repair |
+| `SCANNED_MODE` | `selective` | `selective`: Tesseract first, vision for hard pages; `vision`: every page; `ocr`: no vision |
+| `FREETEXT_MODE` | `concise` | Free-text answers: `concise`, `verbatim` (quotes) or `describe` |
 
 ## Sample-set scores (`tools/validate.py`)
 
@@ -43,12 +60,13 @@ python tools/validate.py outputs/ --schema-dir sample/schemas --truth-dir sample
 | t12_001 | 0.999 | 0 | 0 | 119/119 |
 | **Mean** | **0.936** | | | |
 
-All 8 outputs are VALID. Regenerate them with `python -m app.eval.run_samples --go`;
+All 8 outputs are VALID. Uncached cost **$0.0042 per document** on average (scanned 25-page lease ~$0.009, tables
+~$0.001–0.003). Load test in Docker, 10 jobs in flight: 16/16 SUCCESS, p50 50 s, p95 83 s, none lost or duplicated. Regenerate them with `python -m app.eval.run_samples --go`;
 `LLM_CACHE_MODE=replay` reproduces them from cached responses at $0 (and fails loudly if a prompt changed).
 
 ## Tests
 
 ```bash
 pip install -r requirements-dev.txt
-pytest          # 102 tests: service guarantees, retries/timeouts, cache, ingestion, formulas, table plans
+pytest          # 104 tests: service guarantees, retries/timeouts, cache, ingestion, formulas, table plans
 ```
