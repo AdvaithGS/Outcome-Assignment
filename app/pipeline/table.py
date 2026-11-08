@@ -264,6 +264,11 @@ def _execute_sheet(plan: dict, grid: Grid, spec: SchemaSpec, diag: dict | None =
             elif i + 1 == len(starts):
                 block = [r]                       # last record without a closing row: do not swallow trailing summaries
         blocks.append(block)
+    if not end and len(blocks) >= 2:
+        # without a closing row the last record runs to the end of the table, where totals and summaries follow:
+        # it may not be longer than the longest other record
+        longest = max(len(b) for b in blocks[:-1])
+        blocks[-1] = blocks[-1][:longest]
 
     def where(r, c):
         """Location tag for citations: a cell address for spreadsheets, the page for grids rebuilt from PDFs."""

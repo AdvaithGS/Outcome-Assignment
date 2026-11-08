@@ -264,3 +264,72 @@ def test_cpu_pool_size_and_run():
     assert cpu_slots({"OCR_WORKERS": "3"}) == 3
     assert cpu_slots({}) == max(1, available_cpus() - 2) >= 1
     assert asyncio.run(run_cpu(sum, [1, 2, 3])) == 6
+
+
+def test_to_number_ranges_units_multipliers():
+    from app.pipeline.normalise import normalise
+    for v in ("1,200-1,500", "2019-2020", "5-10", "Year 1: $25.00", "2010-03-01"):
+        assert normalise(v, "number") is None, v               # several figures: never run the digits together
+    assert normalise("$1.2 million", "number") == 1200000
+    assert normalise("$12.5M", "number") == 12500000 and normalise("Suite 5B", "number") == 5
+    assert normalise("$24.50/SF", "number") == 24.5 and normalise("$4,250.00 per month", "number") == 4250.0
+    assert normalise("3.5% annually", "percent") == 3.5 and normalise("(1,234)", "number") == -1234
+    assert normalise("-$1,234.50", "number") == -1234.5 and normalise("Rent - 4,250", "number") == 4250
+
+
+def test_to_date_day_first_ordinals_datetimes():
+    from datetime import datetime
+    from app.pipeline.normalise import normalise
+    assert normalise("13/05/2010", "date") == "2010-05-13" and normalise("05/03/2010", "date") == "2010-05-03"
+    assert normalise("5th of March, 1993", "date") == "1993-03-05"
+    assert normalise(datetime(2024, 1, 31, 10, 30), "date") == "2024-01-31"
+
+
+def test_xlsx_percent_cells_as_displayed(tmp_path):
+    import openpyxl
+    from app.ingest.grid import load_xlsx
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws["A1"], ws["B1"] = 0.0525, 0.95
+    ws["A1"].number_format, ws["B1"].number_format = "0.00%", "0%"
+    ws["C1"] = 1234
+    wb.save(tmp_path / "p.xlsx")
+    s = load_xlsx(tmp_path / "p.xlsx").sheets[0]
+    assert (s.get(1, 1), s.get(1, 2), s.get(1, 3)) == ("5.25%", "95%", 1234)
+
+
+def test_last_table_record_does_not_swallow_totals():
+    from app.ingest.grid import Grid, Sheet
+    from app.pipeline.schema_analysis import heuristic_spec
+    from app.pipeline.table import execute
+    sh = Sheet("S")
+    for r, (a, b) in enumerate([("U1", 10), (None, 5), ("U2", 20), (None, 7), ("Total", 42), ("Grand", 42)], start=1):
+        if a:
+            sh.cells[(r, 1)] = a
+        sh.cells[(r, 2)] = b
+    sh.max_row, sh.max_col = 6, 2
+    spec = heuristic_spec({"fields": {"unit": {"name": "Unit", "description": "unit id", "primary": True},
+                                      "charges": {"name": "Charges", "description": "sum of charge amounts"}}})
+    plan = {"record_start": {"column": "A", "pattern": r"U\d"}, "columns": {"unit": "A"},
+            "block_fields": {"charges": {"mode": "sum", "column": "B"}}, "checks": []}
+    rows = execute(plan, Grid("t", "xlsx", [sh]), spec)
+    assert [r["charges"]["value"] for r in rows] == [15, 27]     # not 27 + 42 + 42 for the last unit
+
+
+def test_docx_strike_and_hidden_runs(tmp_path):
+    import zipfile
+    from app.ingest.docx import ingest_docx
+    from app.ingest.grid import grid_from_docx
+    W = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
+    def run(t, props=""):
+        return f'<w:r><w:rPr>{props}</w:rPr><w:t xml:space="preserve">{t}</w:t></w:r>'
+    para = ("<w:p>" + run("Security deposit: ") + run("$2,400", "<w:strike/>") + run(" $2,150")
+            + run(" internal note", "<w:vanish/>") + "</w:p>")
+    cell = "<w:tc><w:p>" + run("$2,400", "<w:strike/>") + run(" $2,150") + "</w:p></w:tc>"
+    body = para + f"<w:tbl><w:tr><w:tc><w:p>{run('Deposit')}</w:p></w:tc>{cell}</w:tr></w:tbl>"
+    with zipfile.ZipFile(tmp_path / "d.docx", "w") as z:
+        z.writestr("word/document.xml", f"<w:document {W}><w:body>{body}</w:body></w:document>")
+    md = ingest_docx(tmp_path / "d.docx").markdown
+    assert "~~$2,400~~ $2,150" in md and "internal note" not in md
+    g = grid_from_docx(tmp_path / "d.docx")
+    assert g.sheets[0].get(2, 2) == "$2,150"

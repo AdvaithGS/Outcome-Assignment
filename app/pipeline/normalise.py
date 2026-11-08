@@ -12,7 +12,7 @@ A value that does not parse as its type becomes None: a wrong-typed value is wor
 from __future__ import annotations
 
 import re
-from datetime import date
+from datetime import date, datetime
 
 MONTHS = {m: i + 1 for i, m in enumerate(["january", "february", "march", "april", "may", "june", "july", "august",
                                            "september", "october", "november", "december"])}
@@ -25,7 +25,16 @@ WORD_ORD = {w: i + 1 for i, w in enumerate(
 NULL_STRINGS = {"", "null", "none", "n/a", "na", "-", "--", "not stated", "not found", "unknown"}
 
 
+_NUM_TOKEN = re.compile(r"\d[\d,]*(?:\.\d+)?|\.\d+")
+_MULT_WORD = re.compile(r"^\s*(thousand|million|mil|mm|billion|bn)\b", re.I)
+_MULT_LETTER = re.compile(r"^(k|m|b)\b", re.I)        # "$12.5M": only directly after a currency amount
+_MULTS = {"thousand": 1e3, "k": 1e3, "million": 1e6, "mil": 1e6, "mm": 1e6, "m": 1e6, "billion": 1e9, "bn": 1e9, "b": 1e9}
+
+
 def to_number(v):
+    """One number from a value: "$4,250.00 per month" → 4250.0, "$1.2 million" → 1200000, "(1,234)" → -1234.
+    A string holding several figures ("1,200-1,500", "2019-2020", "Year 1: $25") is not one number → None,
+    never the digits run together."""
     if isinstance(v, bool):
         return None
     if isinstance(v, (int, float)):
@@ -35,17 +44,32 @@ def to_number(v):
     s = v.strip()
     if s.lower() in NULL_STRINGS:
         return None
-    neg = (s.startswith("(") and s.endswith(")")) or s.startswith("-") or s.startswith("−")
-    s = re.sub(r"[()\s$€£₹%,−-]", "", s.replace("USD", ""))
-    s = re.sub(r"(?i)(sf|rsf|sq\.?ft\.?|acres?|months?|years?|units?)$", "", s)
-    if not re.fullmatch(r"\d+(\.\d+)?", s):
+    toks = list(_NUM_TOKEN.finditer(s))
+    if len(toks) != 1:
         return None
-    x = float(s)
+    tok = toks[0]
+    digits = tok.group(0).replace(",", "")
+    if not re.fullmatch(r"\d*\.?\d+", digits) or len(s.split()) > 8:     # long prose is not a value
+        return None
+    before, after = s[:tok.start()], s[tok.end():]
+    neg = bool(re.fullmatch(r"\s*[-−–]\s*[$€£₹]?\s*|\s*[$€£₹]\s*[-−–]\s*", before)) or (
+        "(" in before and ")" in after and before.rstrip().endswith(("(", "($", "(€", "(£", "(₹")))
+    mult = 1.0
+    m = _MULT_WORD.match(after)
+    if m:
+        mult = _MULTS[m.group(1).lower()]
+    elif re.search(r"[$€£₹]\s*$", before):
+        m = _MULT_LETTER.match(after)
+        if m:
+            mult = _MULTS[m.group(1).lower()]
+    x = float(digits) * mult
     x = -x if neg else x
-    return int(x) if x.is_integer() and "." not in s else x
+    return int(x) if x.is_integer() and ("." not in digits or mult != 1.0) else x
 
 
 def to_date(v) -> str | None:
+    if isinstance(v, datetime):
+        return v.date().isoformat()                                 # a spreadsheet date with a time of day
     if isinstance(v, date):
         return v.isoformat()
     if not isinstance(v, str):
@@ -55,20 +79,21 @@ def to_date(v) -> str | None:
     m = re.search(r"\b(\d{4})-(\d{1,2})-(\d{1,2})\b", s)
     if m:
         return _mk(int(m.group(1)), int(m.group(2)), int(m.group(3)))
-    m = re.search(r"\b(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})\b", s)   # US numeric
+    m = re.search(r"\b(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})\b", s)   # US numeric; day first only when it must be
     if m:
         y = int(m.group(3))
         y += (1900 if y >= 50 else 2000) if y < 100 else 0
-        return _mk(y, int(m.group(1)), int(m.group(2)))
+        a, b = int(m.group(1)), int(m.group(2))
+        return _mk(y, b, a) if a > 12 >= b else _mk(y, a, b)
     mon = r"(january|february|march|april|may|june|july|august|september|sept|october|november|december|jan|feb|mar|apr|jun|jul|aug|sep|oct|nov|dec)\.?"
     m = re.search(rf"\b{mon} (\d{{1,2}})(?:st|nd|rd|th)? ?,? ?(\d{{4}})\b", s)
     if m:
         return _mk(int(m.group(3)), MONTHS[m.group(1)], int(m.group(2)))
-    m = re.search(rf"\b(\d{{1,2}})(?:st|nd|rd|th)? (?:day of )?{mon} ?,? ?(\d{{4}})\b", s)
+    m = re.search(rf"\b(\d{{1,2}})(?:st|nd|rd|th)? (?:day )?(?:of )?{mon} ?,? ?(\d{{4}})\b", s)
     if m:
         return _mk(int(m.group(3)), MONTHS[m.group(2)], int(m.group(1)))
     ords = "|".join(sorted(WORD_ORD, key=len, reverse=True))
-    m = re.search(rf"\b({ords}) (?:day of )?{mon} ?,? ?(\d{{4}})\b", s)
+    m = re.search(rf"\b({ords}) (?:day )?(?:of )?{mon} ?,? ?(\d{{4}})\b", s)
     if m:
         return _mk(int(m.group(3)), MONTHS[m.group(2)], WORD_ORD[m.group(1)])
     return None

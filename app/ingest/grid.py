@@ -106,6 +106,17 @@ def _index_rows(sheet: Sheet) -> Sheet:
     return sheet
 
 
+def _as_displayed_percent(v, number_format: str | None):
+    """A percent-formatted cell stores 0.0525 and displays "5.25%"; the contract wants percentages as printed, so
+    keep the displayed text (it parses to 5.25, and the plan's preview shows what the reader sees)."""
+    if isinstance(v, bool) or not isinstance(v, (int, float)) or "%" not in (number_format or ""):
+        return v
+    m = re.search(r"0(?:\.(0+))?\s*%", number_format.split(";")[0])
+    if not m:
+        return v
+    return f"{v * 100:.{len(m.group(1) or '')}f}%"
+
+
 def load_xlsx(path: str | Path) -> Grid:
     import openpyxl
     wb = openpyxl.load_workbook(path, data_only=True, read_only=False)
@@ -116,7 +127,7 @@ def load_xlsx(path: str | Path) -> Grid:
             for c in row:
                 v = _clean(c.value)
                 if v is not None:
-                    s.cells[(c.row, c.column)] = v
+                    s.cells[(c.row, c.column)] = _as_displayed_percent(v, c.number_format)
         for rng in ws.merged_cells.ranges:
             v = s.cells.get((rng.min_row, rng.min_col))
             if v is None:
@@ -361,6 +372,11 @@ def grid_from_markdown_pages(pages: list[str], source: str, min_table_rows: int 
     return _sheet_from_rows(Path(source).stem, _drop_repeated(rows), "pdf", Path(source).name)
 
 
+def _unstruck(text: str) -> str:
+    """Table cells: struck-through text (~~old~~ new) does not apply, so only the remaining text is a value."""
+    return " ".join(re.sub(r"~~.*?~~", " ", text).split())
+
+
 def grid_from_docx(path: str | Path) -> "Grid | None":
     """Grid from a DOCX: each Word table row becomes a grid row (merged cells padded), each paragraph a one-cell row,
     in document order. Returns None when the document has no table."""
@@ -377,7 +393,7 @@ def grid_from_docx(path: str | Path) -> "Grid | None":
             nonlocal n_table
             for el in container:
                 if el.tag == _w("p"):
-                    text = parser.para(el)[0]
+                    text = _unstruck(parser.para(el)[0])
                     if text:
                         rows.append((0, [text]))
                 elif el.tag == _w("tbl"):
@@ -387,7 +403,7 @@ def grid_from_docx(path: str | Path) -> "Grid | None":
                             pr = tc.find(_w("tcPr"))
                             span = pr.find(_w("gridSpan")) if pr is not None else None
                             span = int(span.get(f"{{{'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}}}val") or 1) if span is not None else 1
-                            cells.append(parser.cell_text(tc))
+                            cells.append(_unstruck(parser.cell_text(tc)))
                             cells.extend([""] * (span - 1))
                         rows.append((0, cells))
                         n_table += 1

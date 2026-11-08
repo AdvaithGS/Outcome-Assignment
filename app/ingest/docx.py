@@ -5,7 +5,8 @@
 - Auto-numbering is reconstructed from numbering.xml, so "28. REAL ESTATE BROKER." keeps its number.
 - Tables → `[Table ID: NNN]` + Markdown table (gridSpan padded, vMerge continuations blank).
 - Tabs inside a line → " | " (keeps tab-aligned pseudo-tables readable); leading tabs dropped.
-- Tracked deletions (w:delText) are skipped; insertions are kept.
+- Tracked deletions (w:delText) are skipped; insertions are kept. Struck-through runs are marked ~~like this~~
+  (a formatted redline does not apply); hidden runs (w:vanish) are skipped.
 - Embedded images above a size threshold → `[Image ID: NNN]` + OCR transcription (signature pages, scanned exhibits).
 
 Baselines for E0: `ingest_docx_baseline(path, "python-docx" | "mammoth")`.
@@ -36,6 +37,31 @@ def _w(tag: str) -> str:
 
 def _attr(el, name: str, ns: str = W) -> str | None:
     return el.get(f"{{{ns}}}{name}") if el is not None else None
+
+
+def _on(rpr, prop: str) -> bool:
+    """Is a run property (b, strike, dstrike, vanish) switched on? <w:strike/> or val true/1/on."""
+    el = rpr.find(_w(prop)) if rpr is not None else None
+    return el is not None and (_attr(el, "val") or "true").lower() not in ("0", "false", "off", "none")
+
+
+def _join_marked(pieces: list[str], struck: list[bool]) -> str:
+    """Join run texts, wrapping each stretch of struck-through text in ~~ ~~ (whitespace kept outside the marks),
+    the same convention the vision transcription uses, so the extraction prompt treats it as not applying."""
+    out, i = [], 0
+    while i < len(pieces):
+        if not struck[i]:
+            out.append(pieces[i])
+            i += 1
+            continue
+        j = i
+        while j < len(pieces) and (struck[j] or (not pieces[j].strip() and j + 1 < len(pieces) and struck[j + 1])):
+            j += 1
+        seg = "".join(pieces[i:j])
+        lead, core, trail = seg[:len(seg) - len(seg.lstrip())], seg.strip(), seg[len(seg.rstrip()):]
+        out.append(f"{lead}~~{core}~~{trail}")
+        i = j
+    return "".join(out)
 
 
 # ---------------------------------------------------------------------------- numbering
@@ -152,20 +178,26 @@ class _DocxParser:
         pieces: list[str] = []
         images: list[str] = []
         bold_chars = total_chars = 0
+        struck: list[bool] = []                 # per piece: struck-through text (a redline that does not apply)
         for r in p.iter(_w("r")):
             rpr = r.find(_w("rPr"))
-            b = rpr.find(_w("b")) if rpr is not None else None
-            is_bold = b is not None and (_attr(b, "val") or "true") not in ("0", "false")
+            if _on(rpr, "vanish"):
+                continue                        # hidden text is not part of the document a reader sees
+            is_bold = _on(rpr, "b")
+            is_struck = _on(rpr, "strike") or _on(rpr, "dstrike")
             for el in r:
                 if el.tag == _w("t"):
                     pieces.append(el.text or "")
+                    struck.append(is_struck and bool((el.text or "").strip()))
                     n = len((el.text or "").strip())
                     total_chars += n
                     bold_chars += n if is_bold else 0
                 elif el.tag == _w("tab"):
                     pieces.append("\t")
+                    struck.append(False)
                 elif el.tag in (_w("br"), _w("cr")):
                     pieces.append("\n")
+                    struck.append(False)
             for blip in r.iter(f"{{{A}}}blip"):
                 if blip.get(f"{{{R}}}embed"):
                     images.append(blip.get(f"{{{R}}}embed"))
@@ -173,7 +205,7 @@ class _DocxParser:
                 if im.get(f"{{{R}}}id"):
                     images.append(im.get(f"{{{R}}}id"))
         images = list(dict.fromkeys(images))   # mc:AlternateContent repeats an image as Choice + Fallback
-        text = "".join(pieces)
+        text = _join_marked(pieces, struck)
         text = "\n".join(re.sub(r"\t+", " | ", ln.lstrip("\t")).rstrip(" |") for ln in text.split("\n"))
         num = self.para_numpr(p, sid)
         if num and text.strip():
