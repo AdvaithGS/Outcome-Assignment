@@ -136,12 +136,16 @@ def _cell_ok(sheet: Sheet, r: int, cond: dict | None) -> bool:
 _LABELLED = re.compile(r"^\s*[A-Za-z][^:=]{0,60}?\s*[:=]\s*(\S.*?)\s*$")
 
 
-def printed_value(llm_value, cell_value):
+def printed_value(llm_value, cell_value, ftype: str = "text"):
     """A document-wide value (a plan constant) as the document prints it. Plans type the value themselves, and fresh
     plans shorten it differently ("417" for a header cell "Property =  417 .417", where the value is "417 .417"): when
     the cited cell reads "Label = value" / "Label: value" and the plan's value is part of that value, the cell's full
-    value wins. Without an llm_value (per-sheet constants) the cell's value part is used. Anything else: the plan's."""
+    value wins. Only for text fields: a typed value (number, year, date) is already in the field's format, and the
+    rest of its cell need not be ("File: 2021.cm3" for budget year 2021). Without an llm_value (per-sheet constants)
+    the cell's value part is used. Anything else: the plan's."""
     if cell_value is None:
+        return llm_value
+    if llm_value is not None and ftype not in ("text", "freetext"):
         return llm_value
     if not isinstance(cell_value, str):
         return cell_value if llm_value is None else llm_value
@@ -398,10 +402,11 @@ def _execute_sheet(plan: dict, grid: Grid, spec: SchemaSpec, diag: dict | None =
                     cell_v = sheet.get(cr, cc)
                 except ValueError:
                     cell_v = None
+                ftype = spec.fields[k].type if k in spec.fields else "text"
                 if multi and cst.get("per_sheet"):
-                    fr["value"] = printed_value(None, cell_v)      # this sheet's own cell (normalised later)
+                    fr["value"] = printed_value(None, cell_v, ftype)      # this sheet's own cell (normalised later)
                 else:
-                    fr["value"] = printed_value(cst.get("value"), cell_v)
+                    fr["value"] = printed_value(cst.get("value"), cell_v, ftype)
             if ref:
                 try:
                     _, cr, cc = split_ref(ref)
@@ -578,10 +583,14 @@ async def classify(rows: list[dict], plan: dict, spec: SchemaSpec, client: LLMCl
             items = "\n".join(f"{n}. " + " | ".join(f"{i}={v}" for i, v in zip(inputs, combo)) for n, combo in enumerate(order))
             msgs = [{"role": "system", "content": CLASSIFY_SYSTEM},
                     {"role": "user", "content": f"Field: {k}: {spec.fields[k].description}\nAllowed labels: {options}\n\n{items}"}]
-            r = await client.chat(model=model, messages=msgs, stage="table_classify", job_id=job_id, usage=usage,
-                                  temperature=0, max_tokens=4000, timeout_s=90, deadline=deadline,
-                                  response_format={"type": "json_object"}, **extra)
-            got = parse_json(r.content) or {}
+            try:
+                r = await client.chat(model=model, messages=msgs, stage="table_classify", job_id=job_id, usage=usage,
+                                      temperature=0, max_tokens=4000, timeout_s=90, deadline=deadline,
+                                      response_format={"type": "json_object"}, **extra)
+                got = parse_json(r.content) or {}
+            except Exception as exc:  # noqa: BLE001 - labels stay null; the rows are still valid
+                log.warning("classify call failed", extra={"job_id": job_id, "field": k, "error": str(exc)[:200]})
+                got = {}
             for n, combo in enumerate(order):
                 votes.setdefault(combo, []).append(got.get(str(n)))
         labels = {}
@@ -635,9 +644,14 @@ async def extract_table(spec: SchemaSpec, grid: Grid, client: LLMClient, *, mode
     for attempt in range(max_plans):
         last = attempt == max_plans - 1 and attempt > 0 and repair_model
         m, ex = (repair_model, repair_extra or {}) if last else (model, extra)
-        r = await client.chat(model=m, messages=msgs, stage="table_plan", job_id=job_id, usage=usage,
-                              temperature=0, max_tokens=6000, timeout_s=120, deadline=deadline,
-                              response_format={"type": "json_object"}, **ex)
+        try:
+            r = await client.chat(model=m, messages=msgs, stage="table_plan", job_id=job_id, usage=usage,
+                                  temperature=0, max_tokens=6000, timeout_s=120, deadline=deadline,
+                                  response_format={"type": "json_object"}, **ex)
+        except Exception as exc:  # noqa: BLE001 - the next attempt (the last by the repair model) may still succeed
+            errors = [f"plan call failed ({m}): {type(exc).__name__}"]
+            log.warning("plan call failed", extra={"job_id": job_id, "attempt": attempt + 1, "error": str(exc)[:200]})
+            continue
         plan = parse_json(r.content)
         rows: list[dict] = []
         if plan is None:
@@ -678,7 +692,13 @@ async def extract_table(spec: SchemaSpec, grid: Grid, client: LLMClient, *, mode
         return TableResult(rows=_cite_cells(rows), plan=plan, errors=errors, method="best_plan", partial=True,
                            notes=[f"no plan passed all checks after {max_plans} calls; used the best one "
                                   f"({'; '.join(errors[:2])})"])
-    rows = await rows_fallback(grid, spec, client, model=model, extra=extra, usage=usage, job_id=job_id, deadline=deadline)
+    try:
+        rows = await rows_fallback(grid, spec, client, model=model, extra=extra, usage=usage, job_id=job_id,
+                                   deadline=deadline)
+    except Exception as exc:  # noqa: BLE001 - valid nulls (PARTIAL) rather than failing the job
+        log.warning("rows fallback failed", extra={"job_id": job_id, "error": str(exc)[:200]})
+        errors = errors + [f"rows fallback failed: {type(exc).__name__}"]
+        rows = []
     rows = finalise(rows, {}, spec)
     return TableResult(rows=_cite_cells(rows), plan=plan, errors=errors, method="rows_fallback", partial=True,
                        notes=[f"plans failed ({'; '.join(errors[:3])}); LLM wrote the rows"])

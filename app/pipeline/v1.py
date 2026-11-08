@@ -1,6 +1,6 @@
 """Pipeline v1: stage 0 → ingestion → route → stage 3a (single-entry) → stage 4.
 
-Tables (a field marked primary) are not extracted yet (layer 1, step 2): they return one all-null entry.
+Tables (a field marked primary) go to stage 3b (an LLM-written plan executed in code, app/pipeline/table.py).
 Every model choice is configuration (env or V1Config), so experiments swap models without code changes.
 """
 from __future__ import annotations
@@ -8,6 +8,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -20,7 +21,9 @@ from app.pipeline.postprocess import postprocess
 from app.pipeline.schema_analysis import SchemaSpec, analyse
 from app.pipeline.single import extract
 from app.pipeline.table import extract_table
-from app.ingest.grid import grid_document, grid_from_docx, grid_from_markdown_pages, grid_from_pdf, load_grid
+from app.ingest.grid import (grid_document, grid_from_docx, grid_from_markdown_pages, grid_from_pdf,
+                             grid_from_text_lines, load_grid)
+from app.pipeline.base import DocumentError
 from app.ingest.pdf import is_scanned_page, page_texts
 from app.pipeline.ingest import transcribe_table_pages
 
@@ -86,6 +89,29 @@ class Extraction:
     style: str | None = None                # overrides cfg.extract_style for this document
 
 
+_ANCHOR = re.compile(r"\[(?:Page \d+|Section [^\]]*|--- CHUNK \d+ ---|Table ID: \d+|Image ID: \d+)\]")
+
+
+def has_text(doc: Document, min_chars: int = 20) -> bool:
+    """Does the document carry any readable content once anchors and placeholders are removed?"""
+    body = _ANCHOR.sub(" ", doc.markdown).replace("(no text recognised)", " ")
+    return len(re.findall(r"[A-Za-z0-9]", body)) >= min_chars
+
+
+async def read_grid(path: Path, file_type: str):
+    """Spreadsheet → grid; a file that cannot be opened is an unreadable document (FAILED with the reason), not a
+    pipeline error to retry."""
+    try:
+        return await asyncio.to_thread(load_grid, path, file_type)
+    except Exception as exc:  # noqa: BLE001
+        raise DocumentError(f"cannot read {file_type.upper()}: {type(exc).__name__}: {str(exc)[:200]}") from exc
+
+
+def grid_is_empty(grid) -> bool:
+    """No sheet with at least two non-empty rows (a header and a record): there is no table to extract."""
+    return not grid or not grid.sheets or max(len(s.nonempty_rows()) for s in grid.sheets) < 2
+
+
 class PipelineV1:
     name = "v1"
 
@@ -111,8 +137,10 @@ class PipelineV1:
         if ctx.file_type not in ("pdf", "docx"):
             # a single-entry field list on a spreadsheet: read the grid as text and use the prose extractor
             # (pointer: cell addresses are exact, so values are read from the cells themselves)
-            grid = await asyncio.to_thread(load_grid, path, ctx.file_type)
+            grid = await read_grid(path, ctx.file_type)
             doc = grid_document(grid)
+            if not has_text(doc):
+                return Extraction(spec, doc, None, ["spreadsheet has no data; no extraction call made"])
             raw, notes = await extract(spec, doc, self.client, model=self.cfg.extract_model, extra=self.cfg.extract_extra,
                                        fallback_model=self.cfg.fallback_model, fallback_extra=self.cfg.fallback_extra,
                                        usage=ctx.usage, job_id=ctx.job_id, doc_id=ctx.file_name, deadline=deadline,
@@ -121,6 +149,8 @@ class PipelineV1:
         ctx.set_stage("PARSING")
         doc = await ingest(path, ctx.file_type, client=self.client, cfg=self.cfg, cache=self.cache, usage=ctx.usage,
                            job_id=ctx.job_id, doc_id=ctx.file_name, deadline=deadline)
+        if not has_text(doc):
+            return Extraction(spec, doc, None, ["document has no readable text; no extraction call made"])
         ctx.set_stage("EXTRACTING")
         raw, notes = await extract(spec, doc, self.client, model=self.cfg.extract_model, extra=self.cfg.extract_extra,
                                    fallback_model=self.cfg.fallback_model, fallback_extra=self.cfg.fallback_extra,
@@ -133,16 +163,28 @@ class PipelineV1:
         ctx.set_stage("PARSING")
         notes: list[str] = []
         if ctx.file_type in ("xlsx", "csv"):
-            grid = await asyncio.to_thread(load_grid, path, ctx.file_type)
+            grid = await read_grid(path, ctx.file_type)
         elif ctx.file_type == "docx":
-            grid = await asyncio.to_thread(grid_from_docx, path)
+            try:
+                grid = await asyncio.to_thread(grid_from_docx, path)
+            except Exception as exc:  # noqa: BLE001
+                raise DocumentError(f"cannot read DOCX: {type(exc).__name__}: {str(exc)[:200]}") from exc
             if grid is None:
                 return Extraction(spec, None, None, ["DOCX has no table for a table field list"])
         else:
-            texts = await asyncio.to_thread(page_texts, path, self.cfg.pdf_text_engine)
+            try:
+                texts = await asyncio.to_thread(page_texts, path, self.cfg.pdf_text_engine)
+            except Exception as exc:  # noqa: BLE001
+                raise DocumentError(f"cannot read PDF: {exc}") from exc
+            if not texts:
+                raise DocumentError("PDF has no pages")
             scanned = [i for i, t in enumerate(texts) if is_scanned_page(t)]
-            grid = None if len(scanned) * 2 >= len(texts) else await asyncio.to_thread(grid_from_pdf, path)
-            if grid is None:
+            grid = None
+            if len(scanned) * 2 < len(texts):
+                # a text layer: rebuild the table from word positions; if no table-like lines are found, the text
+                # lines themselves are the grid (never vision on pages that already have text)
+                grid = await asyncio.to_thread(grid_from_pdf, path) or grid_from_text_lines(texts, path.name)
+            else:
                 # scanned (or mostly scanned) table: transcribe every page, tables as Markdown, then build the grid
                 got = await transcribe_table_pages(path, len(texts), client=self.client, cfg=self.cfg,
                                                    cache=self.cache, usage=ctx.usage, job_id=ctx.job_id,
@@ -151,6 +193,8 @@ class PipelineV1:
                 notes.append(f"table rebuilt from {len(texts)} transcribed page(s)")
                 if grid is None:
                     return Extraction(spec, None, None, notes + ["no table found in the transcribed pages"])
+        if grid_is_empty(grid):
+            return Extraction(spec, None, None, notes + ["no table data in the document; no plan call made"])
         ctx.set_stage("EXTRACTING")
         res = await extract_table(spec, grid, self.client, model=self.cfg.table_model, extra=self.cfg.table_extra,
                                   usage=ctx.usage, job_id=ctx.job_id, deadline=deadline,
@@ -160,8 +204,8 @@ class PipelineV1:
     def rows(self, ex: Extraction, mode: str | None = None) -> PipelineOutput:
         if ex.table_rows is not None:
             return PipelineOutput(rows=ex.table_rows or [{}], partial=ex.partial, notes=ex.notes)
-        if ex.doc is None:
-            return PipelineOutput(rows=[{}], notes=ex.notes)
+        if ex.doc is None:                  # no table found / nothing to extract: valid nulls, flagged PARTIAL
+            return PipelineOutput(rows=[{}], partial=True, notes=ex.notes)
         row = postprocess(ex.spec, ex.raw, ex.doc, mode or self.cfg.computed_mode, ex.style or self.cfg.extract_style)
         return PipelineOutput(rows=[row], partial=ex.raw is None, notes=ex.notes)
 

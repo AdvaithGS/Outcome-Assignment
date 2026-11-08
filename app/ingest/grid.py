@@ -347,6 +347,20 @@ def _sheet_from_rows(name: str, rows: list[tuple[int, list[str]]], kind: str, so
     return Grid(source=source, kind=kind, sheets=[_index_rows(sheet)])
 
 
+def grid_from_text_lines(texts: list[str], source: str) -> "Grid | None":
+    """Grid from a PDF's text layer when no table-like lines were found: one row per text line, cells split on runs
+    of 2+ spaces (or tabs). The plan can still find records by pattern (and regex columns); it never needs vision
+    for pages that already have text. None when there is no text at all."""
+    rows: list[tuple[int, list[str]]] = []
+    for pno, text in enumerate(texts, start=1):
+        for line in (text or "").splitlines():
+            if line.strip():
+                rows.append((pno, [c for c in re.split(r"\s{2,}|\t", line.strip()) if c]))
+    if not rows:
+        return None
+    return _sheet_from_rows(Path(source).stem, _drop_repeated(rows), "pdf", Path(source).name)
+
+
 _MD_SEP = re.compile(r"^\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?$")
 
 

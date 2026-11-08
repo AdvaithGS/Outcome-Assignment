@@ -157,6 +157,9 @@ def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "
     from app.pipeline.single import field_style
     if style in ("pointer", "hybrid"):
         doc_norm_map = __import__("app.eval.coverage", fromlist=["normalise_with_map"]).normalise_with_map(doc.markdown)
+    # absent defaults (0 / false / []) are a reading of the document ("it grants no such right"); with no extraction
+    # at all (every call failed, or no readable text) nothing was read, so every field stays null
+    extracted = bool(raw)
     raw = raw or {}
     helpers_raw = raw.get("_helpers") if isinstance(raw.get("_helpers"), dict) else {}
     doc_norm = norm_text(doc.markdown)
@@ -204,7 +207,7 @@ def postprocess(spec: SchemaSpec, raw: dict | None, doc: Document, mode: str = "
                 if len(checks) >= 2:
                     conf_bonus = 0.1 if all(_same(checks[0], x) for x in checks[1:]) else -0.25
         absent_default = False
-        if value is None and f.absent is not None:
+        if value is None and f.absent is not None and extracted:
             value, absent_default = (list(f.absent) if isinstance(f.absent, list) else f.absent), True
         if value is None or absent_default:
             out[key] = {"value": value, "citation": "", "confidence": 0.7 if absent_default else 0.6}

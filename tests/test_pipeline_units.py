@@ -336,3 +336,130 @@ def test_docx_strike_and_hidden_runs(tmp_path):
     assert "~~$2,400~~ $2,150" in md and "internal note" not in md
     g = grid_from_docx(tmp_path / "d.docx")
     assert g.sheets[0].get(2, 2) == "$2,150"
+
+
+# ---- missing / erroneous / failed inputs (stub client: records each model call's stage, fails or answers)
+
+class _StubClient:
+    def __init__(self, answers=None):
+        self.calls, self.answers = [], dict(answers or {})
+
+    async def chat(self, *, stage, **kw):
+        self.calls.append(stage)
+        if stage in self.answers and self.answers[stage]:
+            from types import SimpleNamespace
+            return SimpleNamespace(content=self.answers[stage].pop(0), finish_reason="stop")
+        raise RuntimeError("stubbed model call")
+
+    async def aclose(self):
+        pass
+
+
+def _only_stage0(c) -> bool:
+    return all(s.startswith("schema_") for s in c.calls)
+
+
+def _run(path, schema, file_type, client):
+    import asyncio, time
+    from app.artifacts import ArtifactCache
+    from app.llm.usage import UsageTracker
+    from app.pipeline.base import JobContext
+    from app.pipeline.v1 import PipelineV1
+    pipe = PipelineV1(client=client, cache=ArtifactCache(path.parent / "cache"))
+    ctx = JobContext(job_id="t", org="", file_name=path.name, file_type=file_type, deadline=time.monotonic() + 600,
+                     usage=UsageTracker())
+    return asyncio.run(pipe.run(path, schema, ctx))
+
+
+_LEASE = {"fields": {"tenant": {"name": "Tenant", "description": "Tenant legal name"},
+                     "renewal": {"name": "Renewal option", "description": "true if the tenant has a renewal option, false otherwise"},
+                     "free_rent": {"name": "Free rent", "description": "Number of free rent months, 0 if none"}}}
+_TABLE = {"fields": {"unit": {"name": "Unit", "description": "Unit id", "primary": True},
+                     "rent": {"name": "Rent", "description": "Monthly rent as a number"}}}
+
+
+def test_failed_extraction_gives_nulls_not_absent_defaults():
+    from app.pipeline.postprocess import postprocess
+    from app.pipeline.schema_analysis import heuristic_spec
+    from app.ingest.document import MarkdownBuilder
+    b = MarkdownBuilder(); b.text("Some lease text that mentions nothing relevant.")
+    doc = b.build(source="x", kind="pdf", variant="t")
+    spec = heuristic_spec(_LEASE)
+    assert spec.fields["renewal"].absent is False and spec.fields["free_rent"].absent == 0
+    assert all(v["value"] is None for v in postprocess(spec, None, doc).values())       # nothing read: no false / 0
+    got = postprocess(spec, {"tenant": {"value": "Acme LLC", "citation": "Acme LLC"}}, doc)
+    assert got["renewal"]["value"] is False and got["free_rent"]["value"] == 0           # read, not stated: defaults
+
+
+def test_blank_and_empty_documents_make_no_extraction_calls(tmp_path):
+    import zipfile, pymupdf
+    d = pymupdf.open(); d.new_page(); d.save(tmp_path / "blank.pdf")
+    c = _StubClient(); out = _run(tmp_path / "blank.pdf", _LEASE, "pdf", c)
+    assert _only_stage0(c) and out.partial and "no readable text" in " ".join(out.notes)
+    W = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
+    with zipfile.ZipFile(tmp_path / "empty.docx", "w") as z:
+        z.writestr("word/document.xml", f"<w:document {W}><w:body></w:body></w:document>")
+    c = _StubClient(); out = _run(tmp_path / "empty.docx", _LEASE, "docx", c)
+    assert _only_stage0(c) and out.partial
+
+
+def test_corrupt_spreadsheet_is_unreadable_not_retried(tmp_path):
+    import zipfile, pytest
+    from app.pipeline.base import DocumentError
+    with zipfile.ZipFile(tmp_path / "bad.xlsx", "w") as z:
+        z.writestr("xl/workbook.xml", "<<<garbage")
+    with pytest.raises(DocumentError):
+        _run(tmp_path / "bad.xlsx", _TABLE, "xlsx", _StubClient())
+    with pytest.raises(DocumentError):
+        _run(tmp_path / "bad.xlsx", _LEASE, "xlsx", _StubClient())
+
+
+def test_empty_table_makes_no_plan_call(tmp_path):
+    (tmp_path / "h.csv").write_text("Unit,Rent\n")
+    c = _StubClient(); out = _run(tmp_path / "h.csv", _TABLE, "csv", c)
+    assert "table_plan" not in c.calls and out.partial and out.rows == [{}]
+
+
+def test_digital_pdf_without_table_lines_never_uses_vision(tmp_path):
+    import pymupdf
+    d = pymupdf.open()
+    for i in range(3):
+        d.new_page().insert_text((72, 72), f"Page {i + 1} of a narrative memo with no tables at all, only prose.")
+        d[-1].insert_text((72, 100), "The parties agree to meet again next quarter to review progress.")
+    d.save(tmp_path / "prose.pdf")
+    c = _StubClient(); out = _run(tmp_path / "prose.pdf", _TABLE, "pdf", c)
+    assert "vision_transcribe" not in c.calls and "table_plan" in c.calls
+    assert out.partial
+
+
+def test_failed_plan_call_moves_to_next_attempt():
+    import asyncio, json
+    from app.ingest.grid import Grid, Sheet
+    from app.pipeline.schema_analysis import heuristic_spec
+    from app.pipeline.table import extract_table
+    sh = Sheet("S")
+    for r, (u, rent) in enumerate([("Unit", "Rent"), ("101", 1000), ("102", 1100)], start=1):
+        sh.cells[(r, 1)], sh.cells[(r, 2)] = u, rent
+    sh.max_row, sh.max_col = 3, 2
+    plan = {"record_start": {"column": "A", "pattern": r"\d{3}"}, "columns": {"unit": "A", "rent": "B"}, "checks": []}
+
+    class FailOnce(_StubClient):
+        async def chat(self, *, stage, **kw):
+            if not self.calls:
+                self.calls.append(stage)
+                raise RuntimeError("provider error")
+            return await super().chat(stage=stage, **kw)
+    c = FailOnce({"table_plan": [json.dumps(plan)]})
+    res = asyncio.run(extract_table(heuristic_spec(_TABLE), Grid("t", "csv", [sh]), c, model="m", extra={},
+                                    usage=None, repair_model="r"))
+    assert c.calls == ["table_plan", "table_plan"] and [r["unit"]["value"] for r in res.rows] == ["101", "102"]
+
+
+
+def test_plan_constants_as_printed_only_for_text():
+    from app.pipeline.table import printed_value
+    assert printed_value("417", "Property =  417 .417") == "417 .417"                  # text: the full printed value
+    assert printed_value(2021, "File: 2021.cm3", "year") == 2021                       # typed: the plan's typed value
+    assert printed_value(339050, "Property RSF: 339,050", "number") == 339050
+    assert printed_value("Oak Ridge", "Property: Harbor Point") == "Oak Ridge"          # not part of the cell: plan's
+    assert printed_value(None, "Property: Harbor Point  Period: Jan 2024") == "Harbor Point"   # per-sheet constant

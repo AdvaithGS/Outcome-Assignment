@@ -159,6 +159,17 @@ def page_needs_vision(text: str, confidence: float | None, low_share: float | No
     return False, "OCR adequate"
 
 
+BLANK_DARK_SHARE = 0.0005   # a rendered page with fewer dark pixels than this is blank (nothing to transcribe)
+
+
+def is_blank_page(png: bytes) -> bool:
+    from PIL import Image
+    im = Image.open(io.BytesIO(png)).convert("L")
+    im.thumbnail((600, 600))
+    hist = im.histogram()
+    return sum(hist[:160]) / max(1, sum(hist)) < BLANK_DARK_SHARE
+
+
 def _resize_png(data: bytes, long_side: int = LONG_SIDE) -> bytes:
     from PIL import Image
     im = Image.open(io.BytesIO(data)).convert("L")
@@ -205,6 +216,8 @@ async def transcribe_pages(path: Path, indices: list[int], *, client: LLMClient 
 
     async def one(i: int):
         img = await run_cpu(render_page, path, i, RENDER_DPI, cache=cache, file_sha=sha)
+        if await run_cpu(is_blank_page, img):
+            return i, "", "blank"                          # an empty page: no OCR or vision call
         if selective:
             r = ocr_first[i]
             need, why = page_needs_vision(r.text, r.confidence, r.low_share, unsure.get(i))
