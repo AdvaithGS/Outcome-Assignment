@@ -29,7 +29,7 @@ formatting, citations, page numbers).
   Locator did not pay for itself at these sizes. With this prompt the cheapest model tied the dearer ones.
 - **Computed fields are calculated in code**; a figure the document prints wins. The model's arithmetic was wrong on
   4 lease cells, the formulas on none.
-- **Tables: the LLM writes an extraction plan from a fixed-size preview; code runs it on the full grid.** ~$0.001–0.003
+- **Tables: the LLM writes an extraction plan from a fixed-size preview; code runs it on the full grid.** ~$0.0005–0.003
   whatever the length (the rent roll has 3,000 rows); values are copied from cells with their address; the
   description's cross-field relations are checks verified on every row. XLSX/CSV (several sheets too), PDF tables
   rebuilt from word positions, DOCX tables, scanned tables (scanned budget 0.991).
@@ -53,6 +53,20 @@ formatting, citations, page numbers).
 - The image takes ~3 min to build the first time; we read the 60 s gate as start-up of a built image (~2 s).
 - `sample/schemas/` stays in the repo because the validator command needs it; documents and answers never do.
 
+## Where the brief is silent, we decided
+
+- **FAILED** only when the file cannot be read (corrupt, encrypted; reason in `error`); everything else ends with valid
+  output: **PARTIAL** when part of the work failed or there was nothing to extract (empty document, no table), with a note.
+- An internal **deadline of 20 minutes** from submission (queue included), leaving margin inside the 30-minute limit;
+  past it the job finishes PARTIAL with what exists.
+- **Idempotency per tenant:** the same file + field list from the same `X-Organization-Id` returns the same job;
+  a FAILED job may be resubmitted.
+- A table that lists the same **primary key twice** keeps the first row (the rent roll repeats 5 units under "future
+  residents").
+- **Percentages as displayed**, also in spreadsheets (a cell storing 0.0525 shown as 5.25% → 5.25).
+- A term the document provides for but with **no change** ("no escalation") is "none"; a term it does not mention is null.
+- **Struck-through text does not apply** (scans and DOCX); handwriting governs over the printed text it corrects.
+
 ## Models used for what, and spend
 
 | Stage | Model | Typical cost |
@@ -60,10 +74,10 @@ formatting, citations, page numbers).
 | Field-list analysis, terse definitions (once per list) | gpt-6-luna, reasoning off | ~$0.001 |
 | Scanned-page transcription (hard pages only) | gpt-6-luna, reasoning off | ~$0.0007 per page |
 | Lease / OM extraction | gpt-6-luna, reasoning off (fallback claude-haiku-5.5) | ~$0.003–0.007 |
-| Table plan and repairs | gpt-6-luna; last repair claude-haiku-5.5 | ~$0.001–0.003 |
+| Table plan and repairs | gpt-6-luna; last repair claude-haiku-5.5 | ~$0.0005–0.003 |
 
-**Development spend: $0.84 of the $10** (765 calls, almost all experiments, incl. five Docker load tests). Every response is cached, so re-scoring
-after a downstream change costs $0; replay mode fails instead of spending.
+**Development spend: $0.84 of the $10** (765 calls, almost all experiments, incl. five Docker load tests). Every
+response is cached, so re-scoring after a downstream change costs $0; replay mode fails instead of spending.
 
 ## What broke and how it was handled
 
@@ -71,7 +85,7 @@ after a downstream change costs $0; replay mode fails instead of spending.
   job deadline. **Hidden reasoning tokens** tripled a test's cost: estimates include them; reasoning off by default.
 - **Table plans** dropped columns, cut wrapped text, picked the wrong "Rent" line, and once ran 31 fallback calls:
   generic and required cross-field checks, two repairs, a bounded fallback. **Fresh plans** shortened a header value
-  in 4 of 5 runs: document-wide values are now taken as printed in their cell (T12, five fresh plans: 0.923 → 0.997).
+  in 4 of 5 runs: document-wide values are now taken as printed in their cell (T12, five fresh plans: 0.923 → 0.998).
 - **Scanned tables**: pages came back with different column layouts (page 1's header is now imposed), and later
   selective vision turned "easy" pages into plain text (1 of 55 rows; tables always use vision again, 0.991).
 - **Load tests**: table jobs queued behind scanned leases (p50 129 s → concurrency 10 jobs / 24 calls, 50 s); then

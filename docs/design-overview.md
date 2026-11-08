@@ -127,7 +127,7 @@ stateDiagram-v2
     RUNNING --> PENDING: pipeline error → released for retry (≤ JOB_MAX_ATTEMPTS)
     RUNNING --> RUNNING: lease expired (worker died) → another worker re-claims
     RUNNING --> SUCCESS
-    RUNNING --> PARTIAL: deadline reached / repeated pipeline errors (valid nulls) / best-effort table plan
+    RUNNING --> PARTIAL: deadline / repeated pipeline errors / best-effort table plan / no readable text or no table (valid nulls)
     RUNNING --> FAILED: unreadable document (reason stored) / abandoned too often
     SUCCESS --> [*]
     PARTIAL --> [*]
@@ -329,7 +329,7 @@ header row above), row aggregates, constants with their cell, `classify` (one la
 Revenue/Expense/Other per section), value maps, null values, blank defaults, `missing`, **required cross-field
 `checks`**, and several sheets.
 
-**Why:** cost is flat (~$0.001–0.003 per table regardless of length: the rent roll has 3,000 rows); values are copied
+**Why:** cost is flat (~$0.0005–0.003 per table regardless of length: the rent roll has 3,000 rows); values are copied
 from cells, so they cannot be invented; every value carries its cell address or page.
 
 **Safeguards, each added after a measured failure:**
@@ -343,6 +343,8 @@ from cells, so they cannot be invented; every value carries its cell address or 
 | Up to two repair rounds, the last by a second model (claude-haiku-5.5) | luna's repairs could not fix the CSV rent roll; haiku's did (0.946 → 1.000) |
 | LLM-writes-rows fallback only for tables ≤ 400 rows; else best plan + PARTIAL | A failed plan on a 3,000-row sheet triggered 31 fallback calls |
 | Duplicate primary keys merged | The rent roll lists 5 units twice (main list + future residents) |
+| The last multi-line record is no longer than the longest other record | Without a closing row it absorbed the totals below the table |
+| Document-wide constants read as printed in their cited cell (text fields) | Fresh plans shortened "417 .417" to "417" in 4 of 5 runs |
 
 Tried and **not** adopted: other plan models (glm, haiku each failed a different table); majority vote over three
 plans (fixed one table, broke another).

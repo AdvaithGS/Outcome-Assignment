@@ -373,7 +373,7 @@ in 4 of 5 runs, and the label step varied with its inputs.
 | Before | 0.923 | 0.891–1.000 |
 | Constants as printed + labels on the row's own fields, sorted order (**adopted**) | **0.998–0.999** | 0.950–1.000 (two repeats: 0.983, 0.993) |
 | Labels in document order | 0.996 | 0.958–0.975 (consistently worse) |
-| Majority of 3 label calls | 0.998 | 0.966–1.000, 4× the label cost |
+| Majority of 3 label calls | 0.998 | 0.958–1.000, 4× the label cost |
 
 **Open issues:** the remaining lease errors are free-text phrasing under strict matching and four interpretation calls
 every model makes (early termination right, rent commencement after abatement, property name vs building alias,
