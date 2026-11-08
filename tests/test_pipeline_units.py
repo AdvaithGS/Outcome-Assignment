@@ -271,10 +271,13 @@ def test_to_number_ranges_units_multipliers():
     for v in ("1,200-1,500", "2019-2020", "5-10", "Year 1: $25.00", "2010-03-01"):
         assert normalise(v, "number") is None, v               # several figures: never run the digits together
     assert normalise("$1.2 million", "number") == 1200000
-    assert normalise("$12.5M", "number") == 12500000 and normalise("Suite 5B", "number") == 5
+    assert normalise("$12.5M", "number") == 12500000
+    for label in ("Suite 5B", "C5", "PR - P1", "Feb 2023", "Property ID: 417", "12 Month Actual to Budget", "4W"):
+        assert normalise(label, "number") is None, label        # labels are not amounts
     assert normalise("$24.50/SF", "number") == 24.5 and normalise("$4,250.00 per month", "number") == 4250.0
     assert normalise("3.5% annually", "percent") == 3.5 and normalise("(1,234)", "number") == -1234
-    assert normalise("-$1,234.50", "number") == -1234.5 and normalise("Rent - 4,250", "number") == 4250
+    assert normalise("-$1,234.50", "number") == -1234.5 and normalise("approx. 12,500 rentable square feet", "number") == 12500
+    assert normalise("12500SF", "number") == 12500 and normalise("36 months", "integer") == 36
 
 
 def test_to_date_day_first_ordinals_datetimes():

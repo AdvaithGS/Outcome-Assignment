@@ -28,6 +28,9 @@ NULL_STRINGS = {"", "null", "none", "n/a", "na", "-", "--", "not stated", "not f
 _NUM_TOKEN = re.compile(r"\d[\d,]*(?:\.\d+)?|\.\d+")
 _MULT_WORD = re.compile(r"^\s*(thousand|million|mil|mm|billion|bn)\b", re.I)
 _MULT_LETTER = re.compile(r"^(k|m|b)\b", re.I)        # "$12.5M": only directly after a currency amount
+_UNIT_WORDS = set("""usd dollars dollar per a month months mo mos monthly year years yr yrs annually annual annum annualized
+    sf rsf usf nsf gsf psf sq ft square feet foot rentable usable gross net acre acres unit units space spaces x
+    approximately approx about circa total thousand million mil mm billion bn k m b day days percent pct""".split())
 _MULTS = {"thousand": 1e3, "k": 1e3, "million": 1e6, "mil": 1e6, "mm": 1e6, "m": 1e6, "billion": 1e9, "bn": 1e9, "b": 1e9}
 
 
@@ -52,6 +55,17 @@ def to_number(v):
     if not re.fullmatch(r"\d*\.?\d+", digits) or len(s.split()) > 8:     # long prose is not a value
         return None
     before, after = s[:tok.start()], s[tok.end():]
+    if before[-1:].isalpha():                                    # "C5", "P1", "Q1": a label, not an amount
+        return None
+    # the only words allowed around the figure are units, currency and approximations: "Property ID: 417",
+    # "Feb 2023" or "12 Month Actual to Budget" are labels, not amounts
+    words = re.findall(r"[a-z]+", (before + " " + after).lower())
+    if any(w not in _UNIT_WORDS for w in words):
+        return None
+    if re.match(r"[a-z]", after, re.I) and not re.match(r"(?i)(k|m|mm|b|bn|x|sf|rsf|psf|yrs?|mos?)\b", after):
+        return None                                              # "4W", "5th": letters glued to the figure
+    if re.match(r"(?i)(k|m|b)\b", after) and not re.search(r"[$€£₹]\s*$", before):
+        return None                                              # "5B" is a suite, "$5B" an amount
     neg = bool(re.fullmatch(r"\s*[-−–]\s*[$€£₹]?\s*|\s*[$€£₹]\s*[-−–]\s*", before)) or (
         "(" in before and ")" in after and before.rstrip().endswith(("(", "($", "(€", "(£", "(₹")))
     mult = 1.0
